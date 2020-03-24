@@ -1,5 +1,5 @@
 package com.kodilla.ecommercee;
 
 public class CartController {
-	private Long test;
+	private Long test2;
 }
