@@ -29,4 +29,10 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-web')
     runtimeOnly('com.h2database:h2')
     testImplementation('org.springframework.boot:spring-boot-starter-test')
+    compileOnly('org.projectlombok:lombok')
+    annotationProcessor('org.projectlombok:lombok')
+    compile('mysql:mysql-connector-java')
+    testCompile('junit:junit:4.12')
+    testCompile('org.mockito:mockito-all:1.10.19')
+    compile group: 'org.apache.tomcat', name: 'tomcat-jdbc', version: '7.0.28'
 }
