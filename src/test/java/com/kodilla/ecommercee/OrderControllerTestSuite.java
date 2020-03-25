@@ -1,7 +1,6 @@
 package com.kodilla.ecommercee;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 
@@ -26,7 +25,7 @@ public class OrderControllerTestSuite {
         DbServiceOrder dbServiceOrder = new DbServiceOrder(mock);
 
         //When
-        dbServiceOrder.getOrders();
+        dbServiceOrder.getOrdersMock();
 
         //Than
         Assert.assertEquals(3,orders.size());
@@ -45,7 +44,7 @@ public class OrderControllerTestSuite {
         DbServiceOrder dbServiceOrder = new DbServiceOrder(mock);
 
         //When
-        dbServiceOrder.getOrder(1L);
+        dbServiceOrder.getOrderMock(1L);
 
         //Than
         Assert.assertTrue(orderOne.getId().equals(1L));
@@ -59,7 +58,7 @@ public class OrderControllerTestSuite {
         DbServiceOrder dbServiceOrder = new DbServiceOrder(mock);
 
         //When
-        Order order = dbServiceOrder.saveOrder(orderOne);
+        Order order = dbServiceOrder.saveOrderMock(orderOne);
 
         //Than
         Assert.assertTrue(order.getId()==1L);
@@ -77,7 +76,7 @@ public class OrderControllerTestSuite {
         DbServiceOrder dbServiceOrder = new DbServiceOrder(mock);
 
         //When
-        dbServiceOrder.deleteOrder(1L);
+        dbServiceOrder.deleteOrderMock(1L);
 
         //Then
         verify(mock,times(1)).deleteById(1L);
