@@ -1,7 +1,7 @@
 package com.kodilla.ecommercee.controller;
-import com.kodilla.ecommercee.Cart;
+import com.kodilla.ecommercee.entity.Cart;
 import com.kodilla.ecommercee.GenericEntity;
-import com.kodilla.ecommercee.UserOrder;
+import com.kodilla.ecommercee.entity.UserOrder;
 
 
 

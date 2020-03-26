@@ -1,5 +1,7 @@
-package com.kodilla.ecommercee;
+package com.kodilla.ecommercee.mapper;
 
+import com.kodilla.ecommercee.dto.CartDto;
+import com.kodilla.ecommercee.entity.Cart;
 import org.springframework.stereotype.Component;
 
 @Component
