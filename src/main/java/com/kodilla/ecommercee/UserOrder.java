@@ -19,6 +19,4 @@ public class UserOrder {
     @Id
     @GeneratedValue
     private Long Id;
-
-
 }

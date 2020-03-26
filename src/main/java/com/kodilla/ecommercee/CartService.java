@@ -8,7 +8,7 @@ public class CartService {
     private CartRepository cartRepository;
 
 
-    public Cart createCart(Cart cart){
+    public Cart createCart(Cart cart) {
         return new Cart();
     }
 
@@ -16,14 +16,13 @@ public class CartService {
         return new GenericEntity();
     }
 
-    public Cart addProductToCart(GenericEntity product){
+    public Cart addProductToCart(GenericEntity product) {
         return new Cart();
     }
 
-    public void deleteProductFromCart(GenericEntity product){
-    }
+    public void deleteProductFromCart(GenericEntity product) {}
 
-    public UserOrder createAnOrder(Cart cart){
+    public UserOrder createAnOrder(Cart cart) {
         return new UserOrder();
     }
 }
