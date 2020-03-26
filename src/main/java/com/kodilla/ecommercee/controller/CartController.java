@@ -1,4 +1,5 @@
 package com.kodilla.ecommercee.controller;
+
 import com.kodilla.ecommercee.Cart;
 import com.kodilla.ecommercee.GenericEntity;
 import com.kodilla.ecommercee.UserOrder;
@@ -30,4 +31,5 @@ public class CartController {
     public UserOrder createAnOrder(Cart cart){
         return new UserOrder();
     }
+
 }
