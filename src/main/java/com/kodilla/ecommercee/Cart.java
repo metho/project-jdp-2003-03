@@ -13,7 +13,7 @@ import javax.persistence.Id;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "cart")
+@Entity
 public class Cart {
 
     @Id

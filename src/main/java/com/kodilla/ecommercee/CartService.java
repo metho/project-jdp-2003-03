@@ -1,7 +1,9 @@
 package com.kodilla.ecommercee;
 
+import org.springframework.stereotype.Service;
 
-public class ServiceCart {
+@Service
+public class CartService {
 
     private CartRepository cartRepository;
 
@@ -21,7 +23,7 @@ public class ServiceCart {
     public void deleteProductFromCart(GenericEntity product){
     }
 
-    public ProductOrder createAnOrder(Cart cart){
-        return new ProductOrder();
+    public UserOrder createAnOrder(Cart cart){
+        return new UserOrder();
     }
 }

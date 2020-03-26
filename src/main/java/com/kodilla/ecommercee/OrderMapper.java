@@ -1,22 +1,20 @@
 package com.kodilla.ecommercee;
-
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 public class OrderMapper {
 
-    public ProductOrder translateToOrder(OrderDto orderDto) {
-        return new ProductOrder(orderDto.getId());
+    public UserOrder translateToOrder(OrderDto orderDto) {
+        return new UserOrder(orderDto.getId());
     }
 
-    public OrderDto translateToOrderDto(ProductOrder order) {
+    public OrderDto translateToOrderDto(UserOrder order) {
         return new OrderDto(order.getId());
     }
 
-    public List<OrderDto> translateToOrderList(List<ProductOrder> orders){
+    public List<OrderDto> translateToOrderList(List<UserOrder> orders){
       return  orders.stream().map(o -> translateToOrderDto(o))
                .collect(Collectors.toList());
     }
