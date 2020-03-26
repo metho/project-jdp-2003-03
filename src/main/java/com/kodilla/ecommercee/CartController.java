@@ -1,6 +1,4 @@
 package com.kodilla.ecommercee;
-
-
 import org.springframework.web.bind.annotation.*;
 
 @RestController
