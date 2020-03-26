@@ -3,6 +3,7 @@ package com.kodilla.ecommercee.entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,13 +11,14 @@ import javax.persistence.Id;
 
 @Entity
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
 
     @Id
     @GeneratedValue
-    private Long userId;
+    private Long Id;
 
     private String name;
 
@@ -26,10 +28,10 @@ public class User {
 
     private String address;
 
-    public User(String name, String password, boolean blocked, String address){
-        this.name=name;
-        this.password=password;
-        this.blocked=blocked;
-        this.address=address;
+    public User(String name, String password, boolean blocked, String address) {
+        this.name = name;
+        this.password = password;
+        this.blocked = blocked;
+        this.address = address;
     }
 }
