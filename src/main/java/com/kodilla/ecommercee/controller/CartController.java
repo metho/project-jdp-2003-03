@@ -1,6 +1,8 @@
-package com.kodilla.ecommercee;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+package com.kodilla.ecommercee.controller;
+import com.kodilla.ecommercee.Cart;
+import com.kodilla.ecommercee.GenericEntity;
+import com.kodilla.ecommercee.UserOrder;
+
 
 
 public class CartController {
