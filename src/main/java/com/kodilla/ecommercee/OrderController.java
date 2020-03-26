@@ -14,30 +14,30 @@ public class OrderController {
 
 
     @Autowired
-    private DbServiceOrder dbService;
+    private ServiceOrder service;
 
     @Autowired
     private OrderMapper orderMapper;
 
     @RequestMapping(method = RequestMethod.GET, value = "getOrders")
     public List<OrderDto> getOrders(){
-        return orderMapper.translateToOrderList(dbService.getOrders());
+        return orderMapper.translateToOrderList(service.getOrders());
     }
     @RequestMapping(method = RequestMethod.POST, value = "createOrder")
     public void createOrder(OrderDto orderDto){
-        dbService.saveOrder(orderMapper.translateToOrder(orderDto));
+        service.saveOrder(orderMapper.translateToOrder(orderDto));
     }
     @RequestMapping(method = RequestMethod.GET, value = "getOrder")
     public OrderDto getOrder(Long orderId) throws OrderNotFoundException {
-        return orderMapper.translateToOrderDto(dbService.getOrder(orderId).orElseThrow(OrderNotFoundException::new));
+        return orderMapper.translateToOrderDto(service.getOrder(orderId).orElseThrow(OrderNotFoundException::new));
     }
     @RequestMapping(method = RequestMethod.PUT, value = "updateOrder")
-    public OrderDto updateOrder(Order order){
-        return orderMapper.translateToOrderDto(dbService.saveOrder(order));
+    public OrderDto updateOrder(ProductOrder order){
+        return orderMapper.translateToOrderDto(service.saveOrder(order));
     }
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteOrder")
     public void deleteOrder(Long orderId){
-        dbService.deleteOrder(orderId);
+        service.deleteOrder(orderId);
     }
 
 

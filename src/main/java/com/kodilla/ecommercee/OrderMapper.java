@@ -8,19 +8,16 @@ import java.util.stream.Collectors;
 @Component
 public class OrderMapper {
 
-    private Order order;
-    private OrderDto orderDto;
-
-    public Order translateToOrder(OrderDto orderDto) {
-        return new Order(orderDto.getId());
+    public ProductOrder translateToOrder(OrderDto orderDto) {
+        return new ProductOrder(orderDto.getId());
     }
 
-    public OrderDto translateToOrderDto(Order order) {
+    public OrderDto translateToOrderDto(ProductOrder order) {
         return new OrderDto(order.getId());
     }
 
-    public List<OrderDto> translateToOrderList(List<Order> orders){
-      return  orders.stream().map(o -> new OrderDto(o.getId()))
+    public List<OrderDto> translateToOrderList(List<ProductOrder> orders){
+      return  orders.stream().map(o -> translateToOrderDto(o))
                .collect(Collectors.toList());
     }
 }

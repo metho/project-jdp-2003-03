@@ -15,8 +15,8 @@ import javax.persistence.Id;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "orders")
-public class Order {
+@Entity(name = "productOrders")
+public class ProductOrder {
 
     @Id
     @GeneratedValue
