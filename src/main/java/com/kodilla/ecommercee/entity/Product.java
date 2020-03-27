@@ -23,7 +23,6 @@ public class Product {
     @JoinColumn(name = "product_group_id", nullable = false)
     private ProductGroup productGroup;
 
-    @OneToMany(mappedBy = "cart",
-            cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "product")
     private List<Item> items = new ArrayList<>();
 }
