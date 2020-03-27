@@ -9,11 +9,11 @@ import java.util.stream.Collectors;
 public class OrderMapper {
 
     public UserOrder translateToOrder(OrderDto orderDto) {
-        return new UserOrder(orderDto.getId());
+        return new UserOrder(orderDto.getId(),orderDto.getOrderMade(),orderDto.getResolved(),orderDto.getUser(),orderDto.getProducts());
     }
 
     public OrderDto translateToOrderDto(UserOrder order) {
-        return new OrderDto(order.getId());
+        return new OrderDto(order.getId(),order.getOrderMade(),order.getResolved(),order.getUser(),order.getProducts());
     }
 
     public List<OrderDto> translateToOrderList(List<UserOrder> orders){
