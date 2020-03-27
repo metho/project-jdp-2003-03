@@ -1,5 +1,7 @@
-package com.kodilla.ecommercee;
+package com.kodilla.ecommercee.service;
 
+import com.kodilla.ecommercee.entity.UserOrder;
+import com.kodilla.ecommercee.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
