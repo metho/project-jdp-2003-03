@@ -1,12 +1,12 @@
 package com.kodilla.ecommercee.dto;
 import com.kodilla.ecommercee.GenericEntity;
+import com.kodilla.ecommercee.entity.Product;
+import com.kodilla.ecommercee.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -17,11 +17,11 @@ public class OrderDto {
 
     private Long Id;
 
-    private Date orderMade;
+    private LocalDate orderMade;
 
-    private Boolean resolved;
+    private boolean resolved;
 
-    private GenericEntity user;
+    private User user;
 
-    private List<GenericEntity> products;
+    private List<Product> products;
 }
