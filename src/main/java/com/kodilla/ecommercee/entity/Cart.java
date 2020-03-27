@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 
 @Getter
@@ -19,4 +21,11 @@ public class Cart {
     @Id
     @GeneratedValue
     private Long id;
+
+    @OneToMany(mappedBy = "cart",
+                cascade = CascadeType.ALL)
+    private List<Item> items = new ArrayList<>();
+
+    @Column
+    private boolean closed = false;
 }

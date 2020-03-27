@@ -1,4 +1,5 @@
 package com.kodilla.ecommercee.dto;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,12 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class CartDto {
-
-    @Id
-    @GeneratedValue
+    @JsonProperty("id")
     private Long id;
 }

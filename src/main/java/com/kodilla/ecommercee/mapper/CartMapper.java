@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 public class CartMapper {
 
     public Cart translateToCart(CartDto cartDto) {
-        return new Cart(cartDto.getId());
+        return new Cart();
     }
 
     public CartDto translateToCartDto(Cart cart) {
-        return new CartDto(cart.getId());
+        return new CartDto();
     }
 }
