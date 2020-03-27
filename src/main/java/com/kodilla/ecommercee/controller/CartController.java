@@ -7,7 +7,6 @@ import com.kodilla.ecommercee.entity.UserOrder;
 import com.kodilla.ecommercee.exception.CartNotFoundException;
 import com.kodilla.ecommercee.mapper.CartMapper;
 import com.kodilla.ecommercee.service.CartService;
-import com.kodilla.ecommercee.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
@@ -15,9 +14,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/v1/cart")
 public class CartController {
-
-    @Autowired
-    private OrderService orderService;
 
     @Autowired
     private CartService cartService;
@@ -43,7 +39,7 @@ public class CartController {
     }
     @PostMapping
     public UserOrder createAnOrder(@PathVariable Long cartId){
-        return orderService.saveOrder(cartMapper.translateToUserOrder(cartService.getCart(cartId)));
+        return cartService.createAnOrderFromCart(cartMapper.translateToUserOrder(cartService.getCart(cartId)));
     }
 
 }
