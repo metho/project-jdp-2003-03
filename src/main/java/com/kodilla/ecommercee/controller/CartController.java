@@ -1,34 +1,49 @@
 package com.kodilla.ecommercee.controller;
+
+import com.kodilla.ecommercee.dto.CartDto;
 import com.kodilla.ecommercee.entity.Cart;
 import com.kodilla.ecommercee.GenericEntity;
 import com.kodilla.ecommercee.entity.UserOrder;
+import com.kodilla.ecommercee.exception.CartNotFoundException;
+import com.kodilla.ecommercee.mapper.CartMapper;
+import com.kodilla.ecommercee.service.CartService;
+import com.kodilla.ecommercee.service.OrderService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import java.util.Optional;
 
-
-
+@RestController
+@RequestMapping("/v1/cart")
 public class CartController {
 
+    @Autowired
+    private OrderService orderService;
 
+    @Autowired
+    private CartService cartService;
 
+    @Autowired
+    private CartMapper cartMapper;
 
-    public Cart createCart(Cart cart){
-        return new Cart();
+    @PostMapping
+    public Cart createCart(CartDto cartDto){
+        return cartService.createCart(cartMapper.translateToCart(cartDto));
     }
-
-    public GenericEntity getProductFromCart(Cart cart){
-        return new GenericEntity();
+    @GetMapping(value = "/{cartId}")
+    public Optional<GenericEntity> getProductFromCart(@PathVariable Long cartId, int productId) throws CartNotFoundException {
+        return Optional.ofNullable(cartService.getProductFromCart(cartId, productId).orElseThrow(CartNotFoundException::new));
     }
-
-
-    public Cart addProductToCart(GenericEntity product){
-        return new Cart();
+    @PutMapping(value = "/{cartId}")
+    public boolean addProductToCart(@PathVariable Long cartId,GenericEntity product){
+        return cartService.addProductToCart(cartId, product);
     }
-
-
-    public void deleteProductFromCart(Long id){}
-
-
-    public UserOrder createAnOrder(Cart cart){
-        return new UserOrder();
+    @PutMapping
+    public void deleteProductFromCart(@PathVariable Long cartId, int productId){
+        cartService.deleteProductFromCart(cartId, productId);
+    }
+    @PostMapping
+    public UserOrder createAnOrder(@PathVariable Long cartId){
+        return orderService.saveOrder(cartMapper.translateToUserOrder(cartService.getCart(cartId)));
     }
 
 }

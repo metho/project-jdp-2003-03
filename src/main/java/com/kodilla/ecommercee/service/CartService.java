@@ -1,10 +1,11 @@
 package com.kodilla.ecommercee.service;
 
 import com.kodilla.ecommercee.GenericEntity;
-import com.kodilla.ecommercee.entity.UserOrder;
 import com.kodilla.ecommercee.entity.Cart;
 import com.kodilla.ecommercee.repository.CartRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class CartService {
@@ -13,20 +14,23 @@ public class CartService {
 
 
     public Cart createCart(Cart cart) {
-        return new Cart();
+        return cartRepository.save(cart);
     }
 
-    public GenericEntity getProductFromCart(Cart cart) {
-        return new GenericEntity();
+    public Optional<GenericEntity> getProductFromCart(Long cartId, int productId) {
+        return Optional.ofNullable(cartRepository.getOne(cartId).getProducts().get(productId));
     }
 
-    public Cart addProductToCart(GenericEntity product) {
-        return new Cart();
+    public boolean addProductToCart(Long cartId,GenericEntity product) {
+        return cartRepository.getOne(cartId).getProducts().add(product);
     }
 
-    public void deleteProductFromCart(GenericEntity product) {}
-
-    public UserOrder createAnOrder(Cart cart) {
-        return new UserOrder();
+    public void deleteProductFromCart(Long cartId, int productId) {
+        cartRepository.getOne(cartId).getProducts().remove(productId);
     }
+
+    public Cart getCart(Long cartId){
+        return cartRepository.getOne(cartId);
+    }
+
 }

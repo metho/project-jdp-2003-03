@@ -1,10 +1,10 @@
 package com.kodilla.ecommercee.dto;
+import com.kodilla.ecommercee.GenericEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import java.util.List;
 
 @Getter
 @Setter
@@ -12,7 +12,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 public class CartDto {
 
-    @Id
-    @GeneratedValue
     private Long id;
+
+    private List<GenericEntity> products;
 }
