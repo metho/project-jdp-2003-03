@@ -1,5 +1,5 @@
 package com.kodilla.ecommercee.dto;
-import com.kodilla.ecommercee.GenericEntity;
+
 import com.kodilla.ecommercee.entity.Product;
 import com.kodilla.ecommercee.entity.User;
 import lombok.AllArgsConstructor;
@@ -21,7 +21,7 @@ public class OrderDto {
 
     private boolean resolved;
 
-    private User user;
+    private User userId;
 
     private List<Product> products;
 }
