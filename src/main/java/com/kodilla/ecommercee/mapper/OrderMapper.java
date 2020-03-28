@@ -9,15 +9,15 @@ import java.util.stream.Collectors;
 public class OrderMapper {
 
     public UserOrder translateToOrder(OrderDto orderDto) {
-        return new UserOrder(orderDto.getId());
+        return new UserOrder();
     }
 
     public OrderDto translateToOrderDto(UserOrder order) {
-        return new OrderDto(order.getId());
+        return new OrderDto();
     }
 
     public List<OrderDto> translateToOrderList(List<UserOrder> orders){
-      return  orders.stream().map(o -> translateToOrderDto(o))
+      return  orders.stream().map(this::translateToOrderDto)
                .collect(Collectors.toList());
     }
 }

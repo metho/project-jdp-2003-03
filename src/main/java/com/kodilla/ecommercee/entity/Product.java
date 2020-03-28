@@ -1,13 +1,28 @@
 package com.kodilla.ecommercee.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@AllArgsConstructor
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Getter
+@Setter
 @NoArgsConstructor
-@Data
+@AllArgsConstructor
+@Entity
 public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "product_group_id", nullable = false)
+    private ProductGroup productGroup;
+
+    @OneToMany(mappedBy = "product")
+    private List<Item> items = new ArrayList<>();
 }

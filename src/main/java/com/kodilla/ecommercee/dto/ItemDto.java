@@ -5,8 +5,10 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class ProductGroupDto {
+public class ItemDto {
     private Long id;
-    private String name;
+    private Long cartId;
+    private Long productId;
+    private double quantity;
     private String key;
 }

@@ -25,7 +25,6 @@ public class ProductGroup {
 
     @Column
     @OneToMany(mappedBy = "productGroup",
-                cascade = CascadeType.PERSIST,
-                fetch = FetchType.LAZY)
-    private List<ProductMock> products = new ArrayList<>();
+                cascade = CascadeType.PERSIST)
+    private List<Product> products = new ArrayList<>();
 }
