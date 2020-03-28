@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -23,8 +24,26 @@ public class ProductGroup {
     @Column(nullable = false)
     private String name;
 
-    @Column
     @OneToMany(mappedBy = "productGroup",
-                cascade = CascadeType.PERSIST)
+                fetch = FetchType.EAGER)
     private List<Product> products = new ArrayList<>();
+
+    public ProductGroup(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        if (!(o instanceof ProductGroup)) return false;
+        ProductGroup group = (ProductGroup) o;
+        return Objects.equals(id, group.id) &&
+                Objects.equals(name, group.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
 }
