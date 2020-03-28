@@ -15,7 +15,7 @@ public class ProductController {
         return new ArrayList<>();
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{productId}")
+    @RequestMapping(method = RequestMethod.GET,  value = "/{productId}")
     public ProductDto getProduct(@PathVariable Long productId) {
         return new ProductDto();
     }
