@@ -32,6 +32,18 @@ public class ProductGroup {
         this.name = name;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -45,5 +57,8 @@ public class ProductGroup {
     @Override
     public int hashCode() {
         return Objects.hash(id, name);
+    }
+
+    public void setName(String newName) {
     }
 }

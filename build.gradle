@@ -31,7 +31,9 @@ dependencies {
     testImplementation'org.springframework.boot:spring-boot-starter-test'
     implementation'org.springframework.boot:spring-boot-starter-data-jdbc'
     compile 'mysql:mysql-connector-java'
-    compileOnly'org.projectlombok:lombok'
-    annotationProcessor'org.projectlombok:lombok'
-    //compile'org.apache.tomcat.embed:tomcat-embed-jasper'
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.12'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
 }
