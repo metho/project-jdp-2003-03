@@ -28,9 +28,9 @@ public class UserOrder {
 //    @JoinColumn(name = "ID")
 //    private User user;
 
-//    @OneToMany(targetEntity = ProductGroup.class,
+//    @OneToMany(targetEntity = Product.class,
 //    orphanRemoval = true,
 //    mappedBy = "userOrder",
 //    fetch = FetchType.LAZY)
-//    private List<ProductGroup> products;
+//    private List<Product> products;
 }

@@ -21,5 +21,5 @@ public class UserOrderDto {
 
 //    private User user;
 
-//    private List<ProductGroupDto> products;
+//    private List<ProductDto> products;
 }
