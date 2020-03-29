@@ -8,9 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
+@Table
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +21,10 @@ public class Product {
     @NotNull
     private String name;
 
+    @NotNull
+    @Column
+    private double price;
+
     @Column
     private String brand;
 
@@ -31,7 +34,7 @@ public class Product {
     @Column(name = "Production_year")
     private int year;
 
-    @Column
+    @Column(name = "Origin_country")
     private String origin;
 
     @Column
@@ -44,5 +47,7 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<Item> items = new ArrayList<>();
 
-
+    public void setProductGroup(ProductGroup productGroup) {
+        this.productGroup = productGroup;
+    }
 }
