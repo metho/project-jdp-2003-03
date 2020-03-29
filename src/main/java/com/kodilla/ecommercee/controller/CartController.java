@@ -1,34 +1,38 @@
 package com.kodilla.ecommercee.controller;
 import com.kodilla.ecommercee.entity.Cart;
-import com.kodilla.ecommercee.GenericEntity;
+import com.kodilla.ecommercee.entity.Product;
 import com.kodilla.ecommercee.entity.UserOrder;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 
-
+@RestController
+@RequestMapping("/v1/cart")
 public class CartController {
 
 
-
-
-    public Cart createCart(Cart cart){
-        return new Cart();
+    @PostMapping
+    public Cart createCart(Cart cart) {
+        return new Cart(1L);
     }
 
-    public GenericEntity getProductFromCart(Cart cart){
-        return new GenericEntity();
+    @GetMapping("{/productId}")
+    public Product getProductFromCart(@PathVariable Long productId) {
+        return new Product(1L, "laptop", "DELL");
     }
 
-
-    public Cart addProductToCart(GenericEntity product){
-        return new Cart();
+    @PutMapping("{/productId}")
+    public Cart addProductToCart(@PathVariable Long productId) {
+        return new Cart(1L);
     }
 
+    @DeleteMapping("{/productId}")
+    public void deleteProductFromCart(@PathVariable Long productId) {
+    }
 
-    public void deleteProductFromCart(Long id){}
-
-
-    public UserOrder createAnOrder(Cart cart){
-        return new UserOrder();
+    @PostMapping
+    public UserOrder createAnOrder(Cart cart) {
+        return new UserOrder(14L, LocalDate.of(2020, 03, 29), false);
     }
 
 }
