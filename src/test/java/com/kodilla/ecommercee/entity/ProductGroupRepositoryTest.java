@@ -142,4 +142,29 @@ public class ProductGroupRepositoryTest {
         productRepository.deleteAll();
         repository.deleteAll();
     }
+
+    @Test
+    public void testExistsProductGroup() {
+        // Given
+        String name = "Potatoes";
+        ProductGroup groupA = new ProductGroup("Photo camera");
+        ProductGroup groupB = new ProductGroup("Computers");
+        ProductGroup groupC = new ProductGroup(name);
+
+        // When
+        System.out.println("Test exists records ...\n");
+        repository.save(groupA);
+        repository.save(groupB);
+        repository.save(groupC);
+
+        Long id = groupB.getId();
+        boolean existsById = repository.existsById(id);
+        boolean existsByName = repository.existsByName(name);
+
+        // Then
+        assertTrue(existsById);
+        assertTrue(existsByName);
+
+        repository.deleteAll();
+    }
 }

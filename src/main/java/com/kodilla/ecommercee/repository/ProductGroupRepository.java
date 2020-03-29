@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface ProductGroupRepository extends JpaRepository<ProductGroup, Long> {
     List<ProductGroup> findByName(String name);
+    boolean existsByName(String name);
+    boolean existsById(Long id);
 }
