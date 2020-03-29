@@ -9,35 +9,20 @@ import java.util.List;
 
 @Data
 @Entity
-@Table
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
-    @Column(unique = true)
     private Long id;
 
-    @Column
     @NotNull
     private String name;
 
     @NotNull
-    @Column
     private double price;
-
-    @Column
     private String brand;
-
-    @Column
     private String model;
-
-    @Column(name = "Production_year")
     private int year;
-
-    @Column(name = "Origin_country")
     private String origin;
-
-    @Column
     private String description;
 
     @ManyToOne
