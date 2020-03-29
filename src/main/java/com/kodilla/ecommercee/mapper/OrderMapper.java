@@ -1,6 +1,7 @@
 package com.kodilla.ecommercee.mapper;
+
 import com.kodilla.ecommercee.entity.UserOrder;
-import com.kodilla.ecommercee.dto.OrderDto;
+import com.kodilla.ecommercee.dto.UserOrderDto;
 import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,16 +9,17 @@ import java.util.stream.Collectors;
 @Component
 public class OrderMapper {
 
-    public UserOrder translateToOrder(OrderDto orderDto) {
-        return new UserOrder(orderDto.getId(),orderDto.getOrderMade(),orderDto.isResolved(),orderDto.getUserId(),orderDto.getProducts());
+    public UserOrder translateToOrder(UserOrderDto userOrderDto) {
+        return new UserOrder(userOrderDto.getId(), userOrderDto.getOrderMade(), userOrderDto.isResolved());
     }
 
-    public OrderDto translateToOrderDto(UserOrder order) {
-        return new OrderDto(order.getId(),order.getOrderMade(),order.isResolved(),order.getUserId(),order.getProducts());
+    public UserOrderDto translateToOrderDto(UserOrder order) {
+        return new UserOrderDto(order.getId(),order.getOrderMade(),order.isResolved());
     }
 
-    public List<OrderDto> translateToOrderList(List<UserOrder> orders){
+    public List<UserOrderDto> translateToOrderList(List<UserOrder> orders){
       return  orders.stream().map(o -> translateToOrderDto(o))
                .collect(Collectors.toList());
     }
+
 }

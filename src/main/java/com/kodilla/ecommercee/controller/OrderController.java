@@ -1,5 +1,5 @@
 package com.kodilla.ecommercee.controller;
-import com.kodilla.ecommercee.dto.OrderDto;
+import com.kodilla.ecommercee.dto.UserOrderDto;
 import com.kodilla.ecommercee.entity.UserOrder;
 import com.kodilla.ecommercee.exception.OrderNotFoundException;
 import com.kodilla.ecommercee.mapper.OrderMapper;
@@ -21,19 +21,19 @@ public class OrderController {
     private OrderMapper orderMapper;
 
     @GetMapping
-    public List<OrderDto> getOrders(){
+    public List<UserOrderDto> getOrders(){
         return orderMapper.translateToOrderList(service.getOrders());
     }
     @PostMapping
-    public void createOrder(OrderDto orderDto){
-        service.saveOrder(orderMapper.translateToOrder(orderDto));
+    public void createOrder(UserOrderDto userOrderDto){
+        service.saveOrder(orderMapper.translateToOrder(userOrderDto));
     }
     @GetMapping(value = "/{orderId}")
-    public OrderDto getOrder(@PathVariable Long orderId) throws OrderNotFoundException {
+    public UserOrderDto getOrder(@PathVariable Long orderId) throws OrderNotFoundException {
         return orderMapper.translateToOrderDto(service.getOrder(orderId).orElseThrow(OrderNotFoundException::new));
     }
     @PutMapping
-    public OrderDto updateOrder(UserOrder order){
+    public UserOrderDto updateOrder(UserOrder order){
         return orderMapper.translateToOrderDto(service.saveOrder(order));
     }
     @DeleteMapping

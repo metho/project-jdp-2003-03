@@ -24,12 +24,13 @@ public class UserOrder {
 
     private boolean resolved;
 
-    @OneToOne(cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER)
-    @JoinColumn
-    private User userId;
+//    @ManyToOne
+//    @JoinColumn(name = "ID")
+//    private User user;
 
-    @OneToMany
-    @JoinColumn
-    private List<Product> products;
+//    @OneToMany(targetEntity = ProductGroup.class,
+//    orphanRemoval = true,
+//    mappedBy = "userOrder",
+//    fetch = FetchType.LAZY)
+//    private List<ProductGroup> products;
 }

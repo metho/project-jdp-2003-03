@@ -1,19 +1,17 @@
 package com.kodilla.ecommercee.dto;
 
-import com.kodilla.ecommercee.entity.Product;
-import com.kodilla.ecommercee.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.time.LocalDate;
-import java.util.List;
+
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderDto {
+public class UserOrderDto {
 
     private Long Id;
 
@@ -21,7 +19,7 @@ public class OrderDto {
 
     private boolean resolved;
 
-    private User userId;
+//    private User user;
 
-    private List<Product> products;
+//    private List<ProductGroupDto> products;
 }
