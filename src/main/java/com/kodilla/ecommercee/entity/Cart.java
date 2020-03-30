@@ -26,6 +26,5 @@ public class Cart {
                 cascade = CascadeType.ALL)
     private List<Item> items = new ArrayList<>();
 
-    @Column
     private boolean closed = false;
 }

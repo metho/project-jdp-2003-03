@@ -1,6 +1,5 @@
 package com.kodilla.ecommercee.exception.advice;
 
-import com.kodilla.ecommercee.exception.AuthorizationDeniedException;
 import com.kodilla.ecommercee.exception.EntityAlreadyExistsException;
 import com.kodilla.ecommercee.exception.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -19,12 +18,6 @@ public class ExceptionAdvice {
     @ExceptionHandler(EntityAlreadyExistsException.class)
     @ResponseStatus(HttpStatus.FOUND)
     public String readEntityAlreadyExistsAdvice(EntityAlreadyExistsException ex) {
-        return ex.getMessage();
-    }
-
-    @ExceptionHandler(AuthorizationDeniedException.class)
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public String readerAuthorizationDeniedException(AuthorizationDeniedException ex) {
         return ex.getMessage();
     }
 }

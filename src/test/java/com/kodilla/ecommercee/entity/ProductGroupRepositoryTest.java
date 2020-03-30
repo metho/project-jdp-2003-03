@@ -13,8 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -34,9 +33,9 @@ public class ProductGroupRepositoryTest {
     @Test
     public void testProductGroupGetAll() {
         // Given
-        ProductGroup groupA = new ProductGroup("Photo camera");
-        ProductGroup groupB = new ProductGroup("Computers");
-        ProductGroup groupC = new ProductGroup("Potatoes");
+        ProductGroup groupA = new ProductGroup("AAA");
+        ProductGroup groupB = new ProductGroup("BBB");
+        ProductGroup groupC = new ProductGroup("CCC");
 
         // When
         System.out.println("Test get all records ...\n");
@@ -48,18 +47,16 @@ public class ProductGroupRepositoryTest {
         boolean found = groups.contains(groupB);
 
         // Then
-        assertEquals(3, groups.size());
+        assertTrue(groups.size() >= 3);
         assertTrue(found);
-
-        repository.deleteAll();
     }
 
     @Test
     public void testProductGroupGetOne() {
         // Given
-        String name = "Potatoes";
-        ProductGroup groupA = new ProductGroup("Photo camera");
-        ProductGroup groupB = new ProductGroup("Computers");
+        String name = "DDD";
+        ProductGroup groupA = new ProductGroup("EEE");
+        ProductGroup groupB = new ProductGroup("FFF");
         ProductGroup groupC = new ProductGroup(name);
 
         // When
@@ -70,23 +67,22 @@ public class ProductGroupRepositoryTest {
 
         Long id = groupB.getId();
         Optional<ProductGroup> foundGroup = repository.findById(id);
-        List<ProductGroup> foundGroupByName = repository.findByName(name);
+        Optional<ProductGroup> foundGroupByName = repository.findFirstByName(name);
 
         // Then
         assertTrue(foundGroup.isPresent());
         assertEquals(groupB, foundGroup.get());
-        assertEquals(groupC, foundGroupByName.get(0));
-
-        repository.deleteAll();
+        assertTrue(foundGroupByName.isPresent());
+        assertEquals(groupC, foundGroupByName.get());
     }
 
     @Test
     public void testProductGroupUpdateDelete() {
         // Given
-        String name = "Potatoes";
-        String newName = "Vegetables";
-        ProductGroup groupA = new ProductGroup("Photo camera");
-        ProductGroup groupB = new ProductGroup("Computers");
+        String name = "GGG";
+        String newName = "HHH";
+        ProductGroup groupA = new ProductGroup("III");
+        ProductGroup groupB = new ProductGroup("JJJ");
         ProductGroup groupC = new ProductGroup(name);
 
         // When
@@ -95,21 +91,19 @@ public class ProductGroupRepositoryTest {
         repository.save(groupB);
         repository.save(groupC);
 
-        List<ProductGroup> foundOld = repository.findByName(name);
+        Optional<ProductGroup> foundOld = repository.findFirstByName(name);
 
         groupC.setName(newName);
         repository.save(groupC);
-        List<ProductGroup> foundNew = repository.findByName(newName);
+        Optional<ProductGroup> foundNew = repository.findFirstByName(newName);
 
         repository.deleteById(groupA.getId());
-        List<ProductGroup> groups = repository.findAll();
 
         // Then
-        assertEquals(name, foundOld.get(0).getName());
-        assertEquals(groupC, foundNew.get(0));
-        assertEquals(2, groups.size());
-
-        repository.deleteAll();
+        assertTrue(foundOld.isPresent());
+        assertEquals(name, foundOld.get().getName());
+        assertTrue(foundNew.isPresent());
+        assertEquals(groupC, foundNew.get());
     }
 
     @Test
@@ -138,9 +132,6 @@ public class ProductGroupRepositoryTest {
         //Then
         assertTrue(foundGroup.isPresent());
         assertEquals(3, foundGroup.get().getProducts().size());
-
-        productRepository.deleteAll();
-        repository.deleteAll();
     }
 
     @Test
@@ -164,7 +155,31 @@ public class ProductGroupRepositoryTest {
         // Then
         assertTrue(existsById);
         assertTrue(existsByName);
+    }
 
-        repository.deleteAll();
+    @Test
+    public void testFindFirstByName() {
+        // Given
+        String name = "Same";
+        String empty = "Empty";
+        String tmp = "Temporary";
+        ProductGroup groupA = new ProductGroup(name);
+        ProductGroup groupB = new ProductGroup(name);
+        ProductGroup groupC = new ProductGroup(name);
+
+        // When
+        System.out.println("Test find first records ...\n");
+        repository.save(groupA);
+        repository.save(groupB);
+        repository.save(groupC);
+
+        Optional<ProductGroup> found = repository.findFirstByName(name);
+        Optional<ProductGroup> notFound = repository.findFirstByName(empty);
+        ProductGroup create = repository.findFirstByName(empty).orElseGet(() -> new ProductGroup(tmp));
+
+        // Then
+        assertTrue(found.isPresent());
+        assertFalse(notFound.isPresent());
+        assertEquals(tmp, create.getName());
     }
 }

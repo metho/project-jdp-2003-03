@@ -20,7 +20,7 @@ public class Product {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "product_group_id")
+    @JoinColumn(name = "product_group_id", nullable = false)
     private ProductGroup productGroup;
 
     @OneToMany(mappedBy = "product")

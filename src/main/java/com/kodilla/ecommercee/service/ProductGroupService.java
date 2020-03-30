@@ -1,6 +1,5 @@
 package com.kodilla.ecommercee.service;
 
-import com.kodilla.ecommercee.common.Validator;
 import com.kodilla.ecommercee.dto.ProductGroupDto;
 import com.kodilla.ecommercee.entity.Product;
 import com.kodilla.ecommercee.entity.ProductGroup;
@@ -18,6 +17,7 @@ import java.util.List;
 public class ProductGroupService {
     private static final String NOT_FOUND = "ERROR: Group not found.";
     private static final String GROUP_EXISTS = "ERROR: Group already exists.";
+    private static final String TECHNICAL_GROUP = "Unbound";
 
     @Autowired
     ProductGroupRepository groupRepository;
@@ -28,44 +28,49 @@ public class ProductGroupService {
     @Autowired
     ProductGroupMapper groupMapper;
 
-    @Autowired
-    Validator validator;
-
     public List<ProductGroupDto> getGroups() {
         return groupMapper.mapToGroupDtoList(groupRepository.findAll());
     }
 
     public ProductGroupDto getGroup(Long id) {
-        ProductGroup group = groupRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(NOT_FOUND));
+        ProductGroup group = getGroupOrException(id);
         return groupMapper.mapToGroupDto(group);
     }
 
     public void create(ProductGroupDto groupDto) {
-        validator.validateUser(groupDto.getKey());
         if (groupRepository.existsByName(groupDto.getName())) throw new EntityAlreadyExistsException(GROUP_EXISTS);
-
         groupRepository.save(groupMapper.mapToGroup(groupDto));
     }
 
     public ProductGroupDto update(ProductGroupDto groupDto) {
-        validator.validateUser(groupDto.getKey());
-        if (!groupRepository.existsById(groupDto.getId())) throw new EntityNotFoundException(NOT_FOUND);
-        ProductGroup group = groupMapper.mapToGroup(groupDto);
+        ProductGroup group = getGroupOrException(groupDto.getId());
+        group.setName(groupDto.getName());
 
         return groupMapper.mapToGroupDto(groupRepository.save(group));
     }
 
-    public void delete(Long id, String key) {
-        validator.validateUser(key);
-        ProductGroup group = groupRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(NOT_FOUND));
-        detachProduct(group);
+    public void delete(Long id) {
+        detachProducts(id);
         groupRepository.deleteById(id);
     }
 
-    private void detachProduct(ProductGroup group) {
-        for (Product product : group.getProducts()) {
-            product.setProductGroup(null);
-            productRepository.save(product);
+    private void detachProducts(Long id) {
+        ProductGroup group = getGroupOrException(id);
+        if (group.getProducts().size() > 0) {
+            ProductGroup unbound = getUnboundGroup();
+            for (Product product : group.getProducts()) {
+                product.setProductGroup(unbound);
+                productRepository.save(product);
+            }
         }
+    }
+
+    private ProductGroup getUnboundGroup() {
+        ProductGroup group = groupRepository.findFirstByName(TECHNICAL_GROUP).orElseGet(() -> new ProductGroup(TECHNICAL_GROUP));
+        return groupRepository.save(group);
+   }
+
+    private ProductGroup getGroupOrException(Long id) {
+        return groupRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(NOT_FOUND));
     }
 }

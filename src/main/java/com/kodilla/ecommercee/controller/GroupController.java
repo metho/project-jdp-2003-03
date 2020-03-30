@@ -26,8 +26,8 @@ public class GroupController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id, @RequestParam String key) {
-        service.delete(id, key);
+    public void delete(@PathVariable Long id) {
+        service.delete(id);
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
