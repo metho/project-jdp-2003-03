@@ -8,18 +8,13 @@ import com.kodilla.ecommercee.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 
 @RestController
 @RequestMapping("/v1/cart")
 public class CartController {
-
-//    @Autowired
-//    private CartService cartService;
-//
-//    @Autowired
-//    private CartMapper cartMapper;
 
 
     @PostMapping
@@ -40,7 +35,7 @@ public class CartController {
 
     @PostMapping(value = "/{cartId}")
     public UserOrder createAnOrder(@PathVariable Long cartId){
-        return new UserOrder(1L,new Cart(cartId,new ArrayList<Item>(),false));
+        return new UserOrder(1L,LocalDate.of(2020,03,30),false,new User(),new Cart(cartId,new ArrayList<Item>(),false));
     }
 
 }

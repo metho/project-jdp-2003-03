@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.time.LocalDate;
-import java.util.List;
+
 
 
 @Getter
@@ -20,9 +20,7 @@ public class OrderDto {
 
     private boolean resolved;
 
-//    private UserDto user;
-
-    private List<ProductDto> products;
+    private UserDto user;
 
     private CartDto cartDto;
 }

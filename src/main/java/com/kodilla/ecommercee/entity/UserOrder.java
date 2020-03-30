@@ -7,7 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
+
 
 
 @Getter
@@ -25,17 +25,11 @@ public class UserOrder {
 
     private boolean resolved;
 
-//    @ManyToOne
-//    @JoinColumn(name = "user_ID")
-//    private User user;
+    @ManyToOne
+    @JoinColumn(name = "user_ID")
+    private User user;
 
-    @OneToMany(orphanRemoval = true,
-            mappedBy = "userOrder",
-            targetEntity = Product.class,
-            fetch = FetchType.LAZY)
-    private List<Product> products;
-
-    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JoinColumn(name = "cart_ID")
+    @OneToOne(fetch = FetchType.EAGER)
+    @MapsId
     private Cart cart;
 }
