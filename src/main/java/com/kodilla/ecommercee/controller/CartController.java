@@ -1,34 +1,46 @@
 package com.kodilla.ecommercee.controller;
-import com.kodilla.ecommercee.entity.Cart;
-import com.kodilla.ecommercee.GenericEntity;
-import com.kodilla.ecommercee.entity.UserOrder;
+
+import com.kodilla.ecommercee.dto.CartDto;
+import com.kodilla.ecommercee.entity.*;
+import com.kodilla.ecommercee.exception.CartNotFoundException;
+import com.kodilla.ecommercee.mapper.CartMapper;
+import com.kodilla.ecommercee.service.CartService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 
-
+@RestController
+@RequestMapping("/v1/cart")
 public class CartController {
 
+//    @Autowired
+//    private CartService cartService;
+//
+//    @Autowired
+//    private CartMapper cartMapper;
 
 
-
-    public Cart createCart(Cart cart){
-        return new Cart();
+    @PostMapping
+    public Cart createCart(CartDto cartDto){
+        return new Cart(1L,new ArrayList<Item>(),false);
+    }
+    @GetMapping(value = "/{productId}")
+    public Product getProductFromCart(@PathVariable Long productId) {
+        return new Product(productId,new ProductGroup(1L,"devices",new ArrayList<Product>()),new ArrayList<Item>());
+    }
+    @PutMapping(value = "/{productId}")
+    public Cart addProductToCart(@PathVariable Long productId){
+        return new Cart(1L,new ArrayList<Item>(),false);
+    }
+    @DeleteMapping(value = "/{productId}")
+    public void deleteProductFromCart(@PathVariable Long productId){
     }
 
-    public GenericEntity getProductFromCart(Cart cart){
-        return new GenericEntity();
-    }
-
-
-    public Cart addProductToCart(GenericEntity product){
-        return new Cart();
-    }
-
-
-    public void deleteProductFromCart(Long id){}
-
-
-    public UserOrder createAnOrder(Cart cart){
-        return new UserOrder();
+    @PostMapping(value = "/{cartId}")
+    public UserOrder createAnOrder(@PathVariable Long cartId){
+        return new UserOrder(1L,new Cart(cartId,new ArrayList<Item>(),false));
     }
 
 }
