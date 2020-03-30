@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.1.12.RELEASE'
+        springBootVersion = '2.1.1.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -25,15 +25,13 @@ repositories {
 
 
 dependencies {
-    implementation'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation'org.springframework.boot:spring-boot-starter-web'
-    runtimeOnly'com.h2database:h2'
-    testImplementation'org.springframework.boot:spring-boot-starter-test'
-    implementation'org.springframework.boot:spring-boot-starter-data-jdbc'
-    compile 'mysql:mysql-connector-java'
-    compileOnly 'org.projectlombok:lombok:1.18.12'
-    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 
-    testCompileOnly 'org.projectlombok:lombok:1.18.12'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    compile('mysql:mysql-connector-java')
+    runtimeOnly('com.h2database:h2')
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testCompile('junit:junit:4.12')
 }
