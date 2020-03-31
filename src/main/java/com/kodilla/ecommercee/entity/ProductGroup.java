@@ -58,8 +58,4 @@ public class ProductGroup {
     public int hashCode() {
         return Objects.hash(id, name);
     }
-
-    public void setName(String newName) {
-        name = newName;
-    }
 }

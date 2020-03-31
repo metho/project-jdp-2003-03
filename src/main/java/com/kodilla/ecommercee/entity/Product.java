@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Product {
     @Id
@@ -32,7 +34,16 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<Item> items = new ArrayList<>();
 
+    public Product(Long id, String name, String description, double price, String brand, String model, String origin, int year) {
+    }
+
     public void setProductGroup(ProductGroup productGroup) {
         this.productGroup = productGroup;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
 }
