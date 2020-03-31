@@ -3,15 +3,14 @@ package com.kodilla.ecommercee.entity;
 
 import com.kodilla.ecommercee.repository.ProductGroupRepository;
 import com.kodilla.ecommercee.repository.ProductRepository;
-import org.junit.Before;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
@@ -99,11 +98,12 @@ public class ProductRepositoryTest {
         Long productOneId = productOne.getId();
 
         //When
+        Long sizeBefore = productRepository.count();
         productRepository.deleteById(productOneId);
-        Long size = productRepository.count();
+        Long sizeAfter = productRepository.count();
 
         //Than
-        assertTrue(size == 0);
+        assertTrue(sizeBefore - sizeAfter == 1);
 
     }
 
