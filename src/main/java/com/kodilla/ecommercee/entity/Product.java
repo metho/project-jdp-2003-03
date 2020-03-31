@@ -25,4 +25,8 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     private List<Item> items = new ArrayList<>();
+
+    public Product(ProductGroup productGroup) {
+        this.productGroup=productGroup;
+    }
 }
