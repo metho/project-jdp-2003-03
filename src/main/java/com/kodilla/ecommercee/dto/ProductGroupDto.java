@@ -8,5 +8,4 @@ import lombok.Getter;
 public class ProductGroupDto {
     private Long id;
     private String name;
-    private String key;
 }
