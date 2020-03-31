@@ -60,5 +60,6 @@ public class ProductGroup {
     }
 
     public void setName(String newName) {
+        name = newName;
     }
 }
