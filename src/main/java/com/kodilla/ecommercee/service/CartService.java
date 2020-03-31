@@ -1,6 +1,6 @@
 package com.kodilla.ecommercee.service;
 
-import com.kodilla.ecommercee.GenericEntity;
+import com.kodilla.ecommercee.entity.Product;
 import com.kodilla.ecommercee.entity.UserOrder;
 import com.kodilla.ecommercee.entity.Cart;
 import com.kodilla.ecommercee.repository.CartRepository;
@@ -16,15 +16,15 @@ public class CartService {
         return new Cart();
     }
 
-    public GenericEntity getProductFromCart(Cart cart) {
-        return new GenericEntity();
+    public Product getProductFromCart(Cart cart) {
+        return new Product();
     }
 
-    public Cart addProductToCart(GenericEntity product) {
+    public Cart addProductToCart(Product product) {
         return new Cart();
     }
 
-    public void deleteProductFromCart(GenericEntity product) {}
+    public void deleteProductFromCart(Product product) {}
 
     public UserOrder createAnOrder(Cart cart) {
         return new UserOrder();
