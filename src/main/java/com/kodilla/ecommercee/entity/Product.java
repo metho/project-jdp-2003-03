@@ -37,6 +37,12 @@ public class Product {
     public Product(Long id, String name, String description, double price, String brand, String model, String origin, int year) {
     }
 
+    public Product(Long productId, ProductGroup devices, ArrayList<Item> items) {
+        this.id = productId;
+        this.productGroup = devices;
+        this.items = items;
+    }
+
     public void setProductGroup(ProductGroup productGroup) {
         this.productGroup = productGroup;
     }
