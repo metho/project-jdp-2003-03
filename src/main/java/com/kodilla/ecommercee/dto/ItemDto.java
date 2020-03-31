@@ -10,5 +10,4 @@ public class ItemDto {
     private Long cartId;
     private Long productId;
     private double quantity;
-    private String key;
 }

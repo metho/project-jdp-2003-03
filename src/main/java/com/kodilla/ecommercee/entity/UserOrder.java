@@ -1,13 +1,14 @@
 package com.kodilla.ecommercee.entity;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
+import java.time.LocalDate;
+
+
 
 @Getter
 @Setter
@@ -20,7 +21,15 @@ public class UserOrder {
     @GeneratedValue
     private Long Id;
 
-    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JoinColumn(name = "cart_id")
+    private LocalDate orderMade;
+
+    private boolean resolved;
+
+    @ManyToOne
+    @JoinColumn(name = "user_ID")
+    private User user;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @MapsId
     private Cart cart;
 }

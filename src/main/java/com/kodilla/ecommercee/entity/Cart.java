@@ -26,7 +26,6 @@ public class Cart {
                 fetch = FetchType.EAGER)
     private List<Item> items = new ArrayList<>();
 
-    @Column
     private boolean closed = false;
 
     @Override
