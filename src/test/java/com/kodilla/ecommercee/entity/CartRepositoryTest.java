@@ -56,6 +56,11 @@ public class CartRepositoryTest {
         // Then
         assertTrue(carts.size() >= 3);
         assertTrue(carts.contains(cartB));
+
+        // Clean
+        cartRepository.deleteById(cartA.getId());
+        cartRepository.deleteById(cartB.getId());
+        cartRepository.deleteById(cartC.getId());
     }
 
     @Test
@@ -79,6 +84,11 @@ public class CartRepositoryTest {
 
         // Then
         assertTrue(found.isClosed());
+
+        // Clean
+        cartRepository.deleteById(cartA.getId());
+        cartRepository.deleteById(cartB.getId());
+        cartRepository.deleteById(cartC.getId());
     }
 
     @Test
@@ -100,6 +110,10 @@ public class CartRepositoryTest {
 
         // Then
         assertFalse(found.isPresent());
+
+        // Clean
+        cartRepository.deleteById(cartA.getId());
+        cartRepository.deleteById(cartC.getId());
     }
 
     @Test
@@ -137,5 +151,12 @@ public class CartRepositoryTest {
         assertTrue(foundCart.isPresent());
         assertEquals(3, foundCart.get().getItems().size());
         assertEquals(2, itemsDel.size());
+
+        // Clean
+        itemRepository.deleteById(itemA.getId());
+        itemRepository.deleteById(itemC.getId());
+        productRepository.deleteById(product.getId());
+        groupRepository.deleteById(group.getId());
+        cartRepository.deleteById(cart.getId());
     }
 }

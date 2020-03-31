@@ -49,6 +49,11 @@ public class ProductGroupRepositoryTest {
         // Then
         assertTrue(groups.size() >= 3);
         assertTrue(found);
+
+        // Clean
+        repository.deleteById(groupA.getId());
+        repository.deleteById(groupB.getId());
+        repository.deleteById(groupC.getId());
     }
 
     @Test
@@ -74,6 +79,11 @@ public class ProductGroupRepositoryTest {
         assertEquals(groupB, foundGroup.get());
         assertTrue(foundGroupByName.isPresent());
         assertEquals(groupC, foundGroupByName.get());
+
+        // Clean
+        repository.deleteById(groupA.getId());
+        repository.deleteById(groupB.getId());
+        repository.deleteById(groupC.getId());
     }
 
     @Test
@@ -104,6 +114,10 @@ public class ProductGroupRepositoryTest {
         assertEquals(name, foundOld.get().getName());
         assertTrue(foundNew.isPresent());
         assertEquals(groupC, foundNew.get());
+
+        // Clean
+        repository.deleteById(groupB.getId());
+        repository.deleteById(groupC.getId());
     }
 
     @Test
@@ -132,6 +146,12 @@ public class ProductGroupRepositoryTest {
         //Then
         assertTrue(foundGroup.isPresent());
         assertEquals(3, foundGroup.get().getProducts().size());
+
+        // Clean
+        productRepository.deleteById(productA.getId());
+        productRepository.deleteById(productB.getId());
+        productRepository.deleteById(productC.getId());
+        repository.deleteById(group.getId());
     }
 
     @Test
@@ -155,6 +175,11 @@ public class ProductGroupRepositoryTest {
         // Then
         assertTrue(existsById);
         assertTrue(existsByName);
+
+        // Clean
+        repository.deleteById(groupA.getId());
+        repository.deleteById(groupB.getId());
+        repository.deleteById(groupC.getId());
     }
 
     @Test
@@ -181,5 +206,10 @@ public class ProductGroupRepositoryTest {
         assertTrue(found.isPresent());
         assertFalse(notFound.isPresent());
         assertEquals(tmp, create.getName());
+
+        // Clean
+        repository.deleteById(groupA.getId());
+        repository.deleteById(groupB.getId());
+        repository.deleteById(groupC.getId());
     }
 }
