@@ -84,7 +84,7 @@ public class ProductGroupRepositoryTest {
     public void testProductGroupUpdateDelete() {
         // Given
         String name = "Potatoes";
-        String newName = "Vegetables";
+        String name2 = "Vegetables";
         ProductGroup groupA = new ProductGroup("Photo camera");
         ProductGroup groupB = new ProductGroup("Computers");
         ProductGroup groupC = new ProductGroup(name);
@@ -97,9 +97,9 @@ public class ProductGroupRepositoryTest {
 
         List<ProductGroup> foundOld = repository.findByName(name);
 
-        groupC.setName(newName);
+        groupC.setName(name2);
         repository.save(groupC);
-        List<ProductGroup> foundNew = repository.findByName(newName);
+        List<ProductGroup> foundNew = repository.findByName(name2);
 
         repository.deleteById(groupA.getId());
         List<ProductGroup> groups = repository.findAll();
@@ -122,6 +122,10 @@ public class ProductGroupRepositoryTest {
         productA.setProductGroup(group);
         productB.setProductGroup(group);
         productC.setProductGroup(group);
+        productA.setName("product1");
+        productB.setName("product2");
+        productC.setName("product3");
+
         group.getProducts().addAll(Arrays.asList(productA, productB, productC));
 
         // When
