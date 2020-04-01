@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,16 +20,14 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "product_group_id", nullable = false)
-    private ProductGroup productGroup;
+    @NotNull
+    private String namsde;
 
-    private String abc;
-
-    @OneToMany(mappedBy = "product")
-    private List<Item> items = new ArrayList<>();
-
-    public Product(ProductGroup productGroup) {
-        this.productGroup=productGroup;
-    }
+    @NotNull
+    private double psadrice;
+    private String brsadand;
+    private String modsadel;
+    private int yeasdr;
+    private String ordgigin;
+    private String descriptfdgfdgion;
 }
