@@ -23,8 +23,23 @@ public class Cart {
     private Long id;
 
     @OneToMany(mappedBy = "cart",
-                cascade = CascadeType.ALL)
+                fetch = FetchType.EAGER)
     private List<Item> items = new ArrayList<>();
 
     private boolean closed = false;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        if (!(o instanceof Cart)) return false;
+        Cart cart = (Cart) o;
+        return closed == cart.closed &&
+                Objects.equals(id, cart.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, closed);
+    }
 }
