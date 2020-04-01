@@ -52,4 +52,9 @@ public class Product {
     }
 
 
+
+    public Product(ProductGroup productGroup) {
+        this.productGroup=productGroup;
+    }
+
 }
