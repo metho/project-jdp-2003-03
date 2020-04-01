@@ -127,6 +127,9 @@ public class ProductGroupRepositoryTest {
         Product productA = new Product();
         Product productB = new Product();
         Product productC = new Product();
+        productA.setName("product1");
+        productB.setName("product2");
+        productC.setName("product3");
         productA.setProductGroup(group);
         productB.setProductGroup(group);
         productC.setProductGroup(group);
