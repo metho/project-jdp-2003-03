@@ -22,8 +22,7 @@ public class Cart {
     @GeneratedValue
     private Long id;
 
-    @OneToMany(mappedBy = "cart",
-                fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "cart")
     private List<Item> items = new ArrayList<>();
 
     private boolean closed = false;

@@ -2,10 +2,6 @@ package com.kodilla.ecommercee.controller;
 
 import com.kodilla.ecommercee.dto.CartDto;
 import com.kodilla.ecommercee.entity.*;
-import com.kodilla.ecommercee.exception.CartNotFoundException;
-import com.kodilla.ecommercee.mapper.CartMapper;
-import com.kodilla.ecommercee.service.CartService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -23,7 +19,8 @@ public class CartController {
     }
     @GetMapping(value = "/{productId}")
     public Product getProductFromCart(@PathVariable Long productId) {
-        return new Product(productId,new ProductGroup(1L,"devices",new ArrayList<Product>()),new ArrayList<Item>());
+        ProductGroup group = new ProductGroup(1L,"devices",new ArrayList<Product>());
+        return new Product(productId, "Acer", 2.0, "none", "none", 2020, "Poland", "none", group, new ArrayList<>());
     }
     @PutMapping(value = "/{productId}")
     public Cart addProductToCart(@PathVariable Long productId){
