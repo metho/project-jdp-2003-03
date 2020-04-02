@@ -24,8 +24,7 @@ public class ProductGroup {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "productGroup",
-                fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "productGroup")
     private List<Product> products = new ArrayList<>();
 
     public ProductGroup(String name) {
