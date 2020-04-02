@@ -23,7 +23,7 @@ public class Cart {
     private Long id;
 
     @OneToMany(mappedBy = "cart",
-                fetch = FetchType.EAGER)
+                fetch = FetchType.LAZY)
     private List<Item> items = new ArrayList<>();
 
     private boolean closed = false;

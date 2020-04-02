@@ -7,7 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-
+import java.time.LocalDateTime;
 
 
 @Getter
@@ -21,7 +21,7 @@ public class UserOrder {
     @GeneratedValue
     private Long Id;
 
-    private LocalDate orderMade;
+    private LocalDate orderMade = LocalDate.now();
 
     private boolean resolved;
 
@@ -32,4 +32,9 @@ public class UserOrder {
     @OneToOne(fetch = FetchType.EAGER)
     @MapsId
     private Cart cart;
+
+    public UserOrder(User user, Cart cart) {
+        this.user = user;
+        this.cart = cart;
+    }
 }
