@@ -1,19 +1,15 @@
 package com.kodilla.ecommercee.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-
-
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Entity
 public class UserOrder {
 
@@ -21,14 +17,16 @@ public class UserOrder {
     @GeneratedValue
     private Long Id;
 
-    private LocalDate orderMade;
+    private LocalDate orderMade = LocalDate.now();
 
     private boolean resolved;
 
+    @NonNull
     @ManyToOne
-    @JoinColumn(name = "user_ID")
+    @JoinColumn(name = "user_ID", nullable = false)
     private User user;
 
+    @NonNull
     @OneToOne(fetch = FetchType.EAGER)
     @MapsId
     private Cart cart;
