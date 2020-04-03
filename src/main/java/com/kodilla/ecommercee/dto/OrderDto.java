@@ -20,6 +20,8 @@ public class OrderDto {
 
     private boolean resolved;
 
+    private boolean mailSend;
+
     private UserDto user;
 
     private CartDto cartDto;

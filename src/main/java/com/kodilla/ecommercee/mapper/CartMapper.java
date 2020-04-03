@@ -27,6 +27,6 @@ public class CartMapper {
     }
 
     public UserOrder translateToOrder(Cart cart){
-        return new UserOrder(cart.getId(), LocalDate.now(),false,cart.getOrder().getUser(),cart);
+        return new UserOrder(cart.getId(), LocalDate.now(),false,false,cart.getOrder().getUser(),cart);
     }
 }

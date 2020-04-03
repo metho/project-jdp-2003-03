@@ -25,6 +25,8 @@ public class UserOrder {
 
     private boolean resolved;
 
+    private boolean mailSend;
+
     @ManyToOne
     @JoinColumn(name = "user_ID")
     private User user;
