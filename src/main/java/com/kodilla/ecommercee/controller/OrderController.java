@@ -21,7 +21,7 @@ public class OrderController {
     @Autowired
     private OrderMapper orderMapper;
 
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<OrderDto> getOrders(){
         return orderMapper.translateToOrderList(service.getOrders());
     }
