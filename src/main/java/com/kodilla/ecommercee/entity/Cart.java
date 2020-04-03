@@ -1,16 +1,13 @@
 package com.kodilla.ecommercee.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-
+@EqualsAndHashCode
 @Getter
 @Setter
 @AllArgsConstructor
@@ -28,18 +25,7 @@ public class Cart {
 
     private boolean closed = false;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null) return false;
-        if (!(o instanceof Cart)) return false;
-        Cart cart = (Cart) o;
-        return closed == cart.closed &&
-                Objects.equals(id, cart.id);
-    }
+    @OneToOne(fetch = FetchType.EAGER)
+    private UserOrder order;
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, closed);
-    }
 }

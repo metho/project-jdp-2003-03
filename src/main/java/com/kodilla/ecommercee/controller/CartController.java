@@ -2,40 +2,45 @@ package com.kodilla.ecommercee.controller;
 
 import com.kodilla.ecommercee.dto.CartDto;
 import com.kodilla.ecommercee.entity.*;
-import com.kodilla.ecommercee.exception.CartNotFoundException;
 import com.kodilla.ecommercee.mapper.CartMapper;
 import com.kodilla.ecommercee.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 
 
 @RestController
 @RequestMapping("/v1/cart")
 public class CartController {
 
+    @Autowired
+    CartService service;
 
-    @PostMapping
+    @Autowired
+    CartMapper mapper;
+
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public Cart createCart(CartDto cartDto){
-        return new Cart(1L,new ArrayList<Item>(),false);
+        return service.createCart(mapper.translateToCart(cartDto));
     }
-    @GetMapping(value = "/{productId}")
-    public Product getProductFromCart(@PathVariable Long productId) {
-        return new Product(productId,new ProductGroup(1L,"devices",new ArrayList<Product>()),new ArrayList<Item>());
+    @GetMapping(value = "/{itemId}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public Item getItem(@PathVariable Long itemId) {
+        return service.getItem(itemId);
     }
-    @PutMapping(value = "/{productId}")
-    public Cart addProductToCart(@PathVariable Long productId){
-        return new Cart(1L,new ArrayList<Item>(),false);
+    @PutMapping(value = "/{itemId}/{cartId}")
+    public void addItem(@PathVariable("itemId") Long itemId,@PathVariable("cartId") Long cartId){
+        service.addItem(itemId,cartId);
     }
-    @DeleteMapping(value = "/{productId}")
-    public void deleteProductFromCart(@PathVariable Long productId){
+    @DeleteMapping(value = "/{itemId}/{cartId}")
+    public void deleteItem(@PathVariable("itemId") Long itemId,@PathVariable("cartId") Long cartId){
+        service.deleteItem(itemId,cartId);
     }
 
-    @PostMapping(value = "/{cartId}")
-    public UserOrder createAnOrder(@PathVariable Long cartId){
-        return new UserOrder(1L,LocalDate.of(2020,03,30),false,new User(),new Cart(cartId,new ArrayList<Item>(),false));
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public UserOrder createAnOrder(@PathVariable CartDto cartDto){
+        return service.createAnOrder(mapper.translateToCart(cartDto));
     }
 
 }

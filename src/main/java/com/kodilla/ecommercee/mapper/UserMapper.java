@@ -10,7 +10,14 @@ import java.util.List;
 @Component
 public class UserMapper {
 
-    public User translateToUser(UserDto userDto) {return new User(); }
+    public User translateToUser(final UserDto userDto) {
+        return new User(
+                userDto.getId(),
+                userDto.getName(),
+                userDto.getPassword(),
+                userDto.isBlocked(),
+                userDto.getAddress());
+    }
 
     public UserDto translateToUserDto(User user) {return new UserDto();}
 
