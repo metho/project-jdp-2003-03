@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -48,14 +49,17 @@ public class CartRepositoryTest {
         // When
         System.out.println("Test get all records ...\n");
         cartRepository.save(cartA);
+        Long firstId = cartA.getId();
         cartRepository.save(cartB);
         cartRepository.save(cartC);
 
-        List<Cart> carts = cartRepository.findAll();
+        Cart cart = cartRepository.getOne(firstId);
+        ArrayList<Cart> newList = new ArrayList<>();
+        newList.add(cart);
 
         // Then
-        assertTrue(carts.size() >= 3);
-        assertTrue(carts.contains(cartB));
+        assertTrue(cartRepository.count() == 3);
+        assertTrue(newList.size()==1);
 
         // Clean
         cartRepository.deleteById(cartA.getId());
