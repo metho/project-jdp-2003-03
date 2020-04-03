@@ -1,16 +1,16 @@
 package com.kodilla.ecommercee.service;
 
-import com.kodilla.ecommercee.dto.CartDto;
 import com.kodilla.ecommercee.entity.Item;
-import com.kodilla.ecommercee.entity.Product;
 import com.kodilla.ecommercee.entity.UserOrder;
 import com.kodilla.ecommercee.entity.Cart;
+import com.kodilla.ecommercee.exception.ItemNotFoundException;
 import com.kodilla.ecommercee.mapper.CartMapper;
 import com.kodilla.ecommercee.repository.CartRepository;
 import com.kodilla.ecommercee.repository.ItemRepository;
 import com.kodilla.ecommercee.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 
 
 @Service
@@ -25,13 +25,12 @@ public class CartService {
     private CartMapper cartMapper;
 
 
-
     public Cart createCart(Cart cart) {
         return cartRepository.save(cart);
     }
 
-    public Item getItem(Long itemId) {
-        return itemRepository.getOne(itemId);
+    public Optional<Item> getItem(Long itemId) {
+        return Optional.of(itemRepository.getOne(itemId));
     }
 
     public boolean addItem(Long itemId, Long cartId) {

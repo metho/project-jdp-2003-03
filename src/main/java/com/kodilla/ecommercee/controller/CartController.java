@@ -2,6 +2,7 @@ package com.kodilla.ecommercee.controller;
 
 import com.kodilla.ecommercee.dto.CartDto;
 import com.kodilla.ecommercee.entity.*;
+import com.kodilla.ecommercee.exception.ItemNotFoundException;
 import com.kodilla.ecommercee.mapper.CartMapper;
 import com.kodilla.ecommercee.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,8 @@ public class CartController {
         return service.createCart(mapper.translateToCart(cartDto));
     }
     @GetMapping(value = "/{itemId}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public Item getItem(@PathVariable Long itemId) {
-        return service.getItem(itemId);
+    public Item getItem(@PathVariable Long itemId) throws ItemNotFoundException {
+        return service.getItem(itemId).orElseThrow(ItemNotFoundException::new);
     }
     @PutMapping(value = "/{itemId}/{cartId}")
     public void addItem(@PathVariable("itemId") Long itemId,@PathVariable("cartId") Long cartId){
