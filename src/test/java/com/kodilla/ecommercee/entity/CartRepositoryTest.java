@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +21,7 @@ import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Transactional
 public class CartRepositoryTest {
 
     @Autowired
@@ -124,13 +126,12 @@ public class CartRepositoryTest {
     public void testCartAndItem() {
         // Given
         Cart cart = new Cart();
-        Product product = new Product();
         ProductGroup group = new ProductGroup("Empty");
+        Product product = new Product("AAA", 2.0, group);
         Item itemA = new Item(cart, product, 2.0, 12.4);
         Item itemB = new Item(cart, product, 1.0, 10.0);
         Item itemC = new Item(cart, product, 0.5, 5.0);
         cart.getItems().addAll(Arrays.asList(itemA, itemB, itemC));
-        product.setProductGroup(group);
         product.getItems().addAll(Arrays.asList(itemA, itemB, itemC));
         group.getProducts().add(product);
 

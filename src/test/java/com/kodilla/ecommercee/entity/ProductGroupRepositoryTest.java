@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,6 +18,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Transactional
 public class ProductGroupRepositoryTest {
 
     @Autowired
@@ -102,16 +104,19 @@ public class ProductGroupRepositoryTest {
         repository.save(groupC);
 
         Optional<ProductGroup> foundOld = repository.findFirstByName(name);
+        String foundOldName = foundOld.isPresent() ? foundOld.get().getName() : "none";
 
         groupC.setName(newName);
         repository.save(groupC);
         Optional<ProductGroup> foundNew = repository.findFirstByName(newName);
 
         repository.deleteById(groupA.getId());
+        Optional<ProductGroup> deleted = repository.findById(groupA.getId());
 
         // Then
+        assertFalse(deleted.isPresent());
         assertTrue(foundOld.isPresent());
-        assertEquals(name, foundOld.get().getName());
+        assertEquals(name, foundOldName);
         assertTrue(foundNew.isPresent());
         assertEquals(groupC, foundNew.get());
 
@@ -124,12 +129,12 @@ public class ProductGroupRepositoryTest {
     public void testProductAndProductGroup() {
         // Given
         ProductGroup group = new ProductGroup("Product");
-        Product productA = new Product();
-        Product productB = new Product();
-        Product productC = new Product();
-        productA.setProductGroup(group);
-        productB.setProductGroup(group);
-        productC.setProductGroup(group);
+        Product productA = new Product("AAA", 2.0, group);
+        Product productB = new Product("BBB", 3.0, group);
+        Product productC = new Product("CCC", 4.0, group);
+        productA.setName("product1");
+        productB.setName("product2");
+        productC.setName("product3");
         group.getProducts().addAll(Arrays.asList(productA, productB, productC));
 
         // When

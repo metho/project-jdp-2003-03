@@ -16,11 +16,11 @@ public class OrderMapper {
     UserMapper userMapper;
 
     public UserOrder translateToOrder(OrderDto orderDto) {
-        return new UserOrder(orderDto.getId(),orderDto.getOrderMade(),orderDto.isResolved(),orderDto.isMailSend(),userMapper.translateToUser(orderDto.getUser()),cartMapper.translateToCart(orderDto.getCartDto()));
+        return new UserOrder(orderDto.getId(),orderDto.getOrderMade(),orderDto.isResolved(),orderDto.isMailSend(),userMapper.translateToUser(orderDto.getUser()),cartMapper.mapToCart(orderDto.getCartDto()));
     }
 
     public OrderDto translateToOrderDto(UserOrder order) {
-        return new OrderDto(order.getId(),order.getOrderMade(),order.isResolved(),order.isMailSend(),userMapper.translateToUserDto(order.getUser()),cartMapper.translateToCartDto(order.getCart()));
+        return new OrderDto(order.getId(),order.getOrderMade(),order.isResolved(),order.isMailSend(),userMapper.translateToUserDto(order.getUser()),cartMapper.mapToCartDto(order.getCart()));
     }
 
     public List<OrderDto> translateToOrderList(List<UserOrder> orders){

@@ -1,16 +1,20 @@
 package com.kodilla.ecommercee.service;
 
-import com.kodilla.ecommercee.dto.CartDto;
+
 import com.kodilla.ecommercee.entity.Item;
-import com.kodilla.ecommercee.entity.Product;
 import com.kodilla.ecommercee.entity.UserOrder;
 import com.kodilla.ecommercee.entity.Cart;
+import com.kodilla.ecommercee.exception.CartNotFoundException;
+import com.kodilla.ecommercee.exception.UserNotFoundException;
 import com.kodilla.ecommercee.mapper.CartMapper;
+import com.kodilla.ecommercee.mapper.OrderMapper;
 import com.kodilla.ecommercee.repository.CartRepository;
 import com.kodilla.ecommercee.repository.ItemRepository;
 import com.kodilla.ecommercee.repository.OrderRepository;
+import com.kodilla.ecommercee.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 
 
 @Service
@@ -22,7 +26,11 @@ public class CartService {
 
     private OrderRepository orderRepository;
 
+    private UserRepository userRepository;
+
     private CartMapper cartMapper;
+
+    private OrderMapper orderMapper;
 
 
 
@@ -34,16 +42,21 @@ public class CartService {
         return itemRepository.getOne(itemId);
     }
 
-    public boolean addItem(Long itemId, Long cartId) {
-       return cartRepository.getOne(cartId).getItems().add(itemRepository.save(itemRepository.getOne(itemId)));
+    public boolean addItem(Item item, Long cartId) {
+       return cartRepository.getOne(cartId).getItems().add(itemRepository.save(item));
     }
 
-    public void deleteItem(Long itemId, Long cartId) {
-        cartRepository.getOne(cartId).getItems().remove(itemRepository.getOne(itemId));
+    public void deleteItem(Long itemId) {
+        itemRepository.deleteById(itemId);
     }
 
-    public UserOrder createAnOrder(Cart cart) {
-        return orderRepository.save(cartMapper.translateToOrder(cart));
-
+    public UserOrder createAnOrder(Long cartId, Long userId) throws CartNotFoundException, UserNotFoundException {
+        if(cartRepository.getOne(cartId) == null ){
+            throw new CartNotFoundException();
+        } else if (userRepository.getOne(userId) == null) {
+            throw new UserNotFoundException();
+        } else {
+            return orderRepository.save(new UserOrder(cartId, LocalDate.now(), userRepository.getOne(userId), cartRepository.getOne(cartId)));
+        }
     }
 }
