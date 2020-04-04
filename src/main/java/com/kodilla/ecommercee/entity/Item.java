@@ -15,10 +15,10 @@ public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NonNull
     private Long id;
 
     @ManyToOne
+    @NonNull
     @JoinColumn(name = "cart_id", nullable = false)
     private Cart cart;
 
@@ -31,6 +31,7 @@ public class Item {
     @Column(nullable = false)
     private double quantity;
 
+    @NonNull
     @Column(nullable = false)
     private double price;
 
