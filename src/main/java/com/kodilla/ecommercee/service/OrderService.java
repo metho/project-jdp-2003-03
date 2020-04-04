@@ -2,7 +2,7 @@ package com.kodilla.ecommercee.service;
 
 import com.kodilla.ecommercee.entity.UserOrder;
 import com.kodilla.ecommercee.exception.OrderNotFoundException;
-import com.kodilla.ecommercee.exception.OrderNotResolved;
+import com.kodilla.ecommercee.exception.OrderAlreadyResolved;
 import com.kodilla.ecommercee.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,12 +29,12 @@ public class OrderService {
         return orderRepository.findById(orderId).orElseThrow(OrderNotFoundException::new);
     }
 
-    public void deleteOrder(Long orderId) throws OrderNotResolved {
+    public void deleteOrder(Long orderId) throws OrderAlreadyResolved {
         if (!orderRepository.getOne(orderId).isResolved())
         {
             orderRepository.deleteById(orderId);
         } else {
-            throw new OrderNotResolved();
+            throw new OrderAlreadyResolved();
         }
 
     }

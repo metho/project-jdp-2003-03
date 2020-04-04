@@ -15,16 +15,16 @@ public class OrderMapper {
     @Autowired
     UserMapper userMapper;
 
-    public UserOrder translateToOrder(OrderDto orderDto) {
+    public UserOrder mapToOrder(OrderDto orderDto) {
         return new UserOrder(orderDto.getId(),orderDto.getOrderMade(),orderDto.isResolved(),orderDto.isMailSend(),userMapper.translateToUser(orderDto.getUser()),cartMapper.mapToCart(orderDto.getCartDto()));
     }
 
-    public OrderDto translateToOrderDto(UserOrder order) {
+    public OrderDto mapToOrderDto(UserOrder order) {
         return new OrderDto(order.getId(),order.getOrderMade(),order.isResolved(),order.isMailSend(),userMapper.translateToUserDto(order.getUser()),cartMapper.mapToCartDto(order.getCart()));
     }
 
-    public List<OrderDto> translateToOrderList(List<UserOrder> orders){
-      return  orders.stream().map(this::translateToOrderDto)
+    public List<OrderDto> mapToOrderList(List<UserOrder> orders){
+      return  orders.stream().map(this::mapToOrderDto)
                .collect(Collectors.toList());
     }
 }

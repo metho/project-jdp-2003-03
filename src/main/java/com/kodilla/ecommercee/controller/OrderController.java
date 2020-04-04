@@ -2,7 +2,7 @@ package com.kodilla.ecommercee.controller;
 
 import com.kodilla.ecommercee.dto.OrderDto;
 import com.kodilla.ecommercee.exception.OrderNotFoundException;
-import com.kodilla.ecommercee.exception.OrderNotResolved;
+import com.kodilla.ecommercee.exception.OrderAlreadyResolved;
 import com.kodilla.ecommercee.mapper.OrderMapper;
 import com.kodilla.ecommercee.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,22 +23,22 @@ public class OrderController {
 
     @GetMapping
     public List<OrderDto> getOrders(){
-        return orderMapper.translateToOrderList(service.getOrders());
+        return orderMapper.mapToOrderList(service.getOrders());
     }
 
 
     @GetMapping("/{orderId}")
     public OrderDto getOrder(@PathVariable Long orderId) throws OrderNotFoundException {
-        return orderMapper.translateToOrderDto(service.getOrder(orderId));
+        return orderMapper.mapToOrderDto(service.getOrder(orderId));
     }
 
     @PutMapping("/{orderId}")
     public OrderDto updateOrder(@PathVariable Long orderId) throws OrderNotFoundException {
-        return orderMapper.translateToOrderDto(service.saveOrder(service.getOrder(orderId)));
+        return orderMapper.mapToOrderDto(service.saveOrder(service.getOrder(orderId)));
     }
 
     @DeleteMapping("/{orderId}")
-    public void deleteOrder(@PathVariable Long orderId) throws OrderNotResolved {
+    public void deleteOrder(@PathVariable Long orderId) throws OrderAlreadyResolved {
         service.deleteOrder(orderId);
     }
 }

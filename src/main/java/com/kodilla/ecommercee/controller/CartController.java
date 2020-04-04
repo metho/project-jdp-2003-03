@@ -51,7 +51,7 @@ public class CartController {
 
     @PostMapping("/{cartId}/{userId}")
     public OrderDto createAnOrder(@PathVariable("cartId") Long cartId, @PathVariable("userId") Long userId) throws CartNotFoundException, UserNotFoundException {
-        return orderMapper.translateToOrderDto(service.createAnOrder(cartId, userId));
+        return orderMapper.mapToOrderDto(service.createAnOrder(cartId, userId));
     }
 
 }
