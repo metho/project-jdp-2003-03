@@ -17,9 +17,8 @@ public class UserOrder {
 
     @Id
     @GeneratedValue
-    @NonNull
     private Long Id;
-    @NonNull
+
     private LocalDate orderMade;
 
     private boolean resolved;

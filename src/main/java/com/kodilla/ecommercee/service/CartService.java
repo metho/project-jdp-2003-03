@@ -56,7 +56,7 @@ public class CartService {
         } else if (userRepository.getOne(userId) == null) {
             throw new UserNotFoundException();
         } else {
-            return orderRepository.save(new UserOrder(cartId, LocalDate.now(), userRepository.getOne(userId), cartRepository.getOne(cartId)));
+            return orderRepository.save(new UserOrder(userRepository.getOne(userId), cartRepository.getOne(cartId)));
         }
     }
 }
