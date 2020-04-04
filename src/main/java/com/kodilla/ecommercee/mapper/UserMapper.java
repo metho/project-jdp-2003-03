@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 @Component
 public class UserMapper {
 
-    public User translateToUser(final UserDto userDto) {
+    public User toUser(final UserDto userDto) {
         return new User(
                 userDto.getId(),
                 userDto.getName(),
@@ -18,7 +18,7 @@ public class UserMapper {
                 userDto.getAddress());
     }
 
-    public UserDto translateToUserDto(final User user) {
+    public UserDto toUserDto(final User user) {
         return new UserDto(
                 user.getId(),
                 user.getName(),
@@ -27,7 +27,7 @@ public class UserMapper {
                 user.getAddress());
     }
 
-    public List<UserDto> translateToUserDtoList(List<User> users) {
+    public List<UserDto> toUserDtoList(List<User> users) {
         return users.stream()
                 .map(user -> new UserDto(user.getId(), user.getName(), user.getPassword(), user.isBlocked(), user.getAddress()))
                 .collect(Collectors.toList());
