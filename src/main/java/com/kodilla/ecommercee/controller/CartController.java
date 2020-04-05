@@ -30,8 +30,8 @@ public class CartController {
 
 
     @PostMapping(path ="/newCart", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public CartDto createCart(CartDto cartDto){
-        return mapper.mapToCartDto(service.createCart(mapper.mapToCart(cartDto)));
+    public CartDto createCart(Cart cart){
+        return mapper.mapToCartDto(service.createCart(cart));
     }
 
     @GetMapping("/{itemId}")
