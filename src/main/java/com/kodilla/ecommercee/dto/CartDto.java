@@ -12,6 +12,8 @@ public class CartDto {
     @NonNull
     private Long id;
     @NonNull
+    private UserDto user;
+    @NonNull
     private List<ItemDto> items;
     @NonNull
     private boolean closed = false;

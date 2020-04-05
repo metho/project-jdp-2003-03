@@ -46,13 +46,13 @@ public class CartService {
         itemRepository.deleteById(itemId);
     }
 
-    public UserOrder createAnOrder(UserOrder order) throws CartNotFoundException, UserNotFoundException {
-        if(cartRepository.getOne(order.getCart().getId()) == null ){
+    public UserOrder createAnOrder(Cart cart) throws CartNotFoundException, UserNotFoundException {
+        if(cartRepository.getOne(cart.getId()) == null ){
             throw new CartNotFoundException();
-        } else if (userRepository.getOne(order.getUser().getId()) == null) {
+        } else if (userRepository.getOne(cart.getUser().getId()) == null) {
             throw new UserNotFoundException();
         } else {
-            return orderRepository.save(new UserOrder(userRepository.getOne(order.getUser().getId()), cartRepository.getOne(order.getCart().getId())));
+            return orderRepository.save(new UserOrder(userRepository.getOne(cart.getUser().getId()), cartRepository.getOne(cart.getId())));
         }
     }
 }

@@ -24,6 +24,9 @@ public class Cart {
     private List<Item> items = new ArrayList<>();
     @NonNull
     private boolean closed = false;
+    @NonNull
+    @OneToOne
+    private User user;
 
 
 }

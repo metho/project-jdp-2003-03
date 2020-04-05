@@ -22,14 +22,17 @@ public class CartMapper {
     @Autowired
     ProductMapper productMapper;
 
+    @Autowired
+    UserMapper userMapper;
+
 
 
     public Cart mapToCart(CartDto cartDto) {
-        return new Cart(cartDto.getId(),mapToItemList(cartDto.getItems()),cartDto.isClosed());
+        return new Cart(cartDto.getId(),mapToItemList(cartDto.getItems()),cartDto.isClosed(),userMapper.translateToUser(cartDto.getUser()));
     }
 
     public CartDto mapToCartDto(Cart cart) {
-        return new CartDto(cart.getId(),mapToItemDtoList(cart.getItems()),cart.isClosed());
+        return new CartDto(cart.getId(),userMapper.translateToUserDto(cart.getUser()),mapToItemDtoList(cart.getItems()),cart.isClosed());
     }
 
     public ItemDto mapToItemDto(Item item){

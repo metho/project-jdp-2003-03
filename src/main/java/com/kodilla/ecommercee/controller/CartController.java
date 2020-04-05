@@ -50,8 +50,8 @@ public class CartController {
     }
 
     @PostMapping(path ="/newOrder", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public OrderDto createAnOrder(UserOrder order) throws CartNotFoundException, UserNotFoundException {
-        return orderMapper.mapToOrderDto(service.createAnOrder(order));
+    public OrderDto createAnOrder(Cart cart) throws CartNotFoundException, UserNotFoundException {
+        return orderMapper.mapToOrderDto(service.createAnOrder(cart));
     }
 
 }
