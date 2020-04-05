@@ -29,7 +29,7 @@ public class CartController {
     OrderMapper orderMapper;
 
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path ="/newCart", consumes = MediaType.APPLICATION_JSON_VALUE)
     public CartDto createCart(CartDto cartDto){
         return mapper.mapToCartDto(service.createCart(mapper.mapToCart(cartDto)));
     }
@@ -39,9 +39,9 @@ public class CartController {
         return mapper.mapToItemDto(service.getItem(itemId));
     }
 
-    @PostMapping(value = "/{cartId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void addItem(@RequestBody Item item, @PathVariable("cartId") Long cartId){
-        service.addItem(item,cartId);
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void addItem(@RequestBody Item item){
+        service.addItem(item);
     }
 
     @DeleteMapping("/{itemId}")
@@ -49,9 +49,9 @@ public class CartController {
         service.deleteItem(itemId);
     }
 
-    @PostMapping("/{cartId}/{userId}")
-    public OrderDto createAnOrder(@PathVariable("cartId") Long cartId, @PathVariable("userId") Long userId) throws CartNotFoundException, UserNotFoundException {
-        return orderMapper.mapToOrderDto(service.createAnOrder(cartId, userId));
+    @PostMapping(path ="/newOrder", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public OrderDto createAnOrder(UserOrder order) throws CartNotFoundException, UserNotFoundException {
+        return orderMapper.mapToOrderDto(service.createAnOrder(order));
     }
 
 }

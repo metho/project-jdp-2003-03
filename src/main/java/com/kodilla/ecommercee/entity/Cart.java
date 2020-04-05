@@ -5,7 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+
 
 @EqualsAndHashCode
 @Getter
@@ -19,13 +19,11 @@ public class Cart {
     @Id
     @GeneratedValue
     private Long id;
-
+    @NonNull
     @OneToMany(mappedBy = "cart")
     private List<Item> items = new ArrayList<>();
-
+    @NonNull
     private boolean closed = false;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    private UserOrder order;
 
 }

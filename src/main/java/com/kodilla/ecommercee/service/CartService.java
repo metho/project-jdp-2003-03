@@ -14,7 +14,6 @@ import com.kodilla.ecommercee.repository.OrderRepository;
 import com.kodilla.ecommercee.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 
 
 @Service
@@ -35,28 +34,28 @@ public class CartService {
 
 
     public Cart createCart(Cart cart) {
-        return cartRepository.save(cart);
+        return cartRepository.save(new Cart());
     }
 
     public Item getItem(Long itemId) {
         return itemRepository.getOne(itemId);
     }
 
-    public boolean addItem(Item item, Long cartId) {
-       return cartRepository.getOne(cartId).getItems().add(itemRepository.save(item));
+    public boolean addItem(Item item) {
+       return cartRepository.getOne(item.getCart().getId()).getItems().add(itemRepository.save(item));
     }
 
     public void deleteItem(Long itemId) {
         itemRepository.deleteById(itemId);
     }
 
-    public UserOrder createAnOrder(Long cartId, Long userId) throws CartNotFoundException, UserNotFoundException {
-        if(cartRepository.getOne(cartId) == null ){
+    public UserOrder createAnOrder(UserOrder order) throws CartNotFoundException, UserNotFoundException {
+        if(cartRepository.getOne(order.getCart().getId()) == null ){
             throw new CartNotFoundException();
-        } else if (userRepository.getOne(userId) == null) {
+        } else if (userRepository.getOne(order.getUser().getId()) == null) {
             throw new UserNotFoundException();
         } else {
-            return orderRepository.save(new UserOrder(userRepository.getOne(userId), cartRepository.getOne(cartId)));
+            return orderRepository.save(new UserOrder(userRepository.getOne(order.getUser().getId()), cartRepository.getOne(order.getCart().getId())));
         }
     }
 }

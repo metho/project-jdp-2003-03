@@ -11,7 +11,9 @@ import java.util.List;
 public class CartDto {
     @NonNull
     private Long id;
+    @NonNull
     private List<ItemDto> items;
+    @NonNull
     private boolean closed = false;
-    private OrderDto orderDto;
+
 }

@@ -9,14 +9,17 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class ItemDto {
-    @NonNull
+
     private Long id;
-
-    private Long cartId;
+    @NonNull
+    private CartDto cartId;
 
     @NonNull
-    private Long productId;
+    private ProductDto productId;
 
     @NonNull
     private double quantity;
+
+    @NonNull
+    private double price;
 }
