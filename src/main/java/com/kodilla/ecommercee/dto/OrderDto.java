@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.time.LocalDate;
 
+import java.time.LocalDate;
 
 
 @Getter
@@ -15,12 +15,9 @@ import java.time.LocalDate;
 public class OrderDto {
 
     private Long Id;
-
     private LocalDate orderMade;
-
     private boolean resolved;
-
     private UserDto user;
-
     private CartDto cartDto;
+    private boolean mailSent;
 }

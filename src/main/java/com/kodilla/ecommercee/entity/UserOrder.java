@@ -8,8 +8,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -26,10 +24,14 @@ public class UserOrder {
     private boolean resolved;
 
     @ManyToOne
-    @JoinColumn(name = "user_ID")
+    @JoinColumn
     private User user;
 
     @OneToOne(fetch = FetchType.EAGER)
     @MapsId
     private Cart cart;
+
+    private boolean mailSent;
+
+
 }

@@ -8,6 +8,8 @@ import lombok.Setter;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 @Getter
@@ -27,6 +29,9 @@ public class User {
     private boolean blocked;
 
     private String address;
+
+    @OneToMany(mappedBy = "user")
+    private List<UserOrder> userOrders;
 
     public User(String name, String password, boolean blocked, String address) {
         this.name = name;
