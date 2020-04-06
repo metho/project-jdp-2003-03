@@ -33,6 +33,20 @@ public class CartController {
     public CartDto createCart(){
         return mapper.mapToCartDto(service.createCart());
     }
+    @GetMapping("/{cartId}")
+    public CartDto getCart(@PathVariable Long cartId) throws CartNotFoundException {
+        return mapper.mapToCartDto(service.getCart(cartId));
+    };
+
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public CartDto updateCart(@RequestBody Cart cart) throws CartNotFoundException {
+        return mapper.mapToCartDto(service.saveCart(service.getCart(cart.getId())));
+    };
+
+    @DeleteMapping("/{cartId}")
+    public void deleteCart(@PathVariable Long cartId) throws CartNotFoundException {
+        service.deleteCart(cartId);
+    };
 
     @GetMapping("/{itemId}")
     public ItemDto getItem(@PathVariable Long itemId) {
