@@ -19,14 +19,15 @@ public class Cart {
     @Id
     @GeneratedValue
     private Long id;
+    @OneToOne
+    @NonNull
+    private UserOrder order;
     @NonNull
     @OneToMany(mappedBy = "cart")
     private List<Item> items = new ArrayList<>();
     @NonNull
     private boolean closed = false;
-    @NonNull
-    @OneToOne
-    private User user;
+
 
 
 }

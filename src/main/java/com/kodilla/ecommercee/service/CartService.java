@@ -1,6 +1,7 @@
 package com.kodilla.ecommercee.service;
 
 
+import com.kodilla.ecommercee.dto.OrderDto;
 import com.kodilla.ecommercee.entity.Item;
 import com.kodilla.ecommercee.entity.UserOrder;
 import com.kodilla.ecommercee.entity.Cart;
@@ -46,13 +47,13 @@ public class CartService {
         itemRepository.deleteById(itemId);
     }
 
-    public UserOrder createAnOrder(Cart cart) throws CartNotFoundException, UserNotFoundException {
-        if(cartRepository.getOne(cart.getId()) == null ){
+    public UserOrder createAnOrder(OrderDto orderDto) throws CartNotFoundException, UserNotFoundException {
+        if(cartRepository.getOne(orderDto.getCartDto().getId()) == null ){
             throw new CartNotFoundException();
-        } else if (userRepository.getOne(cart.getUser().getId()) == null) {
+        } else if (userRepository.getOne(orderDto.getUser().getId()) == null) {
             throw new UserNotFoundException();
         } else {
-            return orderRepository.save(new UserOrder(userRepository.getOne(cart.getUser().getId()), cartRepository.getOne(cart.getId())));
+            return orderRepository.save(new UserOrder(userRepository.getOne(orderDto.getUser().getId()), cartRepository.getOne(orderDto.getCartDto().getId())));
         }
     }
 }

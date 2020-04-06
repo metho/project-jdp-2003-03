@@ -2,10 +2,8 @@ package com.kodilla.ecommercee.mapper;
 
 import com.kodilla.ecommercee.dto.CartDto;
 import com.kodilla.ecommercee.dto.ItemDto;
-import com.kodilla.ecommercee.dto.OrderDto;
 import com.kodilla.ecommercee.entity.Cart;
 import com.kodilla.ecommercee.entity.Item;
-import com.kodilla.ecommercee.entity.UserOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,17 +20,13 @@ public class CartMapper {
     @Autowired
     ProductMapper productMapper;
 
-    @Autowired
-    UserMapper userMapper;
-
-
 
     public Cart mapToCart(CartDto cartDto) {
-        return new Cart(cartDto.getId(),mapToItemList(cartDto.getItems()),cartDto.isClosed(),userMapper.translateToUser(cartDto.getUser()));
+        return new Cart(cartDto.getId(),orderMapper.mapToOrder(cartDto.getOrder()),mapToItemList(cartDto.getItems()),cartDto.isClosed());
     }
 
     public CartDto mapToCartDto(Cart cart) {
-        return new CartDto(cart.getId(),userMapper.translateToUserDto(cart.getUser()),mapToItemDtoList(cart.getItems()),cart.isClosed());
+        return new CartDto(cart.getId(),orderMapper.mapToOrderDto(cart.getOrder()),mapToItemDtoList(cart.getItems()),cart.isClosed());
     }
 
     public ItemDto mapToItemDto(Item item){
