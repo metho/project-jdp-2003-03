@@ -1,13 +1,18 @@
 package com.kodilla.ecommercee.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -28,33 +33,34 @@ public class Product {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "product_group_id", nullable = false)
+    @JoinColumn
     private ProductGroup productGroup;
 
     @OneToMany(mappedBy = "product")
     private List<Item> items = new ArrayList<>();
 
-    public Product(Long id, String name, String description, double price, String brand, String model, String origin, int year) {
-    }
-
-    public Product(Long productId, ProductGroup devices, ArrayList<Item> items) {
-        this.id = productId;
-        this.productGroup = devices;
-        this.items = items;
-    }
-
-    public void setProductGroup(ProductGroup productGroup) {
+    public Product(String name, double price, ProductGroup productGroup) {
+        this.name = name;
+        this.price = price;
         this.productGroup = productGroup;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        if (!(o instanceof Product)) return false;
+        Product product = (Product) o;
+        return year == product.year &&
+                Objects.equals(id, product.id) &&
+                Objects.equals(name, product.name) &&
+                Objects.equals(brand, product.brand) &&
+                Objects.equals(model, product.model) &&
+                Objects.equals(origin, product.origin);
     }
 
-
-
-    public Product(ProductGroup productGroup) {
-        this.productGroup=productGroup;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, brand, model, year, origin);
     }
-
 }

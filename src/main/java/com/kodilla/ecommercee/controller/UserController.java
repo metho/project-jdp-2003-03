@@ -22,22 +22,22 @@ public class UserController {
 
     @GetMapping
     public List<UserDto> getUsers() {
-        return userMapper.translateToUserDtoList(userService.getUsers());
+        return userMapper.toUserDtoList(userService.getUsers());
     }
 
     @GetMapping(value = "/{id}")
     public UserDto getUser(@PathVariable Long id) throws UserNotFoundException {
-        return userMapper.translateToUserDto(userService.getUser(id).orElseThrow(UserNotFoundException::new));
+        return userMapper.toUserDto(userService.getUser(id).orElseThrow(UserNotFoundException::new));
     }
 
     @PostMapping
     public void createUser(@RequestBody UserDto userDto) {
-        userService.saveUser(userMapper.translateToUser(userDto));
+        userService.saveUser(userMapper.toUser(userDto));
     }
 
     @PutMapping
     public void updateUser(@RequestBody UserDto userDto) {
-        userService.saveUser(userMapper.translateToUser(userDto));
+        userService.saveUser(userMapper.toUser(userDto));
     }
 
     @DeleteMapping
