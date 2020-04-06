@@ -1,23 +1,17 @@
 package com.kodilla.ecommercee.service;
 
 
-import com.kodilla.ecommercee.dto.CartDto;
 import com.kodilla.ecommercee.dto.OrderDto;
 import com.kodilla.ecommercee.entity.Item;
 import com.kodilla.ecommercee.entity.UserOrder;
 import com.kodilla.ecommercee.entity.Cart;
-import com.kodilla.ecommercee.exception.CartNotFoundException;
-import com.kodilla.ecommercee.exception.UserNotFoundException;
+import com.kodilla.ecommercee.exception.EntityNotFoundException;
 import com.kodilla.ecommercee.repository.CartRepository;
 import com.kodilla.ecommercee.repository.ItemRepository;
 import com.kodilla.ecommercee.repository.OrderRepository;
 import com.kodilla.ecommercee.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 
 
 @Service
@@ -43,24 +37,21 @@ public class CartService {
         return cartRepository.save(cart);
     }
 
-    public Cart getCart(Long cartId) throws CartNotFoundException {
-        if(cartRepository.getOne(cartId) == null ){
-            throw new CartNotFoundException();
-        } else {
-        return cartRepository.getOne(cartId);
-        }
-    };
+    public Cart getCart(Long cartId) {
+        return cartRepository.findById(cartId).orElseThrow(()->new EntityNotFoundException("Cart with id "+ cartId + " was not found."));
+    }
 
-    public void deleteCart(Long cartId) throws CartNotFoundException {
-        if(cartRepository.getOne(cartId) == null ){
-            throw new CartNotFoundException();
-        } else {
+    public void deleteCart(Long cartId) {
+        cartRepository.findById(cartId).orElseThrow(()->new EntityNotFoundException("Cart with id "+ cartId + " was not found."));
         cartRepository.deleteById(cartId);
-        }
     }
 
     public Item getItem(Long itemId) {
         return itemRepository.getOne(itemId);
+    }
+
+    public Cart updateCart(Cart cart){
+        return saveCart(getCart(cart.getId()));
     }
 
     public boolean addItem(Item item) {
@@ -71,13 +62,8 @@ public class CartService {
         itemRepository.deleteById(itemId);
     }
 
-    public UserOrder createAnOrder(OrderDto orderDto) throws CartNotFoundException, UserNotFoundException {
-        if(cartRepository.getOne(orderDto.getCartDto().getId()) == null ){
-            throw new CartNotFoundException();
-        } else if (userRepository.getOne(orderDto.getUser().getId()) == null) {
-            throw new UserNotFoundException();
-        } else {
-            return orderRepository.save(new UserOrder(userRepository.getOne(orderDto.getUser().getId()), cartRepository.getOne(orderDto.getCartDto().getId())));
-        }
+    public UserOrder createAnOrder(OrderDto orderDto) {
+        return orderRepository.save(new UserOrder(userRepository.findById(orderDto.getUser().getId()).orElseThrow(()->new EntityNotFoundException("User with id "+ orderDto.getUser().getId() + " was not found.")),
+                cartRepository.findById(orderDto.getCartDto().getId()).orElseThrow(()->new EntityNotFoundException("Cart with id "+ orderDto.getCartDto().getId() + " was not found."))));
     }
 }

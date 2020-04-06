@@ -4,8 +4,6 @@ import com.kodilla.ecommercee.dto.CartDto;
 import com.kodilla.ecommercee.dto.ItemDto;
 import com.kodilla.ecommercee.dto.OrderDto;
 import com.kodilla.ecommercee.entity.*;
-import com.kodilla.ecommercee.exception.CartNotFoundException;
-import com.kodilla.ecommercee.exception.UserNotFoundException;
 import com.kodilla.ecommercee.mapper.CartMapper;
 import com.kodilla.ecommercee.mapper.OrderMapper;
 import com.kodilla.ecommercee.service.CartService;
@@ -33,38 +31,39 @@ public class CartController {
     public CartDto createCart(){
         return mapper.mapToCartDto(service.createCart());
     }
+
     @GetMapping("/{cartId}")
-    public CartDto getCart(@PathVariable Long cartId) throws CartNotFoundException {
+    public CartDto getCart(@PathVariable Long cartId) {
         return mapper.mapToCartDto(service.getCart(cartId));
-    };
+    }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public CartDto updateCart(@RequestBody Cart cart) throws CartNotFoundException {
-        return mapper.mapToCartDto(service.saveCart(service.getCart(cart.getId())));
-    };
+    public CartDto updateCart(@RequestBody CartDto cartDto) {
+        return mapper.mapToCartDto(service.updateCart(mapper.mapToCart(cartDto)));
+    }
 
     @DeleteMapping("/{cartId}")
-    public void deleteCart(@PathVariable Long cartId) throws CartNotFoundException {
+    public void deleteCart(@PathVariable Long cartId) {
         service.deleteCart(cartId);
-    };
+    }
 
-    @GetMapping("/{itemId}")
+    @GetMapping("/item/{itemId}")
     public ItemDto getItem(@PathVariable Long itemId) {
         return mapper.mapToItemDto(service.getItem(itemId));
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path ="/newItem", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void addItem(@RequestBody Item item){
         service.addItem(item);
     }
 
-    @DeleteMapping("/{itemId}")
+    @DeleteMapping("/item/{itemId}")
     public void deleteItem(@PathVariable("itemId") Long itemId){
         service.deleteItem(itemId);
     }
 
     @PostMapping(path ="/newOrder", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public OrderDto createAnOrder(OrderDto orderDto) throws CartNotFoundException, UserNotFoundException {
+    public OrderDto createAnOrder(OrderDto orderDto) {
         return orderMapper.mapToOrderDto(service.createAnOrder(orderDto));
     }
 
