@@ -10,8 +10,7 @@ import java.util.List;
 public class CartDto {
     @NonNull
     private Long id;
-    @NonNull
-    private OrderDto order;
+
     @NonNull
     private List<ItemDto> items;
     @NonNull

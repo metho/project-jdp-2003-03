@@ -22,11 +22,11 @@ public class CartMapper {
 
 
     public Cart mapToCart(CartDto cartDto) {
-        return new Cart(cartDto.getId(),orderMapper.mapToOrder(cartDto.getOrder()),mapToItemList(cartDto.getItems()),cartDto.isClosed());
+        return new Cart(cartDto.getId(),mapToItemList(cartDto.getItems()),cartDto.isClosed());
     }
 
     public CartDto mapToCartDto(Cart cart) {
-        return new CartDto(cart.getId(),orderMapper.mapToOrderDto(cart.getOrder()),mapToItemDtoList(cart.getItems()),cart.isClosed());
+        return new CartDto(cart.getId(),mapToItemDtoList(cart.getItems()),cart.isClosed());
     }
 
     public ItemDto mapToItemDto(Item item){

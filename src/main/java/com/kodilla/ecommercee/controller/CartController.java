@@ -29,9 +29,9 @@ public class CartController {
     OrderMapper orderMapper;
 
 
-    @PostMapping(path ="/newCart", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public CartDto createCart(Cart cart){
-        return mapper.mapToCartDto(service.createCart(cart));
+    @PostMapping(path ="/newCart")
+    public CartDto createCart(){
+        return mapper.mapToCartDto(service.createCart());
     }
 
     @GetMapping("/{itemId}")

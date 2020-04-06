@@ -31,7 +31,7 @@ public class CartService {
 
 
 
-    public Cart createCart(Cart cart) {
+    public Cart createCart() {
         return cartRepository.save(new Cart());
     }
 
