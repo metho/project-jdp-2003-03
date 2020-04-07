@@ -1,11 +1,9 @@
 package com.kodilla.ecommercee.service;
 
-
 import com.kodilla.ecommercee.dto.OrderDto;
 import com.kodilla.ecommercee.entity.Item;
 import com.kodilla.ecommercee.entity.UserOrder;
 import com.kodilla.ecommercee.entity.Cart;
-import com.kodilla.ecommercee.exception.EntityAlreadyExistsException;
 import com.kodilla.ecommercee.exception.EntityNotFoundException;
 import com.kodilla.ecommercee.repository.CartRepository;
 import com.kodilla.ecommercee.repository.ItemRepository;
@@ -20,12 +18,7 @@ public class CartService {
 
     @Autowired
     private CartRepository cartRepository;
-    @Autowired
-    private ItemRepository itemRepository;
-    @Autowired
-    private OrderRepository orderRepository;
-    @Autowired
-    private UserRepository userRepository;
+
 
 
 
@@ -51,24 +44,4 @@ public class CartService {
         cartRepository.deleteById(cartId);
     }
 
-    public Item getItem(Long itemId) {
-        return itemRepository.getOne(itemId);
-    }
-
-    public void addItem(Item item) {
-       if(item.getCart().getId().equals(null) || item.getProduct().getId().equals(null)){
-           throw new EntityNotFoundException("Item with assignments to cart or product was not found");
-       } else {
-           itemRepository.save(item);
-       }
-    }
-
-    public void deleteItem(Long itemId) {
-        itemRepository.deleteById(itemId);
-    }
-
-    public UserOrder createAnOrder(OrderDto orderDto) {
-        return orderRepository.save(new UserOrder(userRepository.findById(orderDto.getUser().getId()).orElseThrow(()->new EntityNotFoundException("User with id "+ orderDto.getUser().getId() + " was not found.")),
-                cartRepository.findById(orderDto.getCartDto().getId()).orElseThrow(()->new EntityNotFoundException("Cart with id "+ orderDto.getCartDto().getId() + " was not found."))));
-    }
 }

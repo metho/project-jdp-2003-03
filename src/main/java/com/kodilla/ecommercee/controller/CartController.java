@@ -3,7 +3,6 @@ package com.kodilla.ecommercee.controller;
 import com.kodilla.ecommercee.dto.CartDto;
 import com.kodilla.ecommercee.dto.ItemDto;
 import com.kodilla.ecommercee.dto.OrderDto;
-import com.kodilla.ecommercee.entity.*;
 import com.kodilla.ecommercee.mapper.CartMapper;
 import com.kodilla.ecommercee.mapper.OrderMapper;
 import com.kodilla.ecommercee.service.CartService;
@@ -23,8 +22,7 @@ public class CartController {
     @Autowired
     CartMapper mapper;
 
-    @Autowired
-    OrderMapper orderMapper;
+
 
 
     @PostMapping(path ="/newCart")
@@ -47,24 +45,6 @@ public class CartController {
         service.deleteCart(cartId);
     }
 
-    @GetMapping("/item/{itemId}")
-    public ItemDto getItem(@PathVariable Long itemId) {
-        return mapper.mapToItemDto(service.getItem(itemId));
-    }
 
-    @PostMapping(path ="/newItem", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void addItem(@RequestBody ItemDto itemDto){
-        service.addItem(mapper.mapToItem(itemDto));
-    }
-
-    @DeleteMapping("/item/{itemId}")
-    public void deleteItem(@PathVariable("itemId") Long itemId){
-        service.deleteItem(itemId);
-    }
-
-    @PostMapping(path ="/newOrder", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public OrderDto createAnOrder(OrderDto orderDto) {
-        return orderMapper.mapToOrderDto(service.createAnOrder(orderDto));
-    }
 
 }
