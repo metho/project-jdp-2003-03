@@ -3,6 +3,7 @@ package com.kodilla.ecommercee.entity;
 import com.kodilla.ecommercee.repository.CartRepository;
 import com.kodilla.ecommercee.repository.OrderRepository;
 import com.kodilla.ecommercee.repository.UserRepository;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
@@ -66,13 +69,9 @@ public class UserOrderRepositoryTest {
         assertEquals(3, cartCount);
 
         // Clean
-        orderRepository.deleteById(orderOne.getId());
-        orderRepository.deleteById(orderTwo.getId());
-        orderRepository.deleteById(orderThree.getId());
-        cartRepository.deleteById(cartOne.getId());
-        cartRepository.deleteById(cartTwo.getId());
-        cartRepository.deleteById(cartThree.getId());
-        userRepository.deleteById(user.getId());
+        orderRepository.deleteAll();
+        cartRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test
@@ -97,9 +96,9 @@ public class UserOrderRepositoryTest {
         assertTrue(getOrder.get().getCart().isClosed());
 
         // Clean
-        orderRepository.deleteById(order.getId());
-        cartRepository.deleteById(cart.getId());
-        userRepository.deleteById(user.getId());
+        orderRepository.deleteAll();
+        cartRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test
@@ -134,11 +133,26 @@ public class UserOrderRepositoryTest {
         assertEquals(3, cartCount);
 
         // Clean
-        orderRepository.deleteById(orderOne.getId());
-        orderRepository.deleteById(orderThree.getId());
-        cartRepository.deleteById(cartOne.getId());
-        cartRepository.deleteById(cartTwo.getId());
-        cartRepository.deleteById(cartThree.getId());
-        userRepository.deleteById(user.getId());
+        orderRepository.deleteAll();
+        cartRepository.deleteAll();
+        cartRepository.deleteAll();
     }
+
+    @Test
+    public void testMailSent() {
+        //Given
+        User user1 = new User("Jack", "None", false, "None");
+        Cart cart1 = new Cart();
+        UserOrder userOrder1 = new UserOrder(LocalDate.now(), false, user1, cart1, false);
+        orderRepository.save(userOrder1);
+        //When
+        List<UserOrder> theList = orderRepository.findByMailSentFalse();
+        int count = theList.size();
+        //Then
+        Assert.assertEquals(1, count);
+        // Clean
+        orderRepository.deleteAll();
+
+    }
+
 }

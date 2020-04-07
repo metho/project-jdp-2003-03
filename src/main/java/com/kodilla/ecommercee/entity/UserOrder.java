@@ -22,7 +22,7 @@ public class UserOrder {
     private boolean resolved;
 
     @NonNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn
     private User user;
 
@@ -33,5 +33,11 @@ public class UserOrder {
 
     private boolean mailSent;
 
-
+    public UserOrder(LocalDate orderMade, boolean resolved, User user, Cart cart, boolean mailSent) {
+        this.orderMade = orderMade;
+        this.resolved = resolved;
+        this.user = user;
+        this.cart = cart;
+        this.mailSent = mailSent;
+    }
 }

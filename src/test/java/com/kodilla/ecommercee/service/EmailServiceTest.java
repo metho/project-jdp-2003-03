@@ -27,6 +27,7 @@ public class EmailServiceTest {
         Mail mail = new Mail("test@test.com","Test","Test Message");
 
         SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(mail.getMailTo());
         mailMessage.setText(mail.getMailTo());
         mailMessage.setSubject(mail.getSubject());
         mailMessage.setText(mail.getMessage());
@@ -34,7 +35,7 @@ public class EmailServiceTest {
         //When
         emailService.send(mail);
         //Then
-        verify(javaMailSender,times(0)).send(mailMessage);
+        verify(javaMailSender, times(1)).send(mailMessage);
     }
 
 
