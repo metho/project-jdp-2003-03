@@ -55,13 +55,12 @@ public class CartService {
         return itemRepository.getOne(itemId);
     }
 
-    public Item addItem(Item item) {
+    public void addItem(Item item) {
        if(item.getCart().getId().equals(null) || item.getProduct().getId().equals(null)){
-           throw new EntityNotFoundException("Assignments to cart or product were not found");
+           throw new EntityNotFoundException("Item with assignments to cart or product was not found");
        } else {
-           return itemRepository.save(item);
+           itemRepository.save(item);
        }
-
     }
 
     public void deleteItem(Long itemId) {
