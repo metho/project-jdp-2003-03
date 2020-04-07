@@ -20,7 +20,6 @@ public class CartMapper {
     @Autowired
     ProductMapper productMapper;
 
-
     public Cart mapToCart(CartDto cartDto) {
         return new Cart(cartDto.getId(),mapToItemList(cartDto.getItems()),cartDto.isClosed());
     }
@@ -30,7 +29,7 @@ public class CartMapper {
     }
 
     public ItemDto mapToItemDto(Item item){
-        return new ItemDto(mapToCartDto(item.getCart()),productMapper.mapToProductDto(item.getProduct()),item.getQuantity(),item.getPrice());
+        return new ItemDto(mapToCartDto(item.getCart()),productMapper.mapToProductDto(item.getProduct()));
     }
     public Item mapToItem(ItemDto itemDto){
         return new Item(mapToCart(itemDto.getCartId()),productMapper.mapToProduct(itemDto.getProductId()),itemDto.getQuantity(),itemDto.getPrice());

@@ -17,9 +17,7 @@ public class ItemDto {
     @NonNull
     private ProductDto productId;
 
-    @NonNull
     private double quantity;
 
-    @NonNull
     private double price;
 }

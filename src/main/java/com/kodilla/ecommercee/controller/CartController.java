@@ -1,10 +1,7 @@
 package com.kodilla.ecommercee.controller;
 
 import com.kodilla.ecommercee.dto.CartDto;
-import com.kodilla.ecommercee.dto.ItemDto;
-import com.kodilla.ecommercee.dto.OrderDto;
 import com.kodilla.ecommercee.mapper.CartMapper;
-import com.kodilla.ecommercee.mapper.OrderMapper;
 import com.kodilla.ecommercee.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -21,9 +18,6 @@ public class CartController {
 
     @Autowired
     CartMapper mapper;
-
-
-
 
     @PostMapping(path ="/newCart")
     public CartDto createCart(){

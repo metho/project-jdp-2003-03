@@ -8,12 +8,12 @@ import java.util.List;
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class CartDto {
-    @NonNull
+
     private Long id;
 
     @NonNull
     private List<ItemDto> items;
-    @NonNull
+
     private boolean closed = false;
 
 }

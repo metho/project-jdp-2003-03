@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class OrderDto {
-    @NonNull
+
     private Long Id;
 
     @NonNull

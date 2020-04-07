@@ -10,16 +10,14 @@ import java.util.List;
 @EqualsAndHashCode
 @Getter
 @Setter
-@RequiredArgsConstructor
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class Cart {
-    @NonNull
+
     @Id
     @GeneratedValue
     private Long id;
-
 
     @NonNull
     @OneToMany(mappedBy = "cart")
