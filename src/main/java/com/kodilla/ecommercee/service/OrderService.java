@@ -30,11 +30,12 @@ public class OrderService {
     }
 
     public void deleteOrder(Long orderId) throws OrderAlreadyResolved {
-        if (!orderRepository.getOne(orderId).isResolved())
-        {
-            orderRepository.deleteById(orderId);
-        } else {
-            throw new OrderAlreadyResolved();
+        if(orderRepository.existsById(orderId)) {
+            if (!orderRepository.getOne(orderId).isResolved()) {
+                orderRepository.deleteById(orderId);
+            } else {
+                throw new OrderAlreadyResolved();
+            }
         }
 
     }

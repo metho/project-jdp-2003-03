@@ -60,8 +60,8 @@ public class CartRepositoryTest {
         newList.add(cart);
 
         // Then
-        assertTrue(cartRepository.count() == 3);
-        assertTrue(newList.size()==1);
+        assertEquals(3,cartRepository.count());
+        assertEquals(1,newList.size());
 
         // Clean
         cartRepository.deleteById(cartA.getId());
