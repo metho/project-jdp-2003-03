@@ -5,6 +5,7 @@ import com.kodilla.ecommercee.dto.OrderDto;
 import com.kodilla.ecommercee.entity.Item;
 import com.kodilla.ecommercee.entity.UserOrder;
 import com.kodilla.ecommercee.entity.Cart;
+import com.kodilla.ecommercee.exception.EntityAlreadyExistsException;
 import com.kodilla.ecommercee.exception.EntityNotFoundException;
 import com.kodilla.ecommercee.repository.CartRepository;
 import com.kodilla.ecommercee.repository.ItemRepository;
@@ -34,7 +35,11 @@ public class CartService {
     }
 
     public Cart saveCart(Cart cart) {
-        return cartRepository.save(cart);
+        if (cartRepository.existsById(cart.getId())) {
+            throw new EntityAlreadyExistsException("Cart with id " +cart.getId()+ " already exists");
+        } else {
+            return cartRepository.save(cart);
+        }
     }
 
     public Cart getCart(Long cartId) {
@@ -48,10 +53,6 @@ public class CartService {
 
     public Item getItem(Long itemId) {
         return itemRepository.getOne(itemId);
-    }
-
-    public Cart updateCart(Cart cart){
-        return saveCart(getCart(cart.getId()));
     }
 
     public boolean addItem(Item item) {

@@ -39,7 +39,7 @@ public class CartController {
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public CartDto updateCart(@RequestBody CartDto cartDto) {
-        return mapper.mapToCartDto(service.updateCart(mapper.mapToCart(cartDto)));
+        return mapper.mapToCartDto(service.saveCart(mapper.mapToCart(cartDto)));
     }
 
     @DeleteMapping("/{cartId}")
