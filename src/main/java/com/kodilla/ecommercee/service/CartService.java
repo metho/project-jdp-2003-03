@@ -35,8 +35,8 @@ public class CartService {
     }
 
     public Cart saveCart(Cart cart) {
-        if (cartRepository.existsById(cart.getId())) {
-            throw new EntityAlreadyExistsException("Cart with id " +cart.getId()+ " already exists");
+        if (!cartRepository.existsById(cart.getId())) {
+            throw new EntityNotFoundException("Cart with id " +cart.getId()+ " was not found");
         } else {
             return cartRepository.save(cart);
         }
@@ -55,8 +55,13 @@ public class CartService {
         return itemRepository.getOne(itemId);
     }
 
-    public boolean addItem(Item item) {
-       return cartRepository.getOne(item.getCart().getId()).getItems().add(itemRepository.save(item));
+    public Item addItem(Item item) {
+       if(item.getCart().getId().equals(null) || item.getProduct().getId().equals(null)){
+           throw new EntityNotFoundException("Assignments to cart or product were not found");
+       } else {
+           return itemRepository.save(item);
+       }
+
     }
 
     public void deleteItem(Long itemId) {
