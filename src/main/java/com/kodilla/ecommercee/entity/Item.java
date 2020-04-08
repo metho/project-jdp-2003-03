@@ -1,8 +1,6 @@
 package com.kodilla.ecommercee.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -10,6 +8,8 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
 @Entity
 public class Item {
 
@@ -18,25 +18,23 @@ public class Item {
     private Long id;
 
     @ManyToOne
+    @NonNull
     @JoinColumn(name = "cart_id", nullable = false)
     private Cart cart;
 
+    @NonNull
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
+    @NonNull
     @Column(nullable = false)
     private double quantity;
 
+    @NonNull
     @Column(nullable = false)
     private double price;
 
-    public Item(Cart cart, Product product, double quantity, double price) {
-        this.cart = cart;
-        this.product = product;
-        this.quantity = quantity;
-        this.price = price;
-    }
 
     @Override
     public boolean equals(Object o) {

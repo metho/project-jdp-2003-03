@@ -1,38 +1,44 @@
 package com.kodilla.ecommercee.controller;
 
 import com.kodilla.ecommercee.dto.CartDto;
-import com.kodilla.ecommercee.entity.*;
+import com.kodilla.ecommercee.mapper.CartMapper;
+import com.kodilla.ecommercee.service.CartService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 
 
 @RestController
 @RequestMapping("/v1/cart")
 public class CartController {
 
+    @Autowired
+    CartService service;
 
-    @PostMapping
-    public Cart createCart(CartDto cartDto){
-        return new Cart(1L,new ArrayList<Item>(),false);
-    }
-    @GetMapping(value = "/{productId}")
-    public Product getProductFromCart(@PathVariable Long productId) {
-        ProductGroup group = new ProductGroup(1L,"devices",new ArrayList<Product>());
-        return new Product(productId, "Acer", 2.0, "none", "none", 2020, "Poland", "none", group, new ArrayList<>());
-    }
-    @PutMapping(value = "/{productId}")
-    public Cart addProductToCart(@PathVariable Long productId){
-        return new Cart(1L,new ArrayList<Item>(),false);
-    }
-    @DeleteMapping(value = "/{productId}")
-    public void deleteProductFromCart(@PathVariable Long productId){
+    @Autowired
+    CartMapper mapper;
+
+    @PostMapping(path ="/newCart")
+    public CartDto createCart(){
+        return mapper.mapToCartDto(service.createCart());
     }
 
-    @PostMapping(value = "/{cartId}")
-    public UserOrder createAnOrder(@PathVariable Long cartId){
-        return new UserOrder(1L,LocalDate.of(2020,03,30),false,new User(),new Cart(cartId,new ArrayList<Item>(),false));
+    @GetMapping("/{cartId}")
+    public CartDto getCart(@PathVariable Long cartId) {
+        return mapper.mapToCartDto(service.getCart(cartId));
     }
+
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public CartDto updateCart(@RequestBody CartDto cartDto) {
+        return mapper.mapToCartDto(service.saveCart(mapper.mapToCart(cartDto)));
+    }
+
+    @DeleteMapping("/{cartId}")
+    public void deleteCart(@PathVariable Long cartId) {
+        service.deleteCart(cartId);
+    }
+
+
 
 }

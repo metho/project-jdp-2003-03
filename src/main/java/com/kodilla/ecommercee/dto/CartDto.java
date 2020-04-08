@@ -1,12 +1,19 @@
 package com.kodilla.ecommercee.dto;
+import lombok.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
 public class CartDto {
+
     private Long id;
+
+    @NonNull
+    private List<ItemDto> items;
+
+    private boolean closed = false;
+
 }

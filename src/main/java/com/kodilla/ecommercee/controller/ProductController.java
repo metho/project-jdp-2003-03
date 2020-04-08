@@ -22,7 +22,6 @@ public class ProductController {
 
     @PostMapping
     public void createProduct(ProductDto productDto) {
-
     }
 
     @PutMapping
