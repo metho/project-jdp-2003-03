@@ -15,10 +15,10 @@ import java.util.stream.Collectors;
 public class CartMapper {
 
     @Autowired
-    OrderMapper orderMapper;
+    private OrderMapper orderMapper;
 
     @Autowired
-    ProductMapper productMapper;
+    private ProductMapper productMapper;
 
     public Cart mapToCart(CartDto cartDto) {
         return new Cart(cartDto.getId(),mapToItemList(cartDto.getItems()),cartDto.isClosed());
@@ -32,7 +32,8 @@ public class CartMapper {
         return new ItemDto(mapToCartDto(item.getCart()),productMapper.mapToProductDto(item.getProduct()));
     }
     public Item mapToItem(ItemDto itemDto){
-        return new Item(mapToCart(itemDto.getCartId()),productMapper.mapToProduct(itemDto.getProductId()),itemDto.getQuantity(),itemDto.getPrice());
+        return new Item(mapToCart(itemDto.getCartId()),productMapper.mapToProduct(itemDto.getProductId()),
+                itemDto.getQuantity(),itemDto.getPrice());
     }
 
     public List<ItemDto> mapToItemDtoList(List<Item> items){
