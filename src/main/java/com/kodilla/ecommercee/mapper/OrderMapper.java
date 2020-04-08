@@ -10,10 +10,10 @@ import java.util.stream.Collectors;
 public class OrderMapper {
 
     @Autowired
-    CartMapper cartMapper;
+    private CartMapper cartMapper;
 
     @Autowired
-    UserMapper userMapper;
+    private UserMapper userMapper;
 
     public UserOrder mapToOrder(OrderDto orderDto) {
         return new UserOrder(orderDto.getId(),orderDto.getOrderMade(),orderDto.isResolved(),orderDto.isMailSend(),userMapper.toUser(orderDto.getUser()),cartMapper.mapToCart(orderDto.getCartDto()));

@@ -11,12 +11,14 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @RequiredArgsConstructor
 @Entity
 public class UserOrder {
 
     @Id
     @GeneratedValue
+    @EqualsAndHashCode.Include
     private Long Id;
 
     private LocalDate orderMade;

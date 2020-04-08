@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@EqualsAndHashCode
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
 @Setter
 @AllArgsConstructor
@@ -17,6 +17,7 @@ public class Cart {
 
     @Id
     @GeneratedValue
+    @EqualsAndHashCode.Include
     private Long id;
 
     @NonNull
