@@ -2,7 +2,6 @@ package com.kodilla.ecommercee.scheduler;
 
 import com.kodilla.ecommercee.config.AdminConfig;
 import com.kodilla.ecommercee.entity.Mail;
-import com.kodilla.ecommercee.entity.User;
 import com.kodilla.ecommercee.entity.UserOrder;
 import com.kodilla.ecommercee.repository.OrderRepository;
 import com.kodilla.ecommercee.service.EmailService;
@@ -29,7 +28,8 @@ public class EmailScheduler {
         List<UserOrder> userOrdersToSendEmail = orderRepository.findByMailSentFalse();
         for(UserOrder userOrder: userOrdersToSendEmail){
             emailService.send(new Mail(
-                    adminConfig.getAdminMail(),SUBJECT,"New order for user "+ userOrder.getUser().getName()));
+                    adminConfig.getAdminMail(), SUBJECT, "New order for user " + userOrder.getUser().getName()));
+            orderRepository.setMailSent(userOrder.getId(), true);
 
         }
     }

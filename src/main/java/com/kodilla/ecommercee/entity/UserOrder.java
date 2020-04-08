@@ -22,7 +22,7 @@ public class UserOrder {
     private boolean resolved;
 
     @NonNull
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn
     private User user;
 

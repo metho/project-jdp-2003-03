@@ -69,9 +69,10 @@ public class UserOrderRepositoryTest {
         assertEquals(3, cartCount);
 
         // Clean
-        orderRepository.deleteAll();
-        cartRepository.deleteAll();
-        userRepository.deleteAll();
+        orderRepository.deleteById(orderOne.getId());
+        orderRepository.deleteById(orderTwo.getId());
+        orderRepository.deleteById(orderThree.getId());
+        userRepository.deleteById(user.getId());
     }
 
     @Test
@@ -96,9 +97,9 @@ public class UserOrderRepositoryTest {
         assertTrue(getOrder.get().getCart().isClosed());
 
         // Clean
-        orderRepository.deleteAll();
-        cartRepository.deleteAll();
-        userRepository.deleteAll();
+        orderRepository.deleteById(order.getId());
+        cartRepository.deleteById(cart.getId());
+        userRepository.deleteById(user.getId());
     }
 
     @Test
@@ -133,9 +134,12 @@ public class UserOrderRepositoryTest {
         assertEquals(3, cartCount);
 
         // Clean
-        orderRepository.deleteAll();
-        cartRepository.deleteAll();
-        cartRepository.deleteAll();
+        orderRepository.deleteById(orderOne.getId());
+        orderRepository.deleteById(orderThree.getId());
+        cartRepository.deleteById(cartOne.getId());
+        cartRepository.deleteById(cartTwo.getId());
+        cartRepository.deleteById(cartThree.getId());
+        userRepository.deleteById(user.getId());
     }
 
     @Test
@@ -144,6 +148,8 @@ public class UserOrderRepositoryTest {
         User user1 = new User("Jack", "None", false, "None");
         Cart cart1 = new Cart();
         UserOrder userOrder1 = new UserOrder(LocalDate.now(), false, user1, cart1, false);
+        userRepository.save(user1);
+        cartRepository.save(cart1);
         orderRepository.save(userOrder1);
         //When
         List<UserOrder> theList = orderRepository.findByMailSentFalse();
@@ -151,8 +157,9 @@ public class UserOrderRepositoryTest {
         //Then
         Assert.assertEquals(1, count);
         // Clean
-        orderRepository.deleteAll();
-
+        orderRepository.deleteById(userOrder1.getId());
+        cartRepository.deleteById(cart1.getId());
+        userRepository.deleteById(user1.getId());
     }
 
 }
