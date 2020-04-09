@@ -9,6 +9,7 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+
 @Entity
 public class Item {
 
@@ -26,13 +27,14 @@ public class Item {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-    @NonNull
+
     @Column(nullable = false)
     private double quantity;
 
-    @NonNull
+
     @Column(nullable = false)
     private double price;
+
 
 
     @Override
