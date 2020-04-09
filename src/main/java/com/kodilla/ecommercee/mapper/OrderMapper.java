@@ -1,6 +1,9 @@
 package com.kodilla.ecommercee.mapper;
 import com.kodilla.ecommercee.entity.UserOrder;
 import com.kodilla.ecommercee.dto.OrderDto;
+import com.kodilla.ecommercee.exception.EntityNotFoundException;
+import com.kodilla.ecommercee.repository.UserRepository;
+import jdk.internal.jline.internal.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.List;
@@ -13,16 +16,18 @@ public class OrderMapper {
     private CartMapper cartMapper;
 
     @Autowired
-    private UserMapper userMapper;
+    private UserRepository userRepository;
 
     public UserOrder mapToOrder(OrderDto orderDto) {
         return new UserOrder(orderDto.getId(),orderDto.getOrderMade(),orderDto.isResolved(),
-                orderDto.isMailSend(),userMapper.toUser(orderDto.getUser()),cartMapper.mapToCart(orderDto.getCartDto()));
+                orderDto.isMailSend(), (userRepository.findById(orderDto.getUserId()).orElseThrow(()->
+                new EntityNotFoundException("Order with id "+ orderDto.getUserId() + " was not found."))),
+        cartMapper.mapToCart(orderDto.getCartDto()));
     }
 
     public OrderDto mapToOrderDto(UserOrder order) {
         return new OrderDto(order.getId(),order.getOrderMade(),order.isResolved(),
-                order.isMailSend(),userMapper.toUserDto(order.getUser()),cartMapper.mapToCartDto(order.getCart()));
+                order.isMailSend(),order.getUser().getId(),cartMapper.mapToCartDto(order.getCart()));
     }
 
     public List<OrderDto> mapToOrderList(List<UserOrder> orders){

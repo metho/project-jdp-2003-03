@@ -10,21 +10,17 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
 public class OrderDto {
 
     private Long Id;
 
-    @NonNull
     private LocalDate orderMade;
 
     private boolean resolved;
 
     private boolean mailSend;
 
-    @NonNull
-    private UserDto user;
+    private Long userId;
 
-    @NonNull
     private CartDto cartDto;
 }

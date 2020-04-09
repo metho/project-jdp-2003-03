@@ -4,6 +4,9 @@ import com.kodilla.ecommercee.dto.CartDto;
 import com.kodilla.ecommercee.dto.ItemDto;
 import com.kodilla.ecommercee.entity.Cart;
 import com.kodilla.ecommercee.entity.Item;
+import com.kodilla.ecommercee.exception.EntityNotFoundException;
+import com.kodilla.ecommercee.repository.CartRepository;
+import com.kodilla.ecommercee.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,10 +18,11 @@ import java.util.stream.Collectors;
 public class CartMapper {
 
     @Autowired
-    private OrderMapper orderMapper;
+    private CartRepository cartRepository;
 
     @Autowired
-    private ProductMapper productMapper;
+    private ProductRepository productRepository;
+
 
     public Cart mapToCart(CartDto cartDto) {
         return new Cart(cartDto.getId(),mapToItemList(cartDto.getItems()),cartDto.isClosed());
@@ -29,10 +33,14 @@ public class CartMapper {
     }
 
     public ItemDto mapToItemDto(Item item){
-        return new ItemDto(mapToCartDto(item.getCart()),productMapper.mapToProductDto(item.getProduct()));
+        return new ItemDto(item.getId(),item.getId(),item.getProduct().getId(),item.getQuantity(),item.getPrice());
+
     }
     public Item mapToItem(ItemDto itemDto){
-        return new Item(mapToCart(itemDto.getCartId()),productMapper.mapToProduct(itemDto.getProductId()),
+        return new Item(itemDto.getId(),(cartRepository.findById(itemDto.getCarId()).orElseThrow(()->
+                new EntityNotFoundException("Item with id "+ itemDto.getCarId() + " was not found."))),
+                (productRepository.findById(itemDto.getProductId()).orElseThrow(()->
+                        new EntityNotFoundException("Product with id "+ itemDto.getProductId() + " was not found."))),
                 itemDto.getQuantity(),itemDto.getPrice());
     }
 
@@ -45,5 +53,7 @@ public class CartMapper {
         return  items.stream().map(this::mapToItem)
                 .collect(Collectors.toList());
     }
+
+
 
 }

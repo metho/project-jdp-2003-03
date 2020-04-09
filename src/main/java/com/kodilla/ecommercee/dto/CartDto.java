@@ -4,14 +4,13 @@ import lombok.*;
 import java.util.List;
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class CartDto {
 
     private Long id;
 
-    @NonNull
     private List<ItemDto> items;
 
     private boolean closed = false;

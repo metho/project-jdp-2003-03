@@ -3,6 +3,7 @@ package com.kodilla.ecommercee.service;
 import com.kodilla.ecommercee.dto.OrderDto;
 import com.kodilla.ecommercee.entity.Cart;
 import com.kodilla.ecommercee.entity.Item;
+import com.kodilla.ecommercee.entity.User;
 import com.kodilla.ecommercee.entity.UserOrder;
 import com.kodilla.ecommercee.exception.EntityNotFoundException;
 import com.kodilla.ecommercee.repository.CartRepository;
@@ -52,15 +53,13 @@ public class CartService {
     }
 
     public Item getItem(Long itemId) {
-        return itemRepository.getOne(itemId);
+        return itemRepository.findById(itemId).orElseThrow(()->
+                new EntityNotFoundException("Cart with id "+ itemId + " was not found."));
     }
 
     public void addItem(Item item) {
-        if(item.getCart().getId().equals(null) || item.getProduct().getId().equals(null)){
-            throw new EntityNotFoundException("Item with assignments to cart or product was not found");
-        } else {
-            itemRepository.save(item);
-        }
+        item.setPrice(item.getQuantity() * item.getProduct().getPrice());
+        itemRepository.save(item);
     }
 
     public void deleteItem(Long itemId) {
@@ -68,11 +67,11 @@ public class CartService {
     }
 
     public UserOrder createAnOrder(OrderDto orderDto) {
-        return orderRepository.save(new UserOrder(userRepository
-                .findById(orderDto.getUser().getId()).orElseThrow(()->
-                        new EntityNotFoundException("User with id "+ orderDto.getUser().getId() + " was not found.")),
-                cartRepository.findById(orderDto.getCartDto().getId()).orElseThrow(()->
-                        new EntityNotFoundException("Cart with id "+ orderDto.getCartDto().getId() + " was not found."))));
+        User user = userRepository.findById(orderDto.getUserId()).orElseThrow(()->
+                        new EntityNotFoundException("User with id "+ orderDto.getUserId() + " was not found."));
+        Cart cart = cartRepository.findById(orderDto.getCartDto().getId()).orElseThrow(()->
+                new EntityNotFoundException("Cart with id "+ orderDto.getCartDto().getId() + " was not found."));
+        return orderRepository.save(new UserOrder(user,cart));
     }
 
 }

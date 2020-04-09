@@ -51,7 +51,7 @@ public class CartController {
         return mapper.mapToItemDto(service.getItem(itemId));
     }
 
-    @PostMapping(path ="/newItem", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path ="/item", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void addItem(@RequestBody ItemDto itemDto){
         service.addItem(mapper.mapToItem(itemDto));
     }

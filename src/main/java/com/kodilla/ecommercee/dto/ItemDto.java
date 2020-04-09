@@ -2,22 +2,21 @@ package com.kodilla.ecommercee.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @AllArgsConstructor
-@RequiredArgsConstructor
 public class ItemDto {
 
     private Long id;
-    @NonNull
-    private CartDto cartId;
 
-    @NonNull
-    private ProductDto productId;
+    private Long carId;
+
+    private Long productId;
 
     private double quantity;
 
     private double price;
+
 }
