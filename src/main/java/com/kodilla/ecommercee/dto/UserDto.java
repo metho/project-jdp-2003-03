@@ -1,12 +1,9 @@
 package com.kodilla.ecommercee.dto;
 
-import com.kodilla.ecommercee.entity.UserOrder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -18,7 +15,6 @@ public class UserDto {
     private String password;
     private boolean blocked;
     private String address;
-    private List<UserOrder> userOrders;
 
     public UserDto(String name, String password, boolean blocked, String address) {
         this.name = name;

@@ -40,4 +40,12 @@ public class User {
         this.address = address;
     }
 
+    public User(Long id, String name, String password, boolean blocked, String address) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.blocked = blocked;
+        this.address = address;
+    }
+
 }

@@ -16,8 +16,7 @@ public class UserMapper {
                 userDto.getName(),
                 userDto.getPassword(),
                 userDto.isBlocked(),
-                userDto.getAddress(),
-                userDto.getUserOrders());
+                userDto.getAddress());
     }
 
     public UserDto toUserDto(final User user) {
@@ -26,13 +25,12 @@ public class UserMapper {
                 user.getName(),
                 user.getPassword(),
                 user.isBlocked(),
-                user.getAddress(),
-                user.getUserOrders());
+                user.getAddress());
     }
 
     public List<UserDto> toUserDtoList(List<User> users) {
         return users.stream()
-                .map(user -> new UserDto(user.getId(), user.getName(), user.getPassword(), user.isBlocked(), user.getAddress(), user.getUserOrders()))
+                .map(user -> new UserDto(user.getId(), user.getName(), user.getPassword(), user.isBlocked(), user.getAddress()))
                 .collect(Collectors.toList());
     }
 
