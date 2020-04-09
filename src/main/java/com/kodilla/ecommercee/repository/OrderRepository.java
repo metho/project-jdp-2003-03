@@ -17,7 +17,7 @@ public interface OrderRepository extends JpaRepository<UserOrder, Long> {
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE UserOrder set mailSent=:value where id=:id", nativeQuery = true)
-    void setMailSent(@Param("id") Long Id, @Param("value") boolean value);
+    @Query(value = "UPDATE UserOrder SET mailSent = :value WHERE id = :id")
+    void setMailSent(@Param("id") Long id, @Param("value") boolean value);
 
 }

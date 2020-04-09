@@ -146,12 +146,20 @@ public class UserOrderRepositoryTest {
     public void testMailSent() {
         //Given
         User user1 = new User("Jack", "None", false, "None");
+        User user2 = new User("Jack", "None", false, "None");
         Cart cart1 = new Cart();
+        Cart cart2 = new Cart();
         UserOrder userOrder1 = new UserOrder(LocalDate.now(), false, user1, cart1, false);
+        UserOrder userOrder2 = new UserOrder(LocalDate.now(), false, user2, cart2, false);
         userRepository.save(user1);
+        userRepository.save(user2);
         cartRepository.save(cart1);
+        cartRepository.save(cart2);
         orderRepository.save(userOrder1);
+        orderRepository.save(userOrder2);
         //When
+
+        orderRepository.setMailSent(userOrder1.getId(), true);
         List<UserOrder> theList = orderRepository.findByMailSentFalse();
         int count = theList.size();
         //Then
