@@ -1,32 +1,39 @@
 package com.kodilla.ecommercee.service;
 
-import com.kodilla.ecommercee.entity.Product;
-import com.kodilla.ecommercee.entity.UserOrder;
 import com.kodilla.ecommercee.entity.Cart;
+import com.kodilla.ecommercee.exception.EntityNotFoundException;
 import com.kodilla.ecommercee.repository.CartRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class CartService {
 
+    @Autowired
     private CartRepository cartRepository;
 
-
-    public Cart createCart(Cart cart) {
-        return new Cart();
+    public Cart createCart() {
+        return cartRepository.save(new Cart());
     }
 
-    public Product getProductFromCart(Cart cart) {
-        return new Product();
+    public Cart saveCart(Cart cart) {
+        if (!cartRepository.existsById(cart.getId())) {
+            throw new EntityNotFoundException("Cart with id " + cart.getId() + " was not found");
+        } else {
+            return cartRepository.save(cart);
+        }
     }
 
-    public Cart addProductToCart(Product product) {
-        return new Cart();
+    public Cart getCart(Long cartId) {
+        return cartRepository.findById(cartId).orElseThrow(() ->
+                new EntityNotFoundException("Cart with id " + cartId + " was not found."));
     }
 
-    public void deleteProductFromCart(Product product) {}
-
-    public UserOrder createAnOrder(Cart cart) {
-        return new UserOrder();
+    public void deleteCart(Long cartId) {
+        cartRepository.findById(cartId).orElseThrow(() ->
+                new EntityNotFoundException("Cart with id " + cartId + " was not found."));
+        cartRepository.deleteById(cartId);
     }
+
 }

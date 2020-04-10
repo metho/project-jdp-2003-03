@@ -1,6 +1,6 @@
 package com.kodilla.ecommercee.entity;
 
-import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,37 +11,27 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class Cart {
 
     @Id
     @GeneratedValue
+    @EqualsAndHashCode.Include
     private Long id;
 
     @OneToMany(mappedBy = "cart")
     private List<Item> items = new ArrayList<>();
-
     private boolean closed = false;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null) return false;
-        if (!(o instanceof Cart)) return false;
-        Cart cart = (Cart) o;
-        return closed == cart.closed &&
-                Objects.equals(id, cart.id);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, closed);
+    public Cart(Long id, List<Item> items, boolean closed) {
+        this.id = id;
+        this.items = items;
+        this.closed = closed;
     }
 }

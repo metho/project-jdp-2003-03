@@ -149,8 +149,8 @@ public class UserOrderRepositoryTest {
         User user2 = new User("Jack", "None", false, "None");
         Cart cart1 = new Cart();
         Cart cart2 = new Cart();
-        UserOrder userOrder1 = new UserOrder(LocalDate.now(), false, user1, cart1, false);
-        UserOrder userOrder2 = new UserOrder(LocalDate.now(), false, user2, cart2, false);
+        UserOrder userOrder1 = new UserOrder(LocalDate.now(), false, false, user1, cart1);
+        UserOrder userOrder2 = new UserOrder(LocalDate.now(), false, false, user2, cart2);
         userRepository.save(user1);
         userRepository.save(user2);
         cartRepository.save(cart1);
