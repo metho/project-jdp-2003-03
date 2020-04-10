@@ -1,16 +1,20 @@
 package com.kodilla.ecommercee.entity;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
-
 
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class Cart {
@@ -20,12 +24,14 @@ public class Cart {
     @EqualsAndHashCode.Include
     private Long id;
 
-    @NonNull
     @OneToMany(mappedBy = "cart")
     private List<Item> items = new ArrayList<>();
-    @NonNull
     private boolean closed = false;
 
 
-
+    public Cart(Long id, List<Item> items, boolean closed) {
+        this.id = id;
+        this.items = items;
+        this.closed = closed;
+    }
 }

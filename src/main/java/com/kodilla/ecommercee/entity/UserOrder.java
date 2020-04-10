@@ -5,35 +5,48 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @RequiredArgsConstructor
 @Entity
 public class UserOrder {
 
     @Id
     @GeneratedValue
-    @EqualsAndHashCode.Include
-    private Long Id;
+    private Long id;
 
-    private LocalDate orderMade;
+    private LocalDate orderMade = LocalDate.now();
 
     private boolean resolved;
 
-    private boolean mailSend;
-
     @NonNull
-    @ManyToOne
-    @JoinColumn(name = "user_ID")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn
     private User user;
 
     @NonNull
     @OneToOne(fetch = FetchType.EAGER)
     @MapsId
     private Cart cart;
+
+    private boolean mailSent;
+
+    public UserOrder(LocalDate orderMade, boolean resolved, boolean mailSent, User user, Cart cart) {
+        this.orderMade = orderMade;
+        this.resolved = resolved;
+        this.mailSent = mailSent;
+        this.user = user;
+        this.cart = cart;
+    }
+
+    public UserOrder(Long id, LocalDate orderMade, boolean resolved, boolean mailSent, User user, Cart cart) {
+        this.id = id;
+        this.orderMade = orderMade;
+        this.resolved = resolved;
+        this.mailSent = mailSent;
+        this.user = user;
+        this.cart = cart;
+    }
 }

@@ -21,27 +21,28 @@ public class CartMapper {
     ProductMapper productMapper;
 
     public Cart mapToCart(CartDto cartDto) {
-        return new Cart(cartDto.getId(),mapToItemList(cartDto.getItems()),cartDto.isClosed());
+        return new Cart(cartDto.getId(), mapToItemList(cartDto.getItems()), cartDto.isClosed());
     }
 
     public CartDto mapToCartDto(Cart cart) {
-        return new CartDto(cart.getId(),mapToItemDtoList(cart.getItems()),cart.isClosed());
+        return new CartDto(cart.getId(), mapToItemDtoList(cart.getItems()), cart.isClosed());
     }
 
-    public ItemDto mapToItemDto(Item item){
-        return new ItemDto(mapToCartDto(item.getCart()),productMapper.mapToProductDto(item.getProduct()));
-    }
-    public Item mapToItem(ItemDto itemDto){
-        return new Item(mapToCart(itemDto.getCartId()),productMapper.mapToProduct(itemDto.getProductId()),itemDto.getQuantity(),itemDto.getPrice());
+    public ItemDto mapToItemDto(Item item) {
+        return new ItemDto(mapToCartDto(item.getCart()), productMapper.mapToProductDto(item.getProduct()));
     }
 
-    public List<ItemDto> mapToItemDtoList(List<Item> items){
-        return  items.stream().map(this::mapToItemDto)
+    public Item mapToItem(ItemDto itemDto) {
+        return new Item(mapToCart(itemDto.getCartId()), productMapper.mapToProduct(itemDto.getProductId()), itemDto.getQuantity(), itemDto.getPrice());
+    }
+
+    public List<ItemDto> mapToItemDtoList(List<Item> items) {
+        return items.stream().map(this::mapToItemDto)
                 .collect(Collectors.toList());
     }
 
-    public List<Item> mapToItemList(List<ItemDto> items){
-        return  items.stream().map(this::mapToItem)
+    public List<Item> mapToItemList(List<ItemDto> items) {
+        return items.stream().map(this::mapToItem)
                 .collect(Collectors.toList());
     }
 

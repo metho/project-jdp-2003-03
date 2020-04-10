@@ -1,8 +1,10 @@
 package com.kodilla.ecommercee.mapper;
-import com.kodilla.ecommercee.entity.UserOrder;
+
 import com.kodilla.ecommercee.dto.OrderDto;
+import com.kodilla.ecommercee.entity.UserOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,15 +18,15 @@ public class OrderMapper {
     private UserMapper userMapper;
 
     public UserOrder mapToOrder(OrderDto orderDto) {
-        return new UserOrder(orderDto.getId(),orderDto.getOrderMade(),orderDto.isResolved(),orderDto.isMailSend(),userMapper.toUser(orderDto.getUser()),cartMapper.mapToCart(orderDto.getCartDto()));
+        return new UserOrder(orderDto.getId(), orderDto.getOrderMade(), orderDto.isResolved(), orderDto.isMailSent(), userMapper.toUser(orderDto.getUser()), cartMapper.mapToCart(orderDto.getCartDto()));
     }
 
     public OrderDto mapToOrderDto(UserOrder order) {
-        return new OrderDto(order.getId(),order.getOrderMade(),order.isResolved(),order.isMailSend(),userMapper.toUserDto(order.getUser()),cartMapper.mapToCartDto(order.getCart()));
+        return new OrderDto(order.getId(), order.getOrderMade(), order.isResolved(), order.isMailSent(), userMapper.toUserDto(order.getUser()), cartMapper.mapToCartDto(order.getCart()));
     }
 
-    public List<OrderDto> mapToOrderList(List<UserOrder> orders){
-      return  orders.stream().map(this::mapToOrderDto)
-               .collect(Collectors.toList());
+    public List<OrderDto> mapToOrderList(List<UserOrder> orders) {
+        return orders.stream().map(this::mapToOrderDto)
+                .collect(Collectors.toList());
     }
 }

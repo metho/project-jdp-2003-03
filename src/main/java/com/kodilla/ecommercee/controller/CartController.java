@@ -8,7 +8,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 
-
 @RestController
 @RequestMapping("/v1/cart")
 public class CartController {
@@ -19,8 +18,8 @@ public class CartController {
     @Autowired
     CartMapper mapper;
 
-    @PostMapping(path ="/newCart")
-    public CartDto createCart(){
+    @PostMapping(path = "/newCart")
+    public CartDto createCart() {
         return mapper.mapToCartDto(service.createCart());
     }
 
@@ -38,7 +37,6 @@ public class CartController {
     public void deleteCart(@PathVariable Long cartId) {
         service.deleteCart(cartId);
     }
-
 
 
 }

@@ -1,8 +1,6 @@
 package com.kodilla.ecommercee.entity;
 
 import com.kodilla.ecommercee.repository.CartRepository;
-import static org.junit.Assert.*;
-
 import com.kodilla.ecommercee.repository.ItemRepository;
 import com.kodilla.ecommercee.repository.ProductGroupRepository;
 import com.kodilla.ecommercee.repository.ProductRepository;
@@ -18,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -60,8 +60,8 @@ public class CartRepositoryTest {
         newList.add(cart);
 
         // Then
-        assertEquals(3,cartRepository.count());
-        assertEquals(1,newList.size());
+        assertEquals(3, cartRepository.count());
+        assertEquals(1, newList.size());
 
         // Clean
         cartRepository.deleteById(cartA.getId());
