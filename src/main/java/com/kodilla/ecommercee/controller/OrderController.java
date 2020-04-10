@@ -2,8 +2,6 @@ package com.kodilla.ecommercee.controller;
 
 import com.kodilla.ecommercee.dto.OrderDto;
 import com.kodilla.ecommercee.entity.UserOrder;
-import com.kodilla.ecommercee.exception.OrderNotFoundException;
-import com.kodilla.ecommercee.exception.OrderAlreadyResolved;
 import com.kodilla.ecommercee.mapper.OrderMapper;
 import com.kodilla.ecommercee.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,17 +28,17 @@ public class OrderController {
 
 
     @GetMapping("/{orderId}")
-    public OrderDto getOrder(@PathVariable Long orderId) throws OrderNotFoundException {
+    public OrderDto getOrder(@PathVariable Long orderId) {
         return orderMapper.mapToOrderDto(service.getOrder(orderId));
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public OrderDto updateOrder(UserOrder order) throws OrderNotFoundException {
+    public OrderDto updateOrder(UserOrder order) {
         return orderMapper.mapToOrderDto(service.saveOrder(service.getOrder(order.getId())));
     }
 
     @DeleteMapping("/{orderId}")
-    public void deleteOrder(@PathVariable Long orderId) throws OrderAlreadyResolved {
+    public void deleteOrder(@PathVariable Long orderId){
         service.deleteOrder(orderId);
     }
 }

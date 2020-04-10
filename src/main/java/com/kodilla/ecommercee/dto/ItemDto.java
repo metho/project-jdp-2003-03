@@ -11,7 +11,7 @@ public class ItemDto {
 
     private Long id;
 
-    private Long carId;
+    private Long cartId;
 
     private Long productId;
 

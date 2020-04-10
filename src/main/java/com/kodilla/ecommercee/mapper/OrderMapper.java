@@ -1,4 +1,5 @@
 package com.kodilla.ecommercee.mapper;
+import com.kodilla.ecommercee.entity.User;
 import com.kodilla.ecommercee.entity.UserOrder;
 import com.kodilla.ecommercee.dto.OrderDto;
 import com.kodilla.ecommercee.exception.EntityNotFoundException;
@@ -18,10 +19,10 @@ public class OrderMapper {
     private UserRepository userRepository;
 
     public UserOrder mapToOrder(OrderDto orderDto) {
+        User user = userRepository.findById(orderDto.getUserId()).orElseThrow(()->
+                new EntityNotFoundException("Order with id "+ orderDto.getUserId() + " was not found."));
         return new UserOrder(orderDto.getId(),orderDto.getOrderMade(),orderDto.isResolved(),
-                orderDto.isMailSend(), (userRepository.findById(orderDto.getUserId()).orElseThrow(()->
-                new EntityNotFoundException("Order with id "+ orderDto.getUserId() + " was not found."))),
-        cartMapper.mapToCart(orderDto.getCartDto()));
+                orderDto.isMailSend(), user, cartMapper.mapToCart(orderDto.getCartDto()));
     }
 
     public OrderDto mapToOrderDto(UserOrder order) {
