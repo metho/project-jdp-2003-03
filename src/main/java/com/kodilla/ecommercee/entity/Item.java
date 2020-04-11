@@ -1,20 +1,21 @@
 package com.kodilla.ecommercee.entity;
 
 import lombok.*;
+import org.springframework.beans.factory.annotation.Required;
 
 import javax.persistence.*;
 import java.util.Objects;
 
 @Getter
 @Setter
+@RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
-
 @Entity
 public class Item {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne
@@ -27,7 +28,7 @@ public class Item {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-
+    @NonNull
     @Column(nullable = false)
     private double quantity;
 

@@ -16,15 +16,15 @@ import java.util.List;
 public class Cart {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @EqualsAndHashCode.Include
     private Long id;
 
     @NonNull
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.MERGE)
     @JoinColumn(name = "cart_id")
     private List<Item> items = new ArrayList<>();
-    @NonNull
+
     private boolean closed = false;
 
 
