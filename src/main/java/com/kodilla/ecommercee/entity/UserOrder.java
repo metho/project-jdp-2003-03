@@ -17,7 +17,6 @@ import java.time.LocalDate;
 public class UserOrder {
 
     @Id
-    @GeneratedValue
     @EqualsAndHashCode.Include
     private Long Id;
 
@@ -33,7 +32,8 @@ public class UserOrder {
     private User user;
 
     @NonNull
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id")
     @MapsId
     private Cart cart;
 }

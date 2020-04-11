@@ -50,7 +50,7 @@ public class CartController {
     public ItemDto getItem(@PathVariable Long itemId) {
         return mapper.mapToItemDto(service.getItem(itemId));
     }
-    @PutMapping(path ="/updateItem", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(path = "/item", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ItemDto updateItem(@RequestBody ItemDto itemDto) {
         return mapper.mapToItemDto(service.saveItem(mapper.mapToItem(itemDto)));
     }
@@ -66,7 +66,7 @@ public class CartController {
     }
 
     @PostMapping(path ="/newOrder", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public OrderDto createAnOrder(OrderDto orderDto) {
+    public OrderDto createAnOrder(@RequestBody OrderDto orderDto) {
         return orderMapper.mapToOrderDto(service.createAnOrder(orderDto));
     }
 

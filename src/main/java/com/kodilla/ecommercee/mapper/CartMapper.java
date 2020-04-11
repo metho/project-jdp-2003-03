@@ -34,9 +34,9 @@ public class CartMapper {
     }
 
     public ItemDto mapToItemDto(Item item){
-        return new ItemDto(item.getId(), item.getId(),item.getProduct().getId(), item.getQuantity(), item.getPrice());
-
+        return new ItemDto(item.getId(), item.getCart().getId(), item.getProduct().getId(), item.getQuantity(), item.getPrice());
     }
+
     public Item mapToItem(ItemDto itemDto){
         Cart cart = cartRepository.findById(itemDto.getCartId()).orElseThrow(()->
                 new EntityNotFoundException("Item with id "+ itemDto.getCartId() + " was not found."));

@@ -21,7 +21,8 @@ public class Cart {
     private Long id;
 
     @NonNull
-    @OneToMany(mappedBy = "cart")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "cart_id")
     private List<Item> items = new ArrayList<>();
     @NonNull
     private boolean closed = false;

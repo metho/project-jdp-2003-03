@@ -61,7 +61,8 @@ public class CartService {
         if (!itemRepository.existsById(item.getId())) {
             throw new EntityNotFoundException("Item with id " +item.getId()+ " was not found");
         } else {
-            return itemRepository.save(item);
+            addItem(item);
+            return item;
         }
     }
 
