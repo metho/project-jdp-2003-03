@@ -21,7 +21,7 @@ public class Cart {
     private Long id;
 
     @NonNull
-    @OneToMany(cascade = CascadeType.MERGE)
+    @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "cart_id")
     private List<Item> items = new ArrayList<>();
 

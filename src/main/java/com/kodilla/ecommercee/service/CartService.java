@@ -54,7 +54,7 @@ public class CartService {
 
     public Item getItem(Long itemId) {
         return itemRepository.findById(itemId).orElseThrow(()->
-                new EntityNotFoundException("Cart with id "+ itemId + " was not found."));
+                new EntityNotFoundException("Item with id "+ itemId + " was not found."));
     }
 
     public Item saveItem(Item item){
@@ -72,6 +72,9 @@ public class CartService {
     }
 
     public void deleteItem(Long itemId) {
+        if (!itemRepository.existsById(itemId)) {
+            throw new EntityNotFoundException("Item with id " + itemId + " was not found");
+        }
         itemRepository.deleteById(itemId);
     }
 

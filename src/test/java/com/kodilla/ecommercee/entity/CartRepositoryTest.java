@@ -162,6 +162,6 @@ public class CartRepositoryTest {
         itemRepository.deleteById(itemC.getId());
         productRepository.deleteById(product.getId());
         groupRepository.deleteById(group.getId());
-        cartRepository.deleteById(cart.getId());
+
     }
 }
