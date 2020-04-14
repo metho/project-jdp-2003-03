@@ -33,8 +33,8 @@ public class OrderController {
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public OrderDto updateOrder(UserOrder order) {
-        return orderMapper.mapToOrderDto(service.saveOrder(service.getOrder(order.getId())));
+    public OrderDto updateOrder(@RequestBody OrderDto orderDto) {
+        return orderMapper.mapToOrderDto(service.saveOrder(service.getOrder(orderDto.getId())));
     }
 
     @DeleteMapping("/{orderId}")

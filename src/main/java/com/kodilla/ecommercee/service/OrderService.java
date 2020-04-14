@@ -31,13 +31,12 @@ public class OrderService {
     }
 
     public void deleteOrder(Long orderId) {
-        if(orderRepository.existsById(orderId)) {
-            if (!orderRepository.getOne(orderId).isResolved()) {
+        if(!orderRepository.existsById(orderId)) { throw
+                new OrderResolved("Order with id "+ orderId + " was not found.");}
+        if (!orderRepository.getOne(orderId).isResolved()) {
                 orderRepository.deleteById(orderId);
             } else {
-                throw new OrderResolved("Order with id "+ orderId + " was resolved.");
-            }
+            throw new OrderResolved("Order with id "+ orderId + " was resolved and can't be deleted.");
         }
-
     }
 }

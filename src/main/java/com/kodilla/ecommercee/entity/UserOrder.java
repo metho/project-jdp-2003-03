@@ -20,7 +20,7 @@ public class UserOrder {
     @EqualsAndHashCode.Include
     private Long Id;
 
-    private LocalDate orderMade;
+    private LocalDate orderMade = LocalDate.now();
 
     private boolean resolved;
 

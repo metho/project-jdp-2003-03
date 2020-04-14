@@ -25,7 +25,7 @@ public class Cart {
     @JoinColumn(name = "cart_id")
     private List<Item> items = new ArrayList<>();
 
-    private boolean closed = false;
+    private boolean closed = true;
 
 
 
