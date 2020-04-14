@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 @Component
 public class ProductMapper {
 
-    public Product mapToProduct (final ProductDto productDto) {
+    public Product mapToProduct(final ProductDto productDto) {
         return new Product(
                 productDto.getId(),
                 productDto.getName(),
@@ -22,7 +22,7 @@ public class ProductMapper {
                 productDto.getYear());
     }
 
-    public ProductDto mapToProductDto (final Product product) {
+    public ProductDto mapToProductDto(final Product product) {
         return new ProductDto(
                 product.getId(),
                 product.getName(),

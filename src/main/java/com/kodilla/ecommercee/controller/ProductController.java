@@ -5,6 +5,7 @@ import com.kodilla.ecommercee.entity.Product;
 import com.kodilla.ecommercee.exception.ProductNotFoundException;
 import com.kodilla.ecommercee.mapper.ProductMapper;
 import com.kodilla.ecommercee.service.ProductService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,13 +15,12 @@ import java.util.List;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping("/v1/products")
+@RequiredArgsConstructor
+@RequestMapping("/v1/product")
 public class ProductController {
 
-    @Autowired
-    ProductMapper productMapper;
-    @Autowired
-    ProductService productService;
+    private final ProductMapper productMapper;
+    private final ProductService productService;
 
     @GetMapping
     public List<ProductDto> getProducts() {
@@ -28,8 +28,13 @@ public class ProductController {
     }
 
     @RequestMapping(method = RequestMethod.GET,  value = "/{productId}")
-    public ProductDto getProduct(@PathVariable Long productId) throws ProductNotFoundException {
-        return productMapper.mapToProductDto(productService.getProduct(productId).orElseThrow(ProductNotFoundException::new));
+    public ProductDto getProduct(@PathVariable Long productId) {
+        return productMapper.mapToProductDto(productService.getProduct(productId));
+    }
+
+    @GetMapping(value = "/{productName}")
+    public ProductDto getProduct(@PathVariable String productName) {
+        return productMapper.mapToProductDto(productService.getProduct(productName));
     }
 
     @PostMapping
@@ -39,12 +44,11 @@ public class ProductController {
 
     @PutMapping
     public ProductDto updateProduct(ProductDto productDto) {
-        return productMapper.mapToProductDto(productService.saveProduct(productMapper.mapToProduct(productDto)));
+        return productMapper.mapToProductDto(productService.updateProduct(productMapper.mapToProduct(productDto)));
     }
 
     @DeleteMapping
-    public void deleteProduct(Long productId) throws ProductNotFoundException {
+    public void deleteProduct(Long productId) {
         productService.deleteProduct(productId);
-
     }
 }
