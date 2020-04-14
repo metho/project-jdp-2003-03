@@ -20,13 +20,13 @@ public class ProductGroupService {
     private static final String TECHNICAL_GROUP = "Unbound";
 
     @Autowired
-    ProductGroupRepository groupRepository;
+    private ProductGroupRepository groupRepository;
 
     @Autowired
-    ProductRepository productRepository;
+    private ProductRepository productRepository;
 
     @Autowired
-    ProductGroupMapper groupMapper;
+    private ProductGroupMapper groupMapper;
 
     public List<ProductGroupDto> getGroups() {
         return groupMapper.mapToGroupDtoList(groupRepository.findAll());

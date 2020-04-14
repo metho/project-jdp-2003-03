@@ -13,7 +13,7 @@ import java.util.List;
 public class GroupController {
 
     @Autowired
-    ProductGroupService service;
+    private ProductGroupService service;
 
     @GetMapping
     public List<ProductGroupDto> getGroups() {
