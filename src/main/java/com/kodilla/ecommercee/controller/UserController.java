@@ -1,7 +1,6 @@
 package com.kodilla.ecommercee.controller;
 
 import com.kodilla.ecommercee.dto.UserDto;
-import com.kodilla.ecommercee.exception.UserNotFoundException;
 import com.kodilla.ecommercee.mapper.UserMapper;
 import com.kodilla.ecommercee.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -28,9 +27,9 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public UserDto getUser(@PathVariable Long id) throws UserNotFoundException {
+    public UserDto getUser(@PathVariable Long id) {
         log.info("Get user by ID = " + id);
-        return userMapper.toUserDto(userService.getUser(id).orElseThrow(UserNotFoundException::new));
+        return userMapper.toUserDto(userService.getUser(id));
     }
 
     @PostMapping
