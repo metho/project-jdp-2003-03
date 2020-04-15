@@ -35,20 +35,20 @@ public class CartService {
 
     public Cart saveCart(Cart cart) {
         if (!cartRepository.existsById(cart.getId())) {
-            throw new EntityNotFoundException("Cart with id " +cart.getId()+ " was not found");
+            throw new EntityNotFoundException("Cart with id " + cart.getId() + " was not found");
         } else {
             return cartRepository.save(cart);
         }
     }
 
     public Cart getCart(Long cartId) {
-        return cartRepository.findById(cartId).orElseThrow(()->
-                new EntityNotFoundException("Cart with id "+ cartId + " was not found."));
+        return cartRepository.findById(cartId).orElseThrow(() ->
+                new EntityNotFoundException("Cart with id " + cartId + " was not found."));
     }
 
     public void deleteCart(Long cartId) {
-        cartRepository.findById(cartId).orElseThrow(()->
-                new EntityNotFoundException("Cart with id "+ cartId + " was not found."));
+        cartRepository.findById(cartId).orElseThrow(() ->
+                new EntityNotFoundException("Cart with id " + cartId + " was not found."));
         cartRepository.deleteById(cartId);
     }
 

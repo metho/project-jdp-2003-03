@@ -33,7 +33,7 @@ public class Product {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "product_group_id", nullable = false)
+    @JoinColumn
     private ProductGroup productGroup;
 
     @OneToMany(mappedBy = "product")
@@ -42,7 +42,7 @@ public class Product {
     public Product(String name, double price, ProductGroup productGroup) {
         this.name = name;
         this.price = price;
-        this.productGroup=productGroup;
+        this.productGroup = productGroup;
     }
 
     @Override

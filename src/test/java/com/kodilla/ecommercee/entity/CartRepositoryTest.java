@@ -1,8 +1,6 @@
 package com.kodilla.ecommercee.entity;
 
 import com.kodilla.ecommercee.repository.CartRepository;
-import static org.junit.Assert.*;
-
 import com.kodilla.ecommercee.repository.ItemRepository;
 import com.kodilla.ecommercee.repository.ProductGroupRepository;
 import com.kodilla.ecommercee.repository.ProductRepository;
@@ -18,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -60,8 +60,8 @@ public class CartRepositoryTest {
         newList.add(cart);
 
         // Then
-        assertEquals(3,cartRepository.count());
-        assertEquals(1,newList.size());
+        assertEquals(3, cartRepository.count());
+        assertEquals(1, newList.size());
 
         // Clean
         cartRepository.deleteById(cartA.getId());
@@ -128,9 +128,9 @@ public class CartRepositoryTest {
         Cart cart = new Cart();
         ProductGroup group = new ProductGroup("Empty");
         Product product = new Product("AAA", 2.0, group);
-        Item itemA = new Item(cart, product, 2.0);
-        Item itemB = new Item(cart, product, 1.0);
-        Item itemC = new Item(cart, product, 0.5);
+        Item itemA = new Item(cart, product, 2.0,3.0);
+        Item itemB = new Item(cart, product, 1.0,9.0);
+        Item itemC = new Item(cart, product, 0.5, 7.8);
         cart.getItems().addAll(Arrays.asList(itemA, itemB, itemC));
         product.getItems().addAll(Arrays.asList(itemA, itemB, itemC));
         group.getProducts().add(product);

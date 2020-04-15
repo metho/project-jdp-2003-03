@@ -9,7 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -23,11 +24,11 @@ public class ProductRepositoryTest {
 
 
     @Test
-    public void shouldCreate(){
+    public void shouldCreate() {
         //Given
         ProductGroup productGroup = new ProductGroup("Laptops");
         Product productOne = new Product("AAA", 2.0, productGroup);
-        Product productTwo = new Product("BBB", 3.45,productGroup);
+        Product productTwo = new Product("BBB", 3.45, productGroup);
         productGroupRepository.save(productGroup);
         productRepository.save(productOne);
         productRepository.save(productTwo);
@@ -45,11 +46,11 @@ public class ProductRepositoryTest {
     }
 
     @Test
-    public void shouldRetrive(){
-       //Given
+    public void shouldRetrive() {
+        //Given
         ProductGroup productGroup = new ProductGroup("Laptops");
         Product productOne = new Product("AAA", 2.0, productGroup);
-        Product productTwo = new Product("BBB", 3.45,productGroup);
+        Product productTwo = new Product("BBB", 3.45, productGroup);
         productGroupRepository.save(productGroup);
         productRepository.save(productOne);
         productRepository.save(productTwo);
@@ -59,7 +60,7 @@ public class ProductRepositoryTest {
         String outcome = productRepository.findById(productOneId).get().getProductGroup().getName();
 
         //Than
-        assertEquals("Laptops",outcome);
+        assertEquals("Laptops", outcome);
 
         //Clean
         productRepository.deleteById(productOne.getId());
@@ -79,13 +80,13 @@ public class ProductRepositoryTest {
         Long productOneId = productOne.getId();
 
         //When
-        Product productChange =productRepository.findById(productOneId).get();
+        Product productChange = productRepository.findById(productOneId).get();
         productChange.setProductGroup(productGroupTwo);
         productRepository.save(productChange);
         String outcome = productRepository.findById(productOneId).get().getProductGroup().getName();
 
         //Than
-        assertEquals("Clothes",outcome);
+        assertEquals("Clothes", outcome);
 
         //Clean
         productRepository.deleteById(productOne.getId());

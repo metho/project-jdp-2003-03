@@ -27,7 +27,6 @@ public class UserRepositoryTest {
         repository.save(use3);
         //Then
         Assert.assertEquals(3, repository.findAll().size());
-
         repository.deleteAll();
     }
 

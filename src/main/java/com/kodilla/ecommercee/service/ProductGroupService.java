@@ -68,7 +68,7 @@ public class ProductGroupService {
     private ProductGroup getUnboundGroup() {
         ProductGroup group = groupRepository.findFirstByName(TECHNICAL_GROUP).orElseGet(() -> new ProductGroup(TECHNICAL_GROUP));
         return groupRepository.save(group);
-   }
+    }
 
     private ProductGroup getGroupOrException(Long id) {
         return groupRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(NOT_FOUND));

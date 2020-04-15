@@ -1,14 +1,12 @@
 package com.kodilla.ecommercee.entity;
 
 import lombok.*;
-import org.springframework.beans.factory.annotation.Required;
 
 import javax.persistence.*;
 import java.util.Objects;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -19,22 +17,26 @@ public class Item {
     private Long id;
 
     @ManyToOne
-    @NonNull
-    @JoinColumn(name = "cart_id", nullable = false)
+    @JoinColumn(nullable = false)
     private Cart cart;
 
-    @NonNull
     @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(nullable = false)
     private Product product;
 
-    @NonNull
     @Column(nullable = false)
     private double quantity;
 
 
     @Column(nullable = false)
     private double price;
+
+    public Item(Cart cart, Product product, double quantity, double price) {
+        this.cart = cart;
+        this.product = product;
+        this.quantity = quantity;
+        this.price = price;
+    }
 
 
 

@@ -6,11 +6,9 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class Cart {
@@ -27,5 +25,9 @@ public class Cart {
     private boolean closed;
 
 
-
+    public Cart(Long id, List<Item> items, boolean closed) {
+        this.id = id;
+        this.items = items;
+        this.closed = closed;
+    }
 }

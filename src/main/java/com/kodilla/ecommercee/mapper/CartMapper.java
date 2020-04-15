@@ -45,13 +45,13 @@ public class CartMapper {
         return new Item(itemDto.getId(), cart, product, itemDto.getQuantity(), itemDto.getPrice());
     }
 
-    public List<ItemDto> mapToItemDtoList(List<Item> items){
-        return  items.stream().map(this::mapToItemDto)
+    public List<ItemDto> mapToItemDtoList(List<Item> items) {
+        return items.stream().map(this::mapToItemDto)
                 .collect(Collectors.toList());
     }
 
-    public List<Item> mapToItemList(List<ItemDto> items){
-        return  items.stream().map(this::mapToItem)
+    public List<Item> mapToItemList(List<ItemDto> items) {
+        return items.stream().map(this::mapToItem)
                 .collect(Collectors.toList());
     }
 
