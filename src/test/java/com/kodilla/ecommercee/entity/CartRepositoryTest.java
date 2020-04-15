@@ -128,9 +128,9 @@ public class CartRepositoryTest {
         Cart cart = new Cart();
         ProductGroup group = new ProductGroup("Empty");
         Product product = new Product("AAA", 2.0, group);
-        Item itemA = new Item(cart, product, 2.0, 12.4);
-        Item itemB = new Item(cart, product, 1.0, 10.0);
-        Item itemC = new Item(cart, product, 0.5, 5.0);
+        Item itemA = new Item(cart, product, 2.0,3.0);
+        Item itemB = new Item(cart, product, 1.0,9.0);
+        Item itemC = new Item(cart, product, 0.5, 7.8);
         cart.getItems().addAll(Arrays.asList(itemA, itemB, itemC));
         product.getItems().addAll(Arrays.asList(itemA, itemB, itemC));
         group.getProducts().add(product);
@@ -162,6 +162,6 @@ public class CartRepositoryTest {
         itemRepository.deleteById(itemC.getId());
         productRepository.deleteById(product.getId());
         groupRepository.deleteById(group.getId());
-        cartRepository.deleteById(cart.getId());
+
     }
 }
