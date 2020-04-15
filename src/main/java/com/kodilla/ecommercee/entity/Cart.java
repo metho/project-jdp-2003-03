@@ -21,11 +21,10 @@ public class Cart {
     private Long id;
 
     @NonNull
-    @OneToMany(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "cart_id")
+    @OneToMany(mappedBy = "cart",cascade = CascadeType.REMOVE)
     private List<Item> items = new ArrayList<>();
 
-    private boolean closed = true;
+    private boolean closed;
 
 
 

@@ -83,6 +83,7 @@ public class CartService {
                         new EntityNotFoundException("User with id "+ orderDto.getUserId() + " was not found."));
         Cart cart = cartRepository.findById(orderDto.getCartDto().getId()).orElseThrow(()->
                 new EntityNotFoundException("Cart with id "+ orderDto.getCartDto().getId() + " was not found."));
+        cart.setClosed(true);
         return orderRepository.save(new UserOrder(user,cart));
     }
 
