@@ -20,7 +20,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public void saveUser(User user) {
+    public User saveUser(User user) {
         if (!Role.exist(user.getAuthority())) {
             String message = String.format(NO_ROLE, user.getAuthority());
             throw new EntityNotFoundException(message);
@@ -31,7 +31,7 @@ public class UserService {
         }
         String hashCode = new BCryptPasswordEncoder().encode(user.getPassword());
         user.setPassword(hashCode);
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     public List<User> getUsers() {

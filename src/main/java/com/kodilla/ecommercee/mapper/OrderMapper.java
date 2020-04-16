@@ -23,13 +23,13 @@ public class OrderMapper {
     public UserOrder mapToOrder(OrderDto orderDto) {
         User user = userRepository.findById(orderDto.getUserId()).orElseThrow(()->
                 new EntityNotFoundException("Order with id "+ orderDto.getUserId() + " was not found."));
-        return new UserOrder(orderDto.getId(),orderDto.getOrderMade(),orderDto.isResolved(),
+        return new UserOrder(orderDto.getId(), orderDto.getOrderMade(), orderDto.isResolved(),
                 orderDto.isMailSend(), user, cartMapper.mapToCart(orderDto.getCartDto()));
     }
 
     public OrderDto mapToOrderDto(UserOrder order) {
-        return new OrderDto(order.getId(),order.getOrderMade(),order.isResolved(),
-                order.isMailSent(),order.getUser().getId(),cartMapper.mapToCartDto(order.getCart()));
+        return new OrderDto(order.getId(), order.getOrderMade(), order.isResolved(),
+                order.isMailSent(), order.getUser().getId(), cartMapper.mapToCartDto(order.getCart()));
     }
 
     public List<OrderDto> mapToOrderList(List<UserOrder> orders) {

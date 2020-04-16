@@ -17,7 +17,7 @@ public class ProductController {
 
     @RequestMapping(method = RequestMethod.GET,  value = "/{productId}")
     public ProductDto getProduct(@PathVariable Long productId) {
-        return new ProductDto();
+        return null;
     }
 
     @PostMapping
@@ -26,7 +26,7 @@ public class ProductController {
 
     @PutMapping
     public ProductDto updateProduct(Long productId) {
-        return new ProductDto();
+        return null;
     }
 
     @DeleteMapping
