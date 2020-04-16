@@ -15,18 +15,22 @@ import java.time.LocalDate;
 public class OrderDto {
 
     private Long id;
+
     private LocalDate orderMade;
     private boolean resolved;
-    private boolean mailSent;
-    private UserDto user;
+
+    private boolean mailSend;
+
+    private Long userId;
+
     private CartDto cartDto;
 
-    public OrderDto(Long id, LocalDate orderMade, boolean resolved, UserDto user, CartDto cartDto, boolean mailSent) {
+    public OrderDto(Long id, LocalDate orderMade, boolean resolved, Long userId, CartDto cartDto, boolean mailSend) {
         this.id = id;
         this.orderMade = orderMade;
         this.resolved = resolved;
-        this.mailSent = mailSent;
-        this.user = user;
+        this.mailSend = mailSend;
+        this.userId = userId;
         this.cartDto = cartDto;
     }
 }

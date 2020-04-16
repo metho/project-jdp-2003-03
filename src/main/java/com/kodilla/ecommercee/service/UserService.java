@@ -10,12 +10,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
     private static final String NO_ROLE = "ERROR: Authority '%s' not found. Only USER and ADMIN are available.";
     private static final String USER_EXIST = "ERROR: User '%s' already exist";
+    private static final String USER_NOT_FOUND = "ERROR: User not found.";
 
     @Autowired
     private UserRepository userRepository;
@@ -38,12 +38,15 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> getUser(Long id) {
-        return userRepository.findById(id);
+    public User getUser(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(USER_NOT_FOUND));
     }
 
     public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+        if (!userRepository.existsById(id)) {
+            throw new EntityNotFoundException(USER_NOT_FOUND);
+        } else {
+            userRepository.deleteById(id);
+        }
     }
-
 }

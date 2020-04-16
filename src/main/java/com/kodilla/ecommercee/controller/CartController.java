@@ -1,7 +1,10 @@
 package com.kodilla.ecommercee.controller;
 
 import com.kodilla.ecommercee.dto.CartDto;
+import com.kodilla.ecommercee.dto.ItemDto;
+import com.kodilla.ecommercee.dto.OrderDto;
 import com.kodilla.ecommercee.mapper.CartMapper;
+import com.kodilla.ecommercee.mapper.OrderMapper;
 import com.kodilla.ecommercee.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -13,10 +16,14 @@ import org.springframework.web.bind.annotation.*;
 public class CartController {
 
     @Autowired
-    CartService service;
+    private CartService service;
 
     @Autowired
-    CartMapper mapper;
+    private CartMapper mapper;
+
+    @Autowired
+    private OrderMapper orderMapper;
+
 
     @PostMapping(path = "/newCart")
     public CartDto createCart() {
@@ -38,5 +45,28 @@ public class CartController {
         service.deleteCart(cartId);
     }
 
+    @GetMapping("/item/{itemId}")
+    public ItemDto getItem(@PathVariable Long itemId) {
+        return mapper.mapToItemDto(service.getItem(itemId));
+    }
+    @PutMapping(path = "/item", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ItemDto updateItem(@RequestBody ItemDto itemDto) {
+        return mapper.mapToItemDto(service.saveItem(mapper.mapToItem(itemDto)));
+    }
+
+    @PostMapping(path ="/item", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void addItem(@RequestBody ItemDto itemDto){
+        service.addItem(mapper.mapToItem(itemDto));
+    }
+
+    @DeleteMapping("/item/{itemId}")
+    public void deleteItem(@PathVariable("itemId") Long itemId){
+        service.deleteItem(itemId);
+    }
+
+    @PostMapping(path ="/newOrder", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public OrderDto createAnOrder(@RequestBody OrderDto orderDto) {
+        return orderMapper.mapToOrderDto(service.createAnOrder(orderDto));
+    }
 
 }

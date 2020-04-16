@@ -1,8 +1,6 @@
 package com.kodilla.ecommercee.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -10,11 +8,12 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Item {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne
@@ -28,6 +27,7 @@ public class Item {
     @Column(nullable = false)
     private double quantity;
 
+
     @Column(nullable = false)
     private double price;
 
@@ -37,6 +37,7 @@ public class Item {
         this.quantity = quantity;
         this.price = price;
     }
+
 
 
     @Override
