@@ -23,14 +23,14 @@ public class OrderDto {
 
     private Long userId;
 
-    private CartDto cartDto;
+    private Long cartId;
 
-    public OrderDto(Long id, LocalDate orderMade, boolean resolved, Long userId, CartDto cartDto, boolean mailSend) {
+    public OrderDto(Long id, LocalDate orderMade, boolean resolved, Long userId, Long cartId, boolean mailSend) {
         this.id = id;
         this.orderMade = orderMade;
         this.resolved = resolved;
         this.mailSend = mailSend;
         this.userId = userId;
-        this.cartDto = cartDto;
+        this.cartId = cartId;
     }
 }
