@@ -1,10 +1,10 @@
 package com.kodilla.ecommercee.service;
 
 import com.kodilla.ecommercee.dto.ProductGroupDto;
-import com.kodilla.ecommercee.entity.Product;
 import com.kodilla.ecommercee.entity.ProductGroup;
 import com.kodilla.ecommercee.exception.EntityAlreadyExistsException;
 import com.kodilla.ecommercee.exception.EntityNotFoundException;
+import com.kodilla.ecommercee.exception.ExceptionType;
 import com.kodilla.ecommercee.mapper.ProductGroupMapper;
 import com.kodilla.ecommercee.repository.ProductGroupRepository;
 import com.kodilla.ecommercee.repository.ProductRepository;
@@ -15,8 +15,6 @@ import java.util.List;
 
 @Service
 public class ProductGroupService {
-    private static final String NOT_FOUND = "ERROR: Group not found.";
-    private static final String GROUP_EXISTS = "ERROR: Group already exists.";
     private static final String TECHNICAL_GROUP = "Unbound";
 
     @Autowired
@@ -38,7 +36,9 @@ public class ProductGroupService {
     }
 
     public void create(ProductGroupDto groupDto) {
-        if (groupRepository.existsByName(groupDto.getName())) throw new EntityAlreadyExistsException(GROUP_EXISTS);
+        if (groupRepository.existsByName(groupDto.getName())) {
+            throw new EntityAlreadyExistsException(ExceptionType.GROUP_FOUND, groupDto.getName());
+        }
         groupRepository.save(groupMapper.mapToGroup(groupDto));
     }
 
@@ -56,13 +56,8 @@ public class ProductGroupService {
 
     private void detachProducts(Long id) {
         ProductGroup group = getGroupOrException(id);
-        if (group.getProducts().size() > 0) {
-            ProductGroup unbound = getUnboundGroup();
-            for (Product product : group.getProducts()) {
-                product.setProductGroup(unbound);
-                productRepository.save(product);
-            }
-        }
+        ProductGroup unbound = getUnboundGroup();
+        productRepository.updateGroupId(unbound, group);
     }
 
     private ProductGroup getUnboundGroup() {
@@ -71,6 +66,7 @@ public class ProductGroupService {
     }
 
     private ProductGroup getGroupOrException(Long id) {
-        return groupRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(NOT_FOUND));
+        return groupRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(ExceptionType.GROUP_NOT_FOUND, id.toString()));
     }
 }

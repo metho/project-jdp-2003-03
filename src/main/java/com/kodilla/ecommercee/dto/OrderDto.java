@@ -5,7 +5,6 @@ import lombok.Getter;
 
 import java.time.LocalDate;
 
-
 @Getter
 @AllArgsConstructor
 public class OrderDto {
@@ -14,5 +13,5 @@ public class OrderDto {
     private boolean resolved;
     private boolean mailSend;
     private Long userId;
-    private CartDto cartDto;
+    private Long cartId;
 }

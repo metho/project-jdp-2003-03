@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @RestController
 @RequestMapping("/v1/order")
 public class OrderController {
@@ -25,7 +24,6 @@ public class OrderController {
         return orderMapper.mapToOrderList(service.getOrders());
     }
 
-
     @GetMapping("/{orderId}")
     public OrderDto getOrder(@PathVariable Long orderId) {
         return orderMapper.mapToOrderDto(service.getOrder(orderId));
@@ -33,7 +31,7 @@ public class OrderController {
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public OrderDto updateOrder(@RequestBody OrderDto orderDto) {
-        return orderMapper.mapToOrderDto(service.saveOrder(service.getOrder(orderDto.getId())));
+        return orderMapper.mapToOrderDto(service.saveOrder(orderMapper.mapToOrder(orderDto)));
     }
 
     @DeleteMapping("/{orderId}")

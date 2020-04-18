@@ -18,7 +18,7 @@ import java.util.Objects;
 @Entity
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotNull
@@ -26,10 +26,15 @@ public class Product {
 
     @NotNull
     private double price;
+
     private String brand;
+
     private String model;
+
     private int year;
+
     private String origin;
+
     private String description;
 
     @ManyToOne

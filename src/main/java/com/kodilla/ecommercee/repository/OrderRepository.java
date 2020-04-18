@@ -14,10 +14,10 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<UserOrder, Long> {
 
     List<UserOrder> findByMailSentFalse();
+    boolean existsByUser_Id(Long id);
 
     @Transactional
     @Modifying
     @Query(value = "UPDATE UserOrder SET mailSent = :value WHERE id = :id")
     void setMailSent(@Param("id") Long id, @Param("value") boolean value);
-
 }

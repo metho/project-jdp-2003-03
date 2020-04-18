@@ -1,6 +1,9 @@
 package com.kodilla.ecommercee.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -27,7 +30,6 @@ public class Item {
     @Column(nullable = false)
     private double quantity;
 
-
     @Column(nullable = false)
     private double price;
 
@@ -37,8 +39,6 @@ public class Item {
         this.quantity = quantity;
         this.price = price;
     }
-
-
 
     @Override
     public boolean equals(Object o) {
