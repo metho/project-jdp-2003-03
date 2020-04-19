@@ -8,7 +8,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,7 +17,6 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Transactional
 public class ProductGroupRepositoryTest {
 
     @Autowired
@@ -51,11 +49,6 @@ public class ProductGroupRepositoryTest {
         // Then
         assertTrue(groups.size() >= 3);
         assertTrue(found);
-
-        // Clean
-        repository.deleteById(groupA.getId());
-        repository.deleteById(groupB.getId());
-        repository.deleteById(groupC.getId());
     }
 
     @Test
@@ -81,11 +74,6 @@ public class ProductGroupRepositoryTest {
         assertEquals(groupB, foundGroup.get());
         assertTrue(foundGroupByName.isPresent());
         assertEquals(groupC, foundGroupByName.get());
-
-        // Clean
-        repository.deleteById(groupA.getId());
-        repository.deleteById(groupB.getId());
-        repository.deleteById(groupC.getId());
     }
 
     @Test
@@ -104,37 +92,33 @@ public class ProductGroupRepositoryTest {
         repository.save(groupC);
 
         Optional<ProductGroup> foundOld = repository.findFirstByName(name);
-        String foundOldName = foundOld.isPresent() ? foundOld.get().getName() : "none";
 
         groupC.setName(newName);
         repository.save(groupC);
         Optional<ProductGroup> foundNew = repository.findFirstByName(newName);
 
         repository.deleteById(groupA.getId());
-        Optional<ProductGroup> deleted = repository.findById(groupA.getId());
 
         // Then
-        assertFalse(deleted.isPresent());
         assertTrue(foundOld.isPresent());
-        assertEquals(name, foundOldName);
+        assertEquals(name, foundOld.get().getName());
         assertTrue(foundNew.isPresent());
         assertEquals(groupC, foundNew.get());
-
-        // Clean
-        repository.deleteById(groupB.getId());
-        repository.deleteById(groupC.getId());
     }
 
     @Test
     public void testProductAndProductGroup() {
         // Given
         ProductGroup group = new ProductGroup("Product");
-        Product productA = new Product("AAA", 2.0, group);
-        Product productB = new Product("BBB", 3.0, group);
-        Product productC = new Product("CCC", 4.0, group);
+        Product productA = new Product();
+        Product productB = new Product();
+        Product productC = new Product();
         productA.setName("product1");
         productB.setName("product2");
         productC.setName("product3");
+        productA.setProductGroup(group);
+        productB.setProductGroup(group);
+        productC.setProductGroup(group);
         group.getProducts().addAll(Arrays.asList(productA, productB, productC));
 
         // When
@@ -151,12 +135,6 @@ public class ProductGroupRepositoryTest {
         //Then
         assertTrue(foundGroup.isPresent());
         assertEquals(3, foundGroup.get().getProducts().size());
-
-        // Clean
-        productRepository.deleteById(productA.getId());
-        productRepository.deleteById(productB.getId());
-        productRepository.deleteById(productC.getId());
-        repository.deleteById(group.getId());
     }
 
     @Test
@@ -180,11 +158,6 @@ public class ProductGroupRepositoryTest {
         // Then
         assertTrue(existsById);
         assertTrue(existsByName);
-
-        // Clean
-        repository.deleteById(groupA.getId());
-        repository.deleteById(groupB.getId());
-        repository.deleteById(groupC.getId());
     }
 
     @Test
@@ -211,10 +184,5 @@ public class ProductGroupRepositoryTest {
         assertTrue(found.isPresent());
         assertFalse(notFound.isPresent());
         assertEquals(tmp, create.getName());
-
-        // Clean
-        repository.deleteById(groupA.getId());
-        repository.deleteById(groupB.getId());
-        repository.deleteById(groupC.getId());
     }
 }

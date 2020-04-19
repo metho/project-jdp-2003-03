@@ -14,19 +14,10 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class OrderDto {
 
-    private Long id;
+    private Long Id;
     private LocalDate orderMade;
     private boolean resolved;
-    private boolean mailSent;
     private UserDto user;
     private CartDto cartDto;
-
-    public OrderDto(Long id, LocalDate orderMade, boolean resolved, UserDto user, CartDto cartDto, boolean mailSent) {
-        this.id = id;
-        this.orderMade = orderMade;
-        this.resolved = resolved;
-        this.mailSent = mailSent;
-        this.user = user;
-        this.cartDto = cartDto;
-    }
+    private boolean mailSent;
 }

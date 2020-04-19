@@ -51,17 +51,14 @@ public class CartRepositoryTest {
         // When
         System.out.println("Test get all records ...\n");
         cartRepository.save(cartA);
-        Long firstId = cartA.getId();
         cartRepository.save(cartB);
         cartRepository.save(cartC);
 
-        Cart cart = cartRepository.getOne(firstId);
-        ArrayList<Cart> newList = new ArrayList<>();
-        newList.add(cart);
+        List<Cart> carts = cartRepository.findAll();
 
         // Then
-        assertEquals(3, cartRepository.count());
-        assertEquals(1, newList.size());
+        assertTrue(carts.size() >= 3);
+        assertTrue(carts.contains(cartB));
 
         // Clean
         cartRepository.deleteById(cartA.getId());
@@ -127,7 +124,8 @@ public class CartRepositoryTest {
         // Given
         Cart cart = new Cart();
         ProductGroup group = new ProductGroup("Empty");
-        Product product = new Product("AAA", 2.0, group);
+        Product product = new Product(1L,"AAA", 2.0, "brand", "model", 1999, "origin",
+                "description", group, new ArrayList<>());
         Item itemA = new Item(cart, product, 2.0, 12.4);
         Item itemB = new Item(cart, product, 1.0, 10.0);
         Item itemC = new Item(cart, product, 0.5, 5.0);
@@ -155,7 +153,7 @@ public class CartRepositoryTest {
         assertEquals(3, items.size());
         assertTrue(foundCart.isPresent());
         assertEquals(3, foundCart.get().getItems().size());
-        assertEquals(2, itemsDel.size());
+        assertEquals(3, itemsDel.size());
 
         // Clean
         itemRepository.deleteById(itemA.getId());

@@ -29,6 +29,7 @@ public class Product {
     private String origin;
     private String description;
 
+    @NotNull
     @ManyToOne
     @JoinColumn
     private ProductGroup productGroup;
@@ -36,11 +37,11 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<Item> items = new ArrayList<>();
 
-    public Product(String name, double price, ProductGroup productGroup) {
-        this.name = name;
-        this.price = price;
-        this.productGroup = productGroup;
-    }
+//    public Product(String name, double price, ProductGroup productGroup) {
+//        this.name = name;
+//        this.price = price;
+//        this.productGroup = productGroup;
+//    }
 
     public Product(Long id, String name, String description, double price, String brand, String model, String origin, int year) {
     }

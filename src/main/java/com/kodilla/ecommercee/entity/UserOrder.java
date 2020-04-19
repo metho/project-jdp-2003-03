@@ -33,20 +33,11 @@ public class UserOrder {
 
     private boolean mailSent;
 
-    public UserOrder(LocalDate orderMade, boolean resolved, boolean mailSent, User user, Cart cart) {
+    public UserOrder(LocalDate orderMade, boolean resolved, User user, Cart cart, boolean mailSent) {
         this.orderMade = orderMade;
         this.resolved = resolved;
-        this.mailSent = mailSent;
         this.user = user;
         this.cart = cart;
-    }
-
-    public UserOrder(Long id, LocalDate orderMade, boolean resolved, boolean mailSent, User user, Cart cart) {
-        this.id = id;
-        this.orderMade = orderMade;
-        this.resolved = resolved;
         this.mailSent = mailSent;
-        this.user = user;
-        this.cart = cart;
     }
 }

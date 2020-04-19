@@ -39,7 +39,7 @@ public class ProductService {
     }
 
     public Product updateProduct(final Product product) {
-        if(productRepository.existsByNameAndBrandAndModelAndYear().equals(product)) {
+        if(productRepository.existsByNameAndBrandAndModelAndYear(product.getName(), product.getBrand(), product.getModel(), product.getYear()).equals(product)) {
             throw new EntityNotFoundException("This product already exist");
         } else {
             new Product();

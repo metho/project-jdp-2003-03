@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -27,8 +29,10 @@ public class ProductRepositoryTest {
     public void shouldCreate() {
         //Given
         ProductGroup productGroup = new ProductGroup("Laptops");
-        Product productOne = new Product("AAA", 2.0, productGroup);
-        Product productTwo = new Product("BBB", 3.45, productGroup);
+        Product productOne = new Product(1L,"AAA", 2.0, "brand", "model", 1999, "origin",
+                "description", productGroup, new ArrayList<>());
+        Product productTwo = new Product(2L,"BBB", 3.0, "brand", "model", 2000, "origin",
+                "description", productGroup, new ArrayList<>());
         productGroupRepository.save(productGroup);
         productRepository.save(productOne);
         productRepository.save(productTwo);
@@ -49,8 +53,10 @@ public class ProductRepositoryTest {
     public void shouldRetrive() {
         //Given
         ProductGroup productGroup = new ProductGroup("Laptops");
-        Product productOne = new Product("AAA", 2.0, productGroup);
-        Product productTwo = new Product("BBB", 3.45, productGroup);
+        Product productOne =new Product(1L,"AAA", 2.0, "brand", "model", 1999, "origin",
+                "description", productGroup, new ArrayList<>());
+        Product productTwo = new Product(2L,"BBB", 3.0, "brand", "model", 2000, "origin",
+                "description", productGroup, new ArrayList<>());
         productGroupRepository.save(productGroup);
         productRepository.save(productOne);
         productRepository.save(productTwo);
@@ -73,7 +79,8 @@ public class ProductRepositoryTest {
         //Given
         ProductGroup productGroup = new ProductGroup("Laptops");
         ProductGroup productGroupTwo = new ProductGroup("Clothes");
-        Product productOne = new Product("AAA", 2.0, productGroup);
+        Product productOne = new Product(1L,"AAA", 2.0, "brand", "model", 1999, "origin",
+                "description", productGroup, new ArrayList<>());
         productGroupRepository.save(productGroupTwo);
         productGroupRepository.save(productGroup);
         productRepository.save(productOne);
@@ -98,7 +105,8 @@ public class ProductRepositoryTest {
     public void shouldDelete(){
         //Given
         ProductGroup productGroup = new ProductGroup("Laptops");
-        Product productOne = new Product("AAA", 3.0, productGroup);
+        Product productOne = new Product(1L,"AAA", 2.0, "brand", "model", 1999, "origin",
+                "description", productGroup, new ArrayList<>());
         productGroupRepository.save(productGroup);
         productRepository.save(productOne);
         Long productOneId = productOne.getId();
