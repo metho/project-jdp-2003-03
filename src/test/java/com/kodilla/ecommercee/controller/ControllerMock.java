@@ -34,9 +34,6 @@ public class ControllerMock {
     @Autowired
     private ProductGroupRepository repository;
 
-    @Autowired
-    private UserRepository userRepository;
-
     private MockMvc mvc;
 
     @Before
