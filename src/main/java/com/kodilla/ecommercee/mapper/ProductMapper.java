@@ -1,6 +1,5 @@
 package com.kodilla.ecommercee.mapper;
 
-
 import com.kodilla.ecommercee.dto.ProductDto;
 import com.kodilla.ecommercee.entity.Product;
 import org.springframework.stereotype.Component;
@@ -8,12 +7,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProductMapper {
 
-
     public Product mapToProduct(ProductDto productDto) {
         return new Product();
     }
 
     public ProductDto mapToProductDto(Product product) {
-        return new ProductDto();
+        return new ProductDto(product.getId(), product.getName(), product.getPrice(), product.getBrand(), product.getModel(),
+                product.getYear(), product.getOrigin(), product.getDescription());
     }
 }

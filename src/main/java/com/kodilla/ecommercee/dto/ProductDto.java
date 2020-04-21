@@ -1,11 +1,9 @@
 package com.kodilla.ecommercee.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-import javax.validation.constraints.NotNull;
-
-@Data
-@NoArgsConstructor
+@Getter
 @AllArgsConstructor
 public class ProductDto {
     private Long id;
@@ -16,7 +14,4 @@ public class ProductDto {
     private int year;
     private String origin;
     private String description;
-
-    public ProductDto(Long id, String name, String description, String brand, String model, String origin, double price, int year) {
-    }
 }

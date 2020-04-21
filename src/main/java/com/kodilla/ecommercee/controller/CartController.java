@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-
 @RestController
 @RequestMapping("/v1/cart")
 public class CartController {
@@ -23,7 +22,6 @@ public class CartController {
 
     @Autowired
     private OrderMapper orderMapper;
-
 
     @PostMapping(path = "/newCart")
     public CartDto createCart() {
@@ -49,14 +47,15 @@ public class CartController {
     public ItemDto getItem(@PathVariable Long itemId) {
         return mapper.mapToItemDto(service.getItem(itemId));
     }
+
     @PutMapping(path = "/item", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ItemDto updateItem(@RequestBody ItemDto itemDto) {
         return mapper.mapToItemDto(service.saveItem(mapper.mapToItem(itemDto)));
     }
 
     @PostMapping(path ="/item", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void addItem(@RequestBody ItemDto itemDto){
-        service.addItem(mapper.mapToItem(itemDto));
+    public ItemDto addItem(@RequestBody ItemDto itemDto){
+        return mapper.mapToItemDto(service.addItem(mapper.mapToItem(itemDto)));
     }
 
     @DeleteMapping("/item/{itemId}")
@@ -68,5 +67,4 @@ public class CartController {
     public OrderDto createAnOrder(@RequestBody OrderDto orderDto) {
         return orderMapper.mapToOrderDto(service.createAnOrder(orderDto));
     }
-
 }

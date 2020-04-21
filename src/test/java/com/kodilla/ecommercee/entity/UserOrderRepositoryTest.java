@@ -41,7 +41,7 @@ public class UserOrderRepositoryTest {
     @Test
     public void testOrderSave() {
         // Give
-        User user = new User("Jack", "None", false, "None");
+        User user = new User("Jack", "None", "USER", false, "None");
         Cart cartOne = new Cart();
         Cart cartTwo = new Cart();
         Cart cartThree = new Cart();
@@ -78,7 +78,7 @@ public class UserOrderRepositoryTest {
     @Test
     public void testOrderUpdate() {
         // Give
-        User user = new User("Jack", "None", false, "None");
+        User user = new User("Jack", "None", "USER", false, "None");
         Cart cart = new Cart();
         UserOrder order = new UserOrder(user, cart);
 
@@ -105,7 +105,7 @@ public class UserOrderRepositoryTest {
     @Test
     public void testOrderDelete() {
         // Give
-        User user = new User("Jack", "None", false, "None");
+        User user = new User("Jack", "None", "USER", false, "None");
         Cart cartOne = new Cart();
         Cart cartTwo = new Cart();
         Cart cartThree = new Cart();
@@ -145,8 +145,8 @@ public class UserOrderRepositoryTest {
     @Test
     public void testMailSent() {
         //Given
-        User user1 = new User("Jack", "None", false, "None");
-        User user2 = new User("Jack", "None", false, "None");
+        User user1 = new User("Jack", "None", "USER", false, "None");
+        User user2 = new User("Jack", "None", "USER",false, "None");
         Cart cart1 = new Cart();
         Cart cart2 = new Cart();
         UserOrder userOrder1 = new UserOrder(LocalDate.now(), false, false, user1, cart1);

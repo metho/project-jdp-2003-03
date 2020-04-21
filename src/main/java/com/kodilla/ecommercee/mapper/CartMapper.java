@@ -5,25 +5,22 @@ import com.kodilla.ecommercee.dto.ItemDto;
 import com.kodilla.ecommercee.entity.Cart;
 import com.kodilla.ecommercee.entity.Item;
 import com.kodilla.ecommercee.entity.Product;
-import com.kodilla.ecommercee.exception.EntityNotFoundException;
-import com.kodilla.ecommercee.repository.CartRepository;
-import com.kodilla.ecommercee.repository.ProductRepository;
+import com.kodilla.ecommercee.service.CartService;
+import com.kodilla.ecommercee.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @Component
 public class CartMapper {
 
     @Autowired
-    private CartRepository cartRepository;
+    private CartService cartService;
 
     @Autowired
-    private ProductRepository productRepository;
-
+    private ProductService productService;
 
     public Cart mapToCart(CartDto cartDto) {
         return new Cart(cartDto.getId(), mapToItemList(cartDto.getItems()), cartDto.isClosed());
@@ -38,23 +35,18 @@ public class CartMapper {
     }
 
     public Item mapToItem(ItemDto itemDto){
-        Cart cart = cartRepository.findById(itemDto.getCartId()).orElseThrow(()->
-                new EntityNotFoundException("Cart with id "+ itemDto.getCartId() + " was not found."));
-        Product product = productRepository.findById(itemDto.getProductId()).orElseThrow(()->
-                new EntityNotFoundException("Product with id "+ itemDto.getProductId() + " was not found."));
+        Cart cart = cartService.getCart(itemDto.getCartId());
+        Product product = productService.getProduct(itemDto.getProductId());
         return new Item(itemDto.getId(), cart, product, itemDto.getQuantity(), itemDto.getPrice());
     }
 
-    public List<ItemDto> mapToItemDtoList(List<Item> items) {
+    private List<ItemDto> mapToItemDtoList(List<Item> items) {
         return items.stream().map(this::mapToItemDto)
                 .collect(Collectors.toList());
     }
 
-    public List<Item> mapToItemList(List<ItemDto> items) {
+    private List<Item> mapToItemList(List<ItemDto> items) {
         return items.stream().map(this::mapToItem)
                 .collect(Collectors.toList());
     }
-
-
-
 }

@@ -10,6 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Cart {
 
@@ -19,15 +20,8 @@ public class Cart {
     private Long id;
 
     @NonNull
-    @OneToMany(mappedBy = "cart",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.REMOVE)
     private List<Item> items = new ArrayList<>();
 
     private boolean closed;
-
-
-    public Cart(Long id, List<Item> items, boolean closed) {
-        this.id = id;
-        this.items = items;
-        this.closed = closed;
-    }
 }

@@ -18,9 +18,9 @@ public class UserRepositoryTest {
     @Test
     public void testUserGetAll() {
         //Given
-        User use1 = new User("User1", "password1", false, "address1");
-        User use2 = new User("User2", "password2", false, "address2");
-        User use3 = new User("User3", "password3", false, "address3");
+        User use1 = new User("User1", "password1", "USER", false, "address1");
+        User use2 = new User("User2", "password2", "USER", false, "address2");
+        User use3 = new User("User3", "password3", "USER", false, "address3");
         //When
         repository.save(use1);
         repository.save(use2);
@@ -33,9 +33,9 @@ public class UserRepositoryTest {
     @Test
     public void testUserDelete() {
         //Given
-        User use1 = new User("User1", "password1", false, "address1");
-        User use2 = new User("User2", "password2", false, "address2");
-        User use3 = new User("User3", "password3", false, "address3");
+        User use1 = new User("User1", "password1", "USER", false, "address1");
+        User use2 = new User("User2", "password2", "USER", false, "address2");
+        User use3 = new User("User3", "password3", "USER", false, "address3");
         //When
         repository.save(use1);
         repository.save(use2);
@@ -51,9 +51,9 @@ public class UserRepositoryTest {
     @Test
     public void testUserGetOne() {
         //Given
-        User use1 = new User("User1", "password1", false, "address1");
-        User use2 = new User("User2", "password2", false, "address2");
-        User use3 = new User("User3", "password3", false, "address3");
+        User use1 = new User("User1", "password1", "USER", false, "address1");
+        User use2 = new User("User2", "password2", "USER", false, "address2");
+        User use3 = new User("User3", "password3", "USER", false, "address3");
         //When
         repository.save(use1);
         repository.save(use2);
@@ -67,5 +67,25 @@ public class UserRepositoryTest {
 
     }
 
+    @Test
+    public void testUserFindByName() {
+        //Given
+        String name = "jacek";
+        User user1 = new User("User1", "password1", "USER", false, "address1");
+        User user2 = new User("jacek", "password2", "USER", false, "address2");
+        User user3 = new User("User3", "password3", "USER", false, "address3");
+        //When
+        repository.save(user1);
+        repository.save(user2);
+        repository.save(user3);
+
+        User user = repository.findByName(name);
+        //Then
+        Assert.assertEquals("password2", user.getPassword());
+
+        repository.deleteById(user1.getId());
+        repository.deleteById(user2.getId());
+        repository.deleteById(user3.getId());
+    }
 }
 

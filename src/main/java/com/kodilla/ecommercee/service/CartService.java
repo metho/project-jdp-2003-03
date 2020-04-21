@@ -6,13 +6,13 @@ import com.kodilla.ecommercee.entity.Item;
 import com.kodilla.ecommercee.entity.User;
 import com.kodilla.ecommercee.entity.UserOrder;
 import com.kodilla.ecommercee.exception.EntityNotFoundException;
+import com.kodilla.ecommercee.exception.ExceptionType;
+import com.kodilla.ecommercee.exception.ForbiddenException;
 import com.kodilla.ecommercee.repository.CartRepository;
 import com.kodilla.ecommercee.repository.ItemRepository;
 import com.kodilla.ecommercee.repository.OrderRepository;
-import com.kodilla.ecommercee.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 @Service
 public class CartService {
@@ -27,64 +27,54 @@ public class CartService {
     private OrderRepository orderRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     public Cart createCart() {
         return cartRepository.save(new Cart());
     }
 
     public Cart saveCart(Cart cart) {
-        if (!cartRepository.existsById(cart.getId())) {
-            throw new EntityNotFoundException("Cart with id " + cart.getId() + " was not found");
-        } else {
-            return cartRepository.save(cart);
-        }
+        getCart(cart.getId());
+        return cartRepository.save(cart);
     }
 
     public Cart getCart(Long cartId) {
-        return cartRepository.findById(cartId).orElseThrow(() ->
-                new EntityNotFoundException("Cart with id " + cartId + " was not found."));
+        return cartRepository.findById(cartId)
+                .orElseThrow(() -> new EntityNotFoundException(ExceptionType.CART_NOT_FOUND, cartId.toString()));
     }
 
     public void deleteCart(Long cartId) {
-        cartRepository.findById(cartId).orElseThrow(() ->
-                new EntityNotFoundException("Cart with id " + cartId + " was not found."));
+        getCart(cartId);
         cartRepository.deleteById(cartId);
     }
 
     public Item getItem(Long itemId) {
         return itemRepository.findById(itemId).orElseThrow(()->
-                new EntityNotFoundException("Item with id "+ itemId + " was not found."));
+                new EntityNotFoundException(ExceptionType.ITEM_NOT_FOUND, itemId.toString()));
     }
 
     public Item saveItem(Item item){
-        if (!itemRepository.existsById(item.getId())) {
-            throw new EntityNotFoundException("Item with id " +item.getId()+ " was not found");
-        } else {
-            addItem(item);
-            return item;
-        }
+        getItem(item.getId());
+        return addItem(item);
     }
 
-    public void addItem(Item item) {
+    public Item addItem(Item item) {
+        if (cartRepository.existsByIdAndClosed(item.getCart().getId(), true)) {
+            throw new ForbiddenException(ExceptionType.CART_IS_CLOSED, item.getCart().getId().toString());
+        }
         item.setPrice(item.getQuantity() * item.getProduct().getPrice());
-        itemRepository.save(item);
+        return itemRepository.save(item);
     }
 
     public void deleteItem(Long itemId) {
-        if (!itemRepository.existsById(itemId)) {
-            throw new EntityNotFoundException("Item with id " + itemId + " was not found");
-        }
+        getItem(itemId);
         itemRepository.deleteById(itemId);
     }
 
     public UserOrder createAnOrder(OrderDto orderDto) {
-        User user = userRepository.findById(orderDto.getUserId()).orElseThrow(()->
-                        new EntityNotFoundException("User with id "+ orderDto.getUserId() + " was not found."));
-        Cart cart = cartRepository.findById(orderDto.getCartDto().getId()).orElseThrow(()->
-                new EntityNotFoundException("Cart with id "+ orderDto.getCartDto().getId() + " was not found."));
+        User user = userService.getUser(orderDto.getUserId());
+        Cart cart = getCart(orderDto.getCartId());
         cart.setClosed(true);
-        return orderRepository.save(new UserOrder(user,cart));
+        return orderRepository.save(new UserOrder(user, cart));
     }
-
 }

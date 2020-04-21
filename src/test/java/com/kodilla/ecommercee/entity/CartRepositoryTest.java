@@ -1,9 +1,6 @@
 package com.kodilla.ecommercee.entity;
 
-import com.kodilla.ecommercee.repository.CartRepository;
-import com.kodilla.ecommercee.repository.ItemRepository;
-import com.kodilla.ecommercee.repository.ProductGroupRepository;
-import com.kodilla.ecommercee.repository.ProductRepository;
+import com.kodilla.ecommercee.repository.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,16 +23,22 @@ import static org.junit.Assert.*;
 public class CartRepositoryTest {
 
     @Autowired
-    CartRepository cartRepository;
+    private CartRepository cartRepository;
 
     @Autowired
-    ProductRepository productRepository;
+    private ProductRepository productRepository;
 
     @Autowired
-    ItemRepository itemRepository;
+    private ItemRepository itemRepository;
 
     @Autowired
-    ProductGroupRepository groupRepository;
+    private ProductGroupRepository groupRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private OrderRepository orderRepository;
 
     @Before
     public void printBefore() {
@@ -123,6 +127,32 @@ public class CartRepositoryTest {
     }
 
     @Test
+    public void testExistsByUserId() {
+        // Given
+        User user = new User("Jacek", "aaa", "ADMIN", false, "none");
+        Cart cart = new Cart();
+        UserOrder order = new UserOrder(LocalDate.now(), false, false, user, cart);
+
+        // When
+        System.out.println("Test exist by userId ...\n");
+        userRepository.save(user);
+        cartRepository.save(cart);
+        orderRepository.save(order);
+
+        boolean found = orderRepository.existsByUser_Id(user.getId());
+        boolean notFound = orderRepository.existsByUser_Id(user.getId() + 1);
+
+        // Then
+        assertTrue(found);
+        assertFalse(notFound);
+
+        // Clean
+        orderRepository.deleteById(order.getId());
+        cartRepository.deleteById(cart.getId());
+        userRepository.deleteById(user.getId());
+    }
+
+    @Test
     public void testCartAndItem() {
         // Given
         Cart cart = new Cart();
@@ -136,6 +166,7 @@ public class CartRepositoryTest {
         group.getProducts().add(product);
 
         // When
+        System.out.println("Test cart and item ...\n");
         groupRepository.save(group);
         productRepository.save(product);
         cartRepository.save(cart);
@@ -162,6 +193,5 @@ public class CartRepositoryTest {
         itemRepository.deleteById(itemC.getId());
         productRepository.deleteById(product.getId());
         groupRepository.deleteById(group.getId());
-
     }
 }

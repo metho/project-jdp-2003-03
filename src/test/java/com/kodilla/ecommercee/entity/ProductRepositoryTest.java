@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Optional;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -116,4 +118,40 @@ public class ProductRepositoryTest {
         productGroupRepository.deleteById(productGroup.getId());
     }
 
+    @Test
+    public void testUpdateGroupInProduct() {
+        // Given
+        ProductGroup groupA = new ProductGroup("GroupA");
+        ProductGroup groupB = new ProductGroup("GroupB");
+        Product productA = new Product("AAA", 2.0, groupA);
+        Product productB = new Product("BBB", 3.0, groupA);
+
+        // When
+        productGroupRepository.save(groupA);
+        productGroupRepository.save(groupB);
+        productRepository.save(productA);
+        productRepository.save(productB);
+
+        Optional<Product> oldProductA = productRepository.findById(productA.getId());
+        Optional<Product> oldProductB = productRepository.findById(productB.getId());
+        productRepository.updateGroupId(groupB, groupA);
+        Optional<Product> newProductA = productRepository.findById(productA.getId());
+        Optional<Product> newProductB = productRepository.findById(productB.getId());
+
+        // Then
+        assertTrue(oldProductA.isPresent());
+        assertEquals(groupA, oldProductA.get().getProductGroup());
+        assertTrue(oldProductB.isPresent());
+        assertEquals(groupA, oldProductB.get().getProductGroup());
+        assertTrue(newProductA.isPresent());
+        assertEquals(groupB, newProductA.get().getProductGroup());
+        assertTrue(newProductB.isPresent());
+        assertEquals(groupB, newProductB.get().getProductGroup());
+
+        // Clean
+        productRepository.deleteById(productA.getId());
+        productRepository.deleteById(productB.getId());
+        productGroupRepository.deleteById(groupA.getId());
+        productGroupRepository.deleteById(groupB.getId());
+    }
 }
