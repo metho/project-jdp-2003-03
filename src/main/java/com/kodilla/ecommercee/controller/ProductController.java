@@ -28,8 +28,8 @@ public class ProductController {
     }
 
     @GetMapping(value = "/{productName}")
-    public ProductDto getProduct(@PathVariable String productName) {
-        return productMapper.mapToProductDto(productService.getProduct(productName));
+    public List<ProductDto> getProduct(@PathVariable String productName) {
+        return productMapper.mapToProductDtoList(productService.getProduct(productName));
     }
 
     @PostMapping

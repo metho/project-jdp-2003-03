@@ -50,6 +50,11 @@ public class Product {
         this.productGroup = productGroup;
     }
 
+    public String setDescription(String newDescription) {
+        this.description = newDescription;
+        return newDescription;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
