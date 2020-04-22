@@ -24,7 +24,7 @@ public class UserMapper {
         return new UserDto(
                 user.getId(),
                 user.getName(),
-                user.getPassword(),
+                user.getPassword().replaceAll("[^a-zA-Z0-9]", "").replaceAll("[a-zA-Z0-9]", ""),
                 user.getAuthority(),
                 user.isBlocked(),
                 user.getAddress());
