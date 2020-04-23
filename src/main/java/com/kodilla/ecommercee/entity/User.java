@@ -49,4 +49,8 @@ public class User {
         this.blocked = blocked;
         this.address = address;
     }
+
+    public String getCodePassword(){
+        return "***";
+    }
 }
