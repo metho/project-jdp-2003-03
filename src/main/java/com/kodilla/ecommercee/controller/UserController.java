@@ -30,12 +30,12 @@ public class UserController {
 
     @PostMapping
     public UserDto createUser(@RequestBody UserDto userDto) {
-        return userMapper.mapToUserDto(userService.createUser(userMapper.mapToUser(userDto)));
+        return userMapper.mapToUserDtoExternal(userService.createUser(userMapper.mapToUser(userDto)));
     }
 
     @PutMapping
     public UserDto updateUser(@RequestBody UserDto userDto) {
-        return userMapper.mapToUserDto(userService.updateUser(userMapper.mapToUser(userDto)));
+        return userMapper.mapToUserDtoExternal(userService.updateUser(userMapper.mapToUser(userDto)));
     }
 
     @DeleteMapping("/{id}")
