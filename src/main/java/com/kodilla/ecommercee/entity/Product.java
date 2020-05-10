@@ -41,18 +41,21 @@ public class Product {
     @JoinColumn
     private ProductGroup productGroup;
 
-    @OneToMany(mappedBy = "product")
-    private List<Item> items = new ArrayList<>();
-
     public Product(String name, double price, ProductGroup productGroup) {
         this.name = name;
         this.price = price;
         this.productGroup = productGroup;
     }
 
-    public String setDescription(String newDescription) {
-        this.description = newDescription;
-        return newDescription;
+    public Product(Long id, String name, double price, String brand, String model, int year, String origin, String description) {
+        this.id = id;
+        this.name=name;
+        this.price=price;
+        this.brand = brand;
+        this.model = model;
+        this.year = year;
+        this.origin = origin;
+        this.description = description;
     }
 
     @Override

@@ -1,13 +1,11 @@
 package com.kodilla.ecommercee.dto;
 
-import com.kodilla.ecommercee.entity.Item;
-import com.kodilla.ecommercee.entity.ProductGroup;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.util.List;
+import lombok.Setter;
 
 @Getter
+@Setter
 @AllArgsConstructor
 public class ProductDto {
     private Long id;
@@ -18,6 +16,18 @@ public class ProductDto {
     private int year;
     private String origin;
     private String description;
-    private ProductGroup productGroup;
-    private List<Item> items;
+    private Long groupId;
+
+
+    public ProductDto(Long id, String name, double price, String brand, String model,
+                      int year, String origin, String description) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.brand = brand;
+        this.model = model;
+        this.year = year;
+        this.origin = origin;
+        this.description = description;
+    }
 }

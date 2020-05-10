@@ -6,7 +6,6 @@ import com.kodilla.ecommercee.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -22,23 +21,23 @@ public class ProductController {
         return productMapper.mapToProductDtoList(productService.productList());
     }
 
-    @RequestMapping(method = RequestMethod.GET,  value = "/{productId}")
-    public ProductDto getProduct(@PathVariable Long productId) {
-        return productMapper.mapToProductDto(productService.getProduct(productId));
+    @GetMapping("/{id}")
+    public ProductDto getProduct(@PathVariable Long id) {
+        return productMapper.mapToProductDto(productService.getProductById(id));
     }
 
-    @GetMapping(value = "/{productName}")
-    public List<ProductDto> getProduct(@PathVariable String productName) {
-        return productMapper.mapToProductDtoList(productService.getProduct(productName));
+    @GetMapping(value = "/{name}")
+    public ProductDto getProduct(@PathVariable String name) {
+        return productMapper.mapToProductDto(productService.getProductByName(name));
     }
 
     @PostMapping
-    public void createProduct(ProductDto productDto) {
+    public void createProduct(@RequestBody ProductDto productDto) {
         productService.saveProduct(productMapper.mapToProduct(productDto));
     }
 
     @PutMapping
-    public ProductDto updateProduct(ProductDto productDto) {
+    public ProductDto updateProduct(@RequestBody ProductDto productDto) {
         return productMapper.mapToProductDto(productService.updateProduct(productMapper.mapToProduct(productDto)));
     }
 

@@ -1,17 +1,24 @@
 package com.kodilla.ecommercee.mapper;
 
-        import com.kodilla.ecommercee.dto.ProductDto;
-        import com.kodilla.ecommercee.entity.Product;
-        import org.springframework.stereotype.Component;
+import com.kodilla.ecommercee.dto.ProductDto;
+import com.kodilla.ecommercee.entity.Product;
+import com.kodilla.ecommercee.exception.EntityNotFoundException;
+import com.kodilla.ecommercee.exception.ExceptionType;
+import com.kodilla.ecommercee.repository.ProductGroupRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-        import java.util.List;
-        import java.util.stream.Collectors;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class ProductMapper {
 
-    public Product mapToProduct (final ProductDto productDto) {
-        return new Product(
+    @Autowired
+    private ProductGroupRepository productGroupRepository;
+
+    public Product mapToProduct(final ProductDto productDto) {
+        Product product = new Product(
                 productDto.getId(),
                 productDto.getName(),
                 productDto.getPrice(),
@@ -19,14 +26,15 @@ public class ProductMapper {
                 productDto.getModel(),
                 productDto.getYear(),
                 productDto.getOrigin(),
-                productDto.getDescription(),
-                productDto.getProductGroup(),
-                productDto.getItems()
-                );
+                productDto.getDescription());
+
+                product.setProductGroup(productGroupRepository.findById(productDto.getId())
+                        .orElseThrow(() -> new EntityNotFoundException(ExceptionType.GROUP_NOT_FOUND, productDto.getId().toString())));
+        return product;
     }
 
-    public ProductDto mapToProductDto (final Product product) {
-        return new ProductDto(
+    public ProductDto mapToProductDto(final Product product) {
+        ProductDto productDto = new ProductDto(
                 product.getId(),
                 product.getName(),
                 product.getPrice(),
@@ -34,10 +42,9 @@ public class ProductMapper {
                 product.getModel(),
                 product.getYear(),
                 product.getOrigin(),
-                product.getDescription(),
-                product.getProductGroup(),
-                product.getItems()
-                );
+                product.getDescription());
+        productDto.setGroupId(product.getProductGroup().getId());
+        return productDto;
     }
 
     public List<ProductDto> mapToProductDtoList(final List<Product> productList) {
