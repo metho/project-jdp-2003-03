@@ -30,9 +30,19 @@ public class UserMapper {
                 user.getAddress());
     }
 
+    public UserDto mapToUserDtoExternal(final User user) {
+        return new UserDto(
+                user.getId(),
+                user.getName(),
+                user.getCodePassword(),
+                user.getAuthority(),
+                user.isBlocked(),
+                user.getAddress());
+    }
+
     public List<UserDto> mapToUserDtoList(List<User> users) {
         return users.stream()
-                .map(this::mapToUserDto)
+                .map(this::mapToUserDtoExternal)
                 .collect(Collectors.toList());
     }
 }

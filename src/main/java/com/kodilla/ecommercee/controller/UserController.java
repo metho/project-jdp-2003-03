@@ -25,17 +25,17 @@ public class UserController {
 
     @GetMapping("/{id}")
     public UserDto getUser(@PathVariable Long id) {
-        return userMapper.mapToUserDto(userService.getUser(id));
+        return userMapper.mapToUserDtoExternal(userService.getUser(id));
     }
 
     @PostMapping
     public UserDto createUser(@RequestBody UserDto userDto) {
-        return userMapper.mapToUserDto(userService.createUser(userMapper.mapToUser(userDto)));
+        return userMapper.mapToUserDtoExternal(userService.createUser(userMapper.mapToUser(userDto)));
     }
 
     @PutMapping
     public UserDto updateUser(@RequestBody UserDto userDto) {
-        return userMapper.mapToUserDto(userService.updateUser(userMapper.mapToUser(userDto)));
+        return userMapper.mapToUserDtoExternal(userService.updateUser(userMapper.mapToUser(userDto)));
     }
 
     @DeleteMapping("/{id}")
