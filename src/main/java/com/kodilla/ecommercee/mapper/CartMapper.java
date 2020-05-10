@@ -36,7 +36,7 @@ public class CartMapper {
 
     public Item mapToItem(ItemDto itemDto){
         Cart cart = cartService.getCart(itemDto.getCartId());
-        Product product = productService.getProduct(itemDto.getProductId());
+        Product product = productService.getProductById(itemDto.getProductId());
         return new Item(itemDto.getId(), cart, product, itemDto.getQuantity(), itemDto.getPrice());
     }
 
