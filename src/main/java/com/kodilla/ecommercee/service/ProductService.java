@@ -47,8 +47,7 @@ public class ProductService {
     }
 
     public void saveProduct(final Product product) {
-        if (productRepository.existsByNameAndBrandAndModelAndYear(product.getName(), product.getBrand(), product.getModel(), product.getYear())
-                .equals(product)) {
+        if (productRepository.existsByNameAndBrandAndModelAndYear(product.getName(), product.getBrand(), product.getModel(), product.getYear())) {
             throw new EntityNotFoundException(ExceptionType.PRODUCT_ALREADY_EXIST, product.getName());
         } else {
             productRepository.save(product);

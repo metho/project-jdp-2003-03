@@ -26,7 +26,7 @@ public class ProductController {
         return productMapper.mapToProductDto(productService.getProductById(id));
     }
 
-    @GetMapping(value = "/{name}")
+    @GetMapping("/byname/{name}")
     public ProductDto getProduct(@PathVariable String name) {
         return productMapper.mapToProductDto(productService.getProductByName(name));
     }

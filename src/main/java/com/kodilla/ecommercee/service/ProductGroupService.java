@@ -65,7 +65,7 @@ public class ProductGroupService {
         return groupRepository.save(group);
     }
 
-    private ProductGroup getGroupOrException(Long id) {
+    public ProductGroup getGroupOrException(Long id) {
         return groupRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(ExceptionType.GROUP_NOT_FOUND, id.toString()));
     }

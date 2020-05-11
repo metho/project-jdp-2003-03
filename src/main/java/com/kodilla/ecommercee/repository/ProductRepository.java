@@ -20,7 +20,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query(value = "UPDATE Product SET productGroup = :newGroup WHERE productGroup = :oldGroup")
     void updateGroupId(@Param("newGroup") ProductGroup newGroup, @Param("oldGroup") ProductGroup oldGroup);
 
-    Object existsByNameAndBrandAndModelAndYear(String name, String brand, String model, int year);
+    boolean existsByNameAndBrandAndModelAndYear(String name, String brand, String model, int year);
 
     Optional <Product> findByName(String name);
 }

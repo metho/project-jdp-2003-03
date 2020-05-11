@@ -2,9 +2,8 @@ package com.kodilla.ecommercee.mapper;
 
 import com.kodilla.ecommercee.dto.ProductDto;
 import com.kodilla.ecommercee.entity.Product;
-import com.kodilla.ecommercee.exception.EntityNotFoundException;
-import com.kodilla.ecommercee.exception.ExceptionType;
-import com.kodilla.ecommercee.repository.ProductGroupRepository;
+import com.kodilla.ecommercee.entity.ProductGroup;
+import com.kodilla.ecommercee.service.ProductGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +14,7 @@ import java.util.stream.Collectors;
 public class ProductMapper {
 
     @Autowired
-    private ProductGroupRepository productGroupRepository;
+    private ProductGroupService productGroupService;
 
     public Product mapToProduct(final ProductDto productDto) {
         Product product = new Product(
@@ -27,14 +26,13 @@ public class ProductMapper {
                 productDto.getYear(),
                 productDto.getOrigin(),
                 productDto.getDescription());
-
-                product.setProductGroup(productGroupRepository.findById(productDto.getId())
-                        .orElseThrow(() -> new EntityNotFoundException(ExceptionType.GROUP_NOT_FOUND, productDto.getId().toString())));
+        ProductGroup productGroup = productGroupService.getGroupOrException(productDto.getGroupId());
+        product.setProductGroup(productGroup);
         return product;
     }
 
     public ProductDto mapToProductDto(final Product product) {
-        ProductDto productDto = new ProductDto(
+        return new ProductDto(
                 product.getId(),
                 product.getName(),
                 product.getPrice(),
@@ -42,9 +40,8 @@ public class ProductMapper {
                 product.getModel(),
                 product.getYear(),
                 product.getOrigin(),
-                product.getDescription());
-        productDto.setGroupId(product.getProductGroup().getId());
-        return productDto;
+                product.getDescription(),
+                product.getProductGroup().getId());
     }
 
     public List<ProductDto> mapToProductDtoList(final List<Product> productList) {

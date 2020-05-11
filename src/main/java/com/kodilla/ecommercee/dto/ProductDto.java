@@ -18,16 +18,4 @@ public class ProductDto {
     private String description;
     private Long groupId;
 
-
-    public ProductDto(Long id, String name, double price, String brand, String model,
-                      int year, String origin, String description) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.brand = brand;
-        this.model = model;
-        this.year = year;
-        this.origin = origin;
-        this.description = description;
-    }
 }
