@@ -12,8 +12,11 @@ public enum ExceptionType {
     CART_IS_CLOSED("ERROR: Cart with id=%s is closed for adding new items."),
     ITEM_NOT_FOUND("ERROR: Item with id=%s was not found."),
     PRODUCT_NOT_FOUND("ERROR: Product with id=%s was not found."),
+    PRODUCT_ALREADY_EXIST("ERROR: Product '%s' already exist."),
+    PRODUCT_BUSY("ERROR: Product with id=%s find himself in item. Can't be deleted."),
     GROUP_FOUND("ERROR: Group '%s' already exists."),
     GROUP_NOT_FOUND("ERROR: Group with id='%s' was not found.");
+
 
     private final String message;
 

@@ -2,8 +2,10 @@ package com.kodilla.ecommercee.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @AllArgsConstructor
 public class ProductDto {
     private Long id;
@@ -14,4 +16,6 @@ public class ProductDto {
     private int year;
     private String origin;
     private String description;
+    private Long groupId;
+
 }

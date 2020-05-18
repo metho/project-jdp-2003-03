@@ -1,36 +1,48 @@
 package com.kodilla.ecommercee.controller;
 
 import com.kodilla.ecommercee.dto.ProductDto;
+import com.kodilla.ecommercee.mapper.ProductMapper;
+import com.kodilla.ecommercee.service.ProductService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1/products")
+@RequiredArgsConstructor
+@RequestMapping("/v1/product")
 public class ProductController {
+
+    private final ProductMapper productMapper;
+    private final ProductService productService;
 
     @GetMapping
     public List<ProductDto> getProducts() {
-        return new ArrayList<>();
+        return productMapper.mapToProductDtoList(productService.productList());
     }
 
-    @RequestMapping(method = RequestMethod.GET,  value = "/{productId}")
-    public ProductDto getProduct(@PathVariable Long productId) {
-        return null;
+    @GetMapping("/{id}")
+    public ProductDto getProduct(@PathVariable Long id) {
+        return productMapper.mapToProductDto(productService.getProductById(id));
+    }
+
+    @GetMapping("/byname")
+    public ProductDto getProduct(@RequestParam("name") String name) {
+        return productMapper.mapToProductDto(productService.getProductByName(name));
     }
 
     @PostMapping
-    public void createProduct(ProductDto productDto) {
+    public void createProduct(@RequestBody ProductDto productDto) {
+        productService.saveProduct(productMapper.mapToProduct(productDto));
     }
 
     @PutMapping
-    public ProductDto updateProduct(Long productId) {
-        return null;
+    public ProductDto updateProduct(@RequestBody ProductDto productDto) {
+        return productMapper.mapToProductDto(productService.updateProduct(productMapper.mapToProduct(productDto)));
     }
 
-    @DeleteMapping
-    public void deleteProduct(Long productId) {
-
+    @DeleteMapping("/{productId}")
+    public void deleteProduct(@PathVariable Long productId) {
+        productService.deleteProduct(productId);
     }
 }
