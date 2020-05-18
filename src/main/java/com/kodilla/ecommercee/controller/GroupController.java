@@ -1,7 +1,8 @@
 package com.kodilla.ecommercee.controller;
 
-import com.kodilla.ecommercee.dto.ProductGroupDto;
-import com.kodilla.ecommercee.service.ProductGroupService;
+import com.kodilla.ecommercee.dto.group.ProductGroupDto;
+import com.kodilla.ecommercee.dto.group.ProductGroupExtDto;
+import com.kodilla.ecommercee.facade.ProductGroupFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -13,30 +14,30 @@ import java.util.List;
 public class GroupController {
 
     @Autowired
-    private ProductGroupService service;
+    private ProductGroupFacade facade;
 
     @GetMapping
     public List<ProductGroupDto> getGroups() {
-        return service.getGroups();
+        return facade.fetchGetGroups();
     }
 
     @GetMapping("/{id}")
-    public ProductGroupDto getGroup(@PathVariable Long id) {
-        return service.getGroup(id);
+    public ProductGroupExtDto getGroup(@PathVariable Long id) {
+        return facade.fetchGetGroup(id);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
-        service.delete(id);
+        facade.fetchDeleteGroup(id);
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ProductGroupDto update(@RequestBody ProductGroupDto groupDto) {
-        return service.update(groupDto);
+        return facade.fetchUpdateGroup(groupDto);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public void create(@RequestBody ProductGroupDto groupDto) {
-        service.create(groupDto);
+        facade.fetchCreateGroup(groupDto);
     }
 }

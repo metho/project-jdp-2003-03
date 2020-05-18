@@ -1,21 +1,22 @@
 package com.kodilla.ecommercee.service;
 
-import com.kodilla.ecommercee.dto.ProductGroupDto;
+import com.kodilla.ecommercee.dto.group.ProductGroupDto;
+import com.kodilla.ecommercee.dto.group.ProductGroupLinkDto;
 import com.kodilla.ecommercee.entity.ProductGroup;
-import com.kodilla.ecommercee.exception.EntityAlreadyExistsException;
 import com.kodilla.ecommercee.exception.EntityNotFoundException;
 import com.kodilla.ecommercee.exception.ExceptionType;
-import com.kodilla.ecommercee.mapper.ProductGroupMapper;
 import com.kodilla.ecommercee.repository.ProductGroupRepository;
 import com.kodilla.ecommercee.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ProductGroupService {
     private static final String TECHNICAL_GROUP = "Unbound";
+    private static final String BASIC_PATH = "http://localhost:8080/v1/product/bygroup?name=";
 
     @Autowired
     private ProductGroupRepository groupRepository;
@@ -23,35 +24,35 @@ public class ProductGroupService {
     @Autowired
     private ProductRepository productRepository;
 
-    @Autowired
-    private ProductGroupMapper groupMapper;
-
-    public List<ProductGroupDto> getGroups() {
-        return groupMapper.mapToGroupDtoList(groupRepository.findAll());
+    public List<ProductGroup> getGroups() {
+        return groupRepository.findAll();
     }
 
-    public ProductGroupDto getGroup(Long id) {
-        ProductGroup group = getGroupOrException(id);
-        return groupMapper.mapToGroupDto(group);
+    public ProductGroup getGroup(Long id) {
+        return getGroupOrException(id);
     }
 
-    public void create(ProductGroupDto groupDto) {
-        if (groupRepository.existsByName(groupDto.getName())) {
-            throw new EntityAlreadyExistsException(ExceptionType.GROUP_FOUND, groupDto.getName());
-        }
-        groupRepository.save(groupMapper.mapToGroup(groupDto));
+    public void create(ProductGroup group) {
+        groupRepository.save(group);
     }
 
-    public ProductGroupDto update(ProductGroupDto groupDto) {
+    public ProductGroup update(ProductGroupDto groupDto) {
         ProductGroup group = getGroupOrException(groupDto.getId());
         group.setName(groupDto.getName());
 
-        return groupMapper.mapToGroupDto(groupRepository.save(group));
+        return groupRepository.save(group);
     }
 
     public void delete(Long id) {
         detachProducts(id);
         groupRepository.deleteById(id);
+    }
+
+    public List<ProductGroupLinkDto> getLinks(String name) {
+        ProductGroupLinkDto link = new ProductGroupLinkDto("LinkToProductList", BASIC_PATH + name);
+        List<ProductGroupLinkDto> links = new ArrayList<>();
+        links.add(link);
+        return links;
     }
 
     private void detachProducts(Long id) {

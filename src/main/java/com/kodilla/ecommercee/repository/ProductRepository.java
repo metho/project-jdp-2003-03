@@ -9,6 +9,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 @Transactional
 public interface ProductRepository extends JpaRepository<Product, Long> {
@@ -16,4 +18,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Modifying
     @Query(value = "UPDATE Product SET productGroup = :newGroup WHERE productGroup = :oldGroup")
     void updateGroupId(@Param("newGroup") ProductGroup newGroup, @Param("oldGroup") ProductGroup oldGroup);
+
+    List<Product> findByProductGroup(ProductGroup group);
 }
