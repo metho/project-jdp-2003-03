@@ -26,8 +26,8 @@ public class ProductController {
         return productMapper.mapToProductDto(productService.getProductById(id));
     }
 
-    @GetMapping("/byname/{name}")
-    public ProductDto getProduct(@PathVariable String name) {
+    @GetMapping("/byname")
+    public ProductDto getProduct(@RequestParam("name") String name) {
         return productMapper.mapToProductDto(productService.getProductByName(name));
     }
 
@@ -41,8 +41,8 @@ public class ProductController {
         return productMapper.mapToProductDto(productService.updateProduct(productMapper.mapToProduct(productDto)));
     }
 
-    @DeleteMapping
-    public void deleteProduct(Long productId) {
+    @DeleteMapping("/{productId}")
+    public void deleteProduct(@PathVariable Long productId) {
         productService.deleteProduct(productId);
     }
 }

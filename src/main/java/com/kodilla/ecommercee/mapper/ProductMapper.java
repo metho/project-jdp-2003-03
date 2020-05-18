@@ -17,7 +17,8 @@ public class ProductMapper {
     private ProductGroupService productGroupService;
 
     public Product mapToProduct(final ProductDto productDto) {
-        Product product = new Product(
+        ProductGroup productGroup = productGroupService.getGroupOrException(productDto.getGroupId());
+        return new Product(
                 productDto.getId(),
                 productDto.getName(),
                 productDto.getPrice(),
@@ -25,10 +26,8 @@ public class ProductMapper {
                 productDto.getModel(),
                 productDto.getYear(),
                 productDto.getOrigin(),
-                productDto.getDescription());
-        ProductGroup productGroup = productGroupService.getGroupOrException(productDto.getGroupId());
-        product.setProductGroup(productGroup);
-        return product;
+                productDto.getDescription(),
+                productGroup);
     }
 
     public ProductDto mapToProductDto(final Product product) {

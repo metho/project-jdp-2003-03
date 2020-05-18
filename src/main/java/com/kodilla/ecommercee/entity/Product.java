@@ -50,7 +50,7 @@ public class Product {
         this.productGroup = productGroup;
     }
 
-    public Product(Long id, String name, double price, String brand, String model, int year, String origin, String description) {
+    public Product(Long id, String name, double price, String brand, String model, int year, String origin, String description, ProductGroup productGroup) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -59,6 +59,7 @@ public class Product {
         this.year = year;
         this.origin = origin;
         this.description = description;
+        this.productGroup=productGroup;
     }
 
     @Override
